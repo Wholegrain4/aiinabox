@@ -1,0 +1,45 @@
+# Use the R image as the base
+FROM rocker/r-ver:4.2.0
+
+# Set non-interactive mode for apt-get
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies and Java
+RUN apt-get update && apt-get install -y \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    default-jre \
+    wget \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy your local Chrome deb file into the container
+COPY bin/google-chrome-stable_current_amd64.deb /tmp/chrome.deb
+
+# Install Chrome using apt-get to automatically resolve dependencies
+RUN apt-get update && apt-get install -y ./tmp/chrome.deb && rm /tmp/chrome.deb
+
+# Ensure the chrome binary is accessible (create symlink if needed)
+RUN ln -sf /opt/google/chrome/google-chrome /usr/bin/google-chrome || true
+
+# Set environment variables so Chrome is discoverable
+ENV CHROME_BIN=/usr/bin/google-chrome
+ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV PATH=/usr/bin:$JAVA_HOME/bin:$PATH
+
+# Set the working directory
+WORKDIR /app
+
+# Copy your code & local ChromeDriver folder
+COPY src/data_scraping /app/data_scraping/
+COPY bin/133.0.6943.53 /app/bin/133.0.6943.53
+
+# Install the required R packages (including wdman)
+RUN Rscript -e "install.packages(c('RSelenium','rvest','stringr','jsonlite','doParallel','foreach','wdman'), repos='https://cloud.r-project.org')"
+
+# Create any needed output directories
+RUN mkdir -p /app/icd_10_codes /app/icd_10_codes_clean /app/icd_10_code_jsons
+
+# Run your data scraping script
+CMD ["bash", "/app/data_scraping/run_icd_10_scrape.sh"]

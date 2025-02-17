@@ -1,0 +1,5 @@
+bin/Chrome.tar.xz
+src/ai_pipeline/templates/sick_visit_filled_template_p0.txt
+src/ai_pipeline/templates/sick_visit_filled_template_p1.txt
+src/ai_pipeline/templates/sick_visit_filled_template_p2.txt
+src/ai_pipeline/templates/sick_visit_filled_template_p3.txt

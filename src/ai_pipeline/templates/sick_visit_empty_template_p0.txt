@@ -1,0 +1,24 @@
+Patient: (Fill in the this with the patient's name)
+
+DOB: (Put in the date of birth of the patient - Ensure that the date of birth is in the format MM/DD/YYYY and is the correct date)
+
+DOS: (Write the day of the visit followed by the doctor who is seeing the patient)
+
+CC: Sick Visit- sick (This will always be the same - sick visit)
+
+Brought to the office today by: [Mother|Father|Parents|Grandparent|Foster Parent|specify other] (Specify who brought the patient in. Use context clues from the transcript to determine who brought the patient in)
+
+HPI: (Specify the gender or the patient and the age of the patient in years followed by the number of months) [1|2|3|4|5|6|7|8|9|10|11] months
+
+Has the patient been seen here, in the ER or by another doctor in the last three months: [NO|YES] (Only specify if they have been seen)
+
+If yes, what was the patient seen for: [NA|SEEN WHERE|FOR WHAT|WERE THEY TREATED] (Select one of the options from inside the brackets then below iin a bulleted list write down the reasons they are being seen)
+
+Subjective: Patient presents with the following symptoms: [Reason for visit|Reason for follow up] (Write the reason for the visit or the reason for the follow up)
+
+Duration of illness: [How long|ER recheck|UC recheck|recheck] (Specify the duration of the illness)
+
+Extra Field: (This is an extra field that can be used to fill in any additional information that is needed)
+
+IMPORTANT NOTE FOR AI MODEL - Do not deviate from the above template. "Extra Field:" should be the last item filled out.
+IMPORTANT NOTE FOR AI MODEL - Make sure that there is one line break between each item in the template.

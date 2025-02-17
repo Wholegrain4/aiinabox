@@ -1,0 +1,27 @@
+Fever [NO|YES] (Select one of the options from inside the brackets)
+Vomiting [NO|YES] (Select one of the options from inside the brackets)
+Diarrhea [NO|YES] (Select one of the options from inside the brackets)
+Eye Discharge [NO|YES] (Select one of the options from inside the brackets)
+Nasal Congestion [NO|YES] (Select one of the options from inside the brackets)
+Nasal Drainage [NO|YES] (Select one of the options from inside the brackets)
+Sore Throat [NO|YES] (Select one of the options from inside the brackets)
+Headache [NO|YES] (Select one of the options from inside the brackets)
+Ear Pain [NO|YES] [RT|LT|BILATERAL] (Select the appropriate options from inside pair of brackets)
+Ear Drainage [NO|YES] (Select one of the options from inside the brackets)
+Abd Pain [NO|YES] (Select one of the options from inside the brackets)
+Rash [NO|YES] (Select one of the options from inside the brackets)
+Cough [NO|YES] (Select one of the options from inside the brackets)
+Trouble Breathing [NO|YES] (Select one of the options from inside the brackets)
+Eating [YES|NO] (Select one of the options from inside the brackets)
+Active [YES|NO] (Select one of the options from inside the brackets)
+Others Sick at Home [NO|YES] (Select one of the options from inside the brackets. Specify who is sick at home if yes)
+Smokers at home [NO|YES|OUTSIDE SMOKERS] (Select the one of the YES of NO options and specify if there are outside smokers)
+Vaccines UTD [YES|NO] (Select one of the options from inside the brackets)
+
+Medications: (List the medications that the patient is currently taking)
+
+Allergies: (List the allergies that the patient has)
+
+Extra Field: (This is an extra field that can be used to fill in any additional information that is needed)
+
+IMPORTANT NOTE FOR AI MODEL - Do not deviate from the above template. "Extra Field" should be the last item filled out.

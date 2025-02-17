@@ -1,0 +1,31 @@
+PMH: (List down the patient's past medical history here)
+
+Viral: [infection NOS] or [illness] (disorder) (Specify the viral infection or illness that the patient has)
+
+SHx: (List down the patient's social history here)
+
+PSH: (List the procedures that were performed during the visit)
+
+Objective:
+
+Vitals: (list vitals here for the patient which include (weight, height, temp, BP, pulse, BMI, PO2))
+
+General: (Put general findings here about the doctor patient interaction)
+
+SKIN: (Briefly describe the skin findings here)
+
+HEENT: (Fill in information about the Head, eyes, ears, nose, and throat here)
+
+RESPIRATORY: (Fill in information about the respiratory system here)
+
+CDV: (Please describe the cardiovascular system here)
+
+GI: (Please describe the gastrointestinal system here)
+
+EXTREMITIES: (List the findings of the extremities here)
+
+Extra Field: (This is an extra field that can be used to fill in any additional information that is needed)
+
+IMPORTANT NOTE FOR AI MODEL - Do not deviate from the above template. "Extra Field" should be the last item filled out.
+IMPORTANT NOTE FOR AI MODEL - Insure that the "PMH", "Viral", "SHx", "PSH", "Objective", "Vitals", "General", "SKIN", "HEENT", "RESPIRATORY", "CDV", "GI" and "EXTREMITIES"  are filled out in the template.
+IMPORTANT NOTE FOR AI MODEL - Make sure that there is one line break between each item in the template.

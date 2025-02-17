@@ -1,0 +1,9 @@
+nltk==3.9.1
+chardet==5.2.0
+pandas==2.2.3
+scikit-network==0.33.1
+numpy==2.2.3
+lightgbm==4.5.0
+scikit-learn==1.6.1
+flask==3.1.0
+ollama==0.4.7

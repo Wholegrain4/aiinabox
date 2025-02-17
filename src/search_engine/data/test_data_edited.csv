@@ -1,0 +1,61 @@
+Query,docid,Title,Link,Score,Rel Score
+What is the billing code for cough?,R05.3,R05.3 Chronic cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.3,13.5294,3
+What is the billing code for cough?,R05,R05 Cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05,13.4682,1
+What is the billing code for cough?,R05.2,R05.2 Subacute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.2,13.3689,3
+What is the billing code for cough?,R05.1,R05.1 Acute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.1,13.3658,3
+What is the billing code for cough?,R05.9,"R05.9 Cough, unspecified",/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.9,13.3218,0
+What is the billing code for cough?,A37.0,A37.0 Whooping cough due to Bordetella pertussis,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.0,13.3106,3
+What is the billing code for cough?,A37.01,A37.01 Whooping cough due to Bordetella pertussis with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.01,13.2617,3
+What is the billing code for cough?,A37.9,"A37.9 Whooping cough, unspecified species",/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.9,13.2297,1
+What is the billing code for cough?,R05.8,R05.8 Other specified cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.8,13.2128,2
+What is the billing code for cough?,A37,A37 Whooping cough,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37,13.0795,3
+What is the billing code for cough?,A37.81,A37.81 Whooping cough due to other Bordetella species with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.81,12.9989,3
+What is the billing code for cough?,A37.11,A37.11 Whooping cough due to Bordetella parapertussis with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.11,12.9863,3
+What is the billing code for cough?,A37.00,A37.00 Whooping cough due to Bordetella pertussis without pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.00,12.9304,3
+What is the billing code for cough?,R05.4,R05.4 Cough syncope,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.4,12.9061,3
+What is the billing code for cough?,A37.10,A37.10 Whooping cough due to Bordetella parapertussis without pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.10,12.6223,3
+What is the billing code for cough?,A37.80,A37.80 Whooping cough due to other Bordetella species without pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.80,12.6148,3
+What is the billing code for cough?,A37.90,"A37.90 Whooping cough, unspecified species without pneumonia",/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.90,12.5897,3
+What is the billing code for cough?,R04.2,R04.2 Hemoptysis,/ICD10CM/Codes/R00-R99/R00-R09/R04-/R04.2,12.5529,3
+What is the billing code for cough?,A37.1,A37.1 Whooping cough due to Bordetella parapertussis,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.1,12.3709,3
+What is the billing code for cough?,A37.8,A37.8 Whooping cough due to other Bordetella species,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.8,12.3677,3
+What is the billing code for obesity,E66.9,"E66.9 Obesity, unspecified",/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.9,15.6451,2
+What is the billing code for obesity,E66.01,E66.01 Morbid (severe) obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.01,15.4241,3
+What is the billing code for obesity,E66.2,E66.2 Morbid (severe) obesity with alveolar hypoventilation,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.2,15.1828,1
+What is the billing code for obesity,O99.21,"O99.21 Obesity complicating pregnancy, childbirth, and the puerperium",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.21,14.88,1
+What is the billing code for obesity,E66.09,E66.09 Other obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.09,14.7851,2
+What is the billing code for obesity,E66.8,E66.8 Other obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.8,14.7851,1
+What is the billing code for obesity,E66.0,E66.0 Obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.0,14.7788,3
+What is the billing code for obesity,O99.215,O99.215 Obesity complicating the puerperium,/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.215,14.5914,1
+What is the billing code for obesity,O99.214,O99.214 Obesity complicating childbirth,/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.214,14.5705,1
+What is the billing code for obesity,O99.210,"O99.210 Obesity complicating pregnancy, unspecified trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.210,14.5092,1
+What is the billing code for obesity,E66.3,E66.3 Overweight,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.3,14.276,2
+What is the billing code for obesity,E66.1,E66.1 Drug-induced obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.1,14.2508,3
+What is the billing code for obesity,E65,E65 Localized adiposity,/ICD10CM/Codes/E00-E89/E65-E68/E65-/E65,14.1621,0
+What is the billing code for obesity,E67,E67 Other hyperalimentation,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67,14.1041,0
+What is the billing code for obesity,E66,E66 Overweight and obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66,14.0871,2
+What is the billing code for obesity,O99.212,"O99.212 Obesity complicating pregnancy, second trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.212,13.9907,0
+What is the billing code for obesity,O99.211,"O99.211 Obesity complicating pregnancy, first trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.211,13.9887,0
+What is the billing code for obesity,O99.213,"O99.213 Obesity complicating pregnancy, third trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.213,13.9806,0
+What is the billing code for obesity,E88.81,E88.81 Metabolic syndrome and other insulin resistance,/ICD10CM/Codes/E00-E89/E70-E88/E88-/E88.81,13.9129,0
+What is the billing code for obesity,E67.0,E67.0 Hypervitaminosis A,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67.0,13.9099,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R06.0,R06.0 Dyspnea,/ICD10CM/Codes/R00-R99/R00-R09/R06-/R06.0,18.15,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,E84.9,"E84.9 Cystic fibrosis, unspecified",/ICD10CM/Codes/E00-E89/E70-E88/E84-/E84.9,17.8081,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,E84,E84 Cystic fibrosis,/ICD10CM/Codes/E00-E89/E70-E88/E84-/E84,17.1672,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,P24.11,P24.11 Neonatal aspiration of (clear) amniotic fluid and mucus with respiratory symptoms,/ICD10CM/Codes/P00-P96/P19-P29/P24-/P24.11,15.6672,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,P24.10,P24.10 Neonatal aspiration of (clear) amniotic fluid and mucus without respiratory symptoms,/ICD10CM/Codes/P00-P96/P19-P29/P24-/P24.10,15.0336,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J12.81,J12.81 Pneumonia due to SARS-associated coronavirus,/ICD10CM/Codes/J00-J99/J09-J18/J12-/J12.81,14.5572,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J42,J42 Unspecified chronic bronchitis,/ICD10CM/Codes/J00-J99/J40-J4A/J42-/J42,14.4323,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J41.0,J41.0 Simple chronic bronchitis,/ICD10CM/Codes/J00-J99/J40-J4A/J41-/J41.0,13.9898,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J32,J32 Chronic sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32,13.9325,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.3,R05.3 Chronic cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.3,13.5294,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05,R05 Cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05,13.4682,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.2,R05.2 Subacute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.2,13.3689,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.1,R05.1 Acute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.1,13.3658,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.9,"R05.9 Cough, unspecified",/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.9,13.3218,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37.0,A37.0 Whooping cough due to Bordetella pertussis,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.0,13.3106,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37.01,A37.01 Whooping cough due to Bordetella pertussis with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.01,13.2617,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37.9,"A37.9 Whooping cough, unspecified species",/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.9,13.2297,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.8,R05.8 Other specified cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.8,13.2128,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37,A37 Whooping cough,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37,13.0795,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,E51.12,E51.12 Wet beriberi,/ICD10CM/Codes/E00-E89/E50-E64/E51-/E51.12,13.077,0

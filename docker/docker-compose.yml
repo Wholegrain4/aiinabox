@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  icd_10_code_scraping:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile_scraping
+    container_name: aiinabox_icd_10_scrape
+    volumes:
+      - /var/lib/aiinabox/scraped_data/jsons:/app/icd_10_code_jsons
+      - /var/lib/aiinabox/scraped_data/codes:/app/icd_10_codes
+      - /var/lib/aiinabox/scraped_data/codes_clean:/app/icd_10_codes_clean
+    restart: on-failure
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hardware == server
+
+  icd_10_search_engine:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile_search_engine
+    container_name: aiinabox_icd_10_search_engine
+    volumes:
+      - /var/lib/aiinabox/scraped_data/jsons:/app/icd_10_code_jsons
+      - /var/lib/aiinabox/scraped_data/codes_clean:/app/icd_10_codes_clean
+      - /var/lib/aiinabox/search_eng_data:/app/icd_10_search_eng_data
+      - /var/lib/aiinabox/index_dir:/app/icd_10_index_dir
+      - /var/lib/aiinabox/title_index_dir:/app/icd_10_title_index_dir
+    restart: on-failure
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hardware == server
+
+  front_end:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile_front_end
+    ports:
+      - "5000:5000"
+    container_name: aiinabox_front_end
+    volumes:
+      - /var/lib/aiinabox/search_eng_data:/app/icd_10_search_eng_data
+      - /var/lib/aiinabox/index_dir:/app/icd_10_index_dir
+      - /var/lib/aiinabox/title_index_dir:/app/icd_10_title_index_dir
+    restart: on-failure
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hardware == server
+
+  scribe_speech_to_text:
+    build:
+      context: ../
+      dockerfile: Dockerfile_scribe_arm
+    container_name: aiinabox_scribe
+    volumes:
+      - /var/lib/aiinabox/transcripts:/app/transcripts
+      - /var/lib/aiinabox/transcripts:/app/transcripts_clean
+    restart: on-failure
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hardware == raspberrypi
+
+networks:
+  default:
+    external:
+      name: app_network

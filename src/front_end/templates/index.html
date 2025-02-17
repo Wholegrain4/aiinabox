@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Engine</title>
+    <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+    <div id="main-content">
+        <div id="rag-section">
+            <div id="rag-output">
+                <h2>RAG Response Area</h2>
+                {% if verified_templates %}
+                    {% for item in verified_templates %}
+                        <h3>Template {{ item.personality_index + 1 }}</h3>
+                        <pre>{{ item.template }}</pre>
+                    {% endfor %}
+                {% else %}
+                    <p>Output from the RAG architecture will appear here after a search.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div id="results-section">
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+            {% if results %}
+                <ul>
+                    {% for result in results %}
+                        <li>
+                            <h2><a href="{{ result['url'] }}" target="_blank">{{ result['title'] }}</a></h2>
+                            <p>{{ result['snippet'] }}</p>
+                            <p>Score: {{ result['score'] }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {% if not error %}
+                    <p>No results found.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div id="search-section">
+        <form id="search-form" action="/search" method="post">
+            <input id="search-bar" type="text" name="query" placeholder="Enter your search query here" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+</html>

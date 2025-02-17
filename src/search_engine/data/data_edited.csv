@@ -1,0 +1,401 @@
+Query,docid,Title,Link,Score,Rel Score
+What is the billing code for cough?,R05.3,R05.3 Chronic cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.3,13.5294,3
+What is the billing code for cough?,R05,R05 Cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05,13.4682,1
+What is the billing code for cough?,R05.2,R05.2 Subacute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.2,13.3689,3
+What is the billing code for cough?,R05.1,R05.1 Acute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.1,13.3658,3
+What is the billing code for cough?,R05.9,"R05.9 Cough, unspecified",/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.9,13.3218,0
+What is the billing code for cough?,A37.0,A37.0 Whooping cough due to Bordetella pertussis,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.0,13.3106,3
+What is the billing code for cough?,A37.01,A37.01 Whooping cough due to Bordetella pertussis with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.01,13.2617,3
+What is the billing code for cough?,A37.9,"A37.9 Whooping cough, unspecified species",/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.9,13.2297,1
+What is the billing code for cough?,R05.8,R05.8 Other specified cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.8,13.2128,2
+What is the billing code for cough?,A37,A37 Whooping cough,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37,13.0795,3
+What is the billing code for cough?,A37.81,A37.81 Whooping cough due to other Bordetella species with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.81,12.9989,3
+What is the billing code for cough?,A37.11,A37.11 Whooping cough due to Bordetella parapertussis with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.11,12.9863,3
+What is the billing code for cough?,A37.00,A37.00 Whooping cough due to Bordetella pertussis without pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.00,12.9304,3
+What is the billing code for cough?,R05.4,R05.4 Cough syncope,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.4,12.9061,3
+What is the billing code for cough?,A37.10,A37.10 Whooping cough due to Bordetella parapertussis without pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.10,12.6223,3
+What is the billing code for cough?,A37.80,A37.80 Whooping cough due to other Bordetella species without pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.80,12.6148,3
+What is the billing code for cough?,A37.90,"A37.90 Whooping cough, unspecified species without pneumonia",/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.90,12.5897,3
+What is the billing code for cough?,R04.2,R04.2 Hemoptysis,/ICD10CM/Codes/R00-R99/R00-R09/R04-/R04.2,12.5529,3
+What is the billing code for cough?,A37.1,A37.1 Whooping cough due to Bordetella parapertussis,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.1,12.3709,3
+What is the billing code for cough?,A37.8,A37.8 Whooping cough due to other Bordetella species,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.8,12.3677,3
+What is the billing code for diabetes,E10,E10 Type 1 diabetes mellitus,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10,6.245,3
+What is the billing code for diabetes,E11,E11 Type 2 diabetes mellitus,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11,6.241,3
+What is the billing code for diabetes,E09,E09 Drug or chemical induced diabetes mellitus,/ICD10CM/Codes/E00-E89/E08-E13/E09-/E09,6.2408,3
+What is the billing code for diabetes,E08,E08 Diabetes mellitus due to underlying condition,/ICD10CM/Codes/E00-E89/E08-E13/E08-/E08,6.2348,3
+What is the billing code for diabetes,E13,E13 Other specified diabetes mellitus,/ICD10CM/Codes/E00-E89/E08-E13/E13-/E13,6.2311,2
+What is the billing code for diabetes,E89.1,E89.1 Postprocedural hypoinsulinemia,/ICD10CM/Codes/E00-E89/E89-E89/E89-/E89.1,6.161,2
+What is the billing code for diabetes,E11.9,E11.9 Type 2 diabetes mellitus without complications,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11.9,6.1573,3
+What is the billing code for diabetes,R11.15,R11.15 Cyclical vomiting syndrome unrelated to migraine,/ICD10CM/Codes/R00-R99/R10-R19/R11-/R11.15,6.1559,3
+What is the billing code for diabetes,Q45.3,Q45.3 Other congenital malformations of pancreas and pancreatic duct,/ICD10CM/Codes/Q00-Q99/Q38-Q45/Q45-/Q45.3,6.1513,1
+What is the billing code for diabetes,O24.4,O24.4 Gestational diabetes mellitus,/ICD10CM/Codes/O00-O9A/O20-O29/O24-/O24.4,6.1433,3
+What is the billing code for diabetes,E11.622,E11.622 Type 2 diabetes mellitus with other skin ulcer,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11.622,6.1332,3
+What is the billing code for diabetes,E10.69,E10.69 Type 1 diabetes mellitus with other specified complication,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.69,6.1328,3
+What is the billing code for diabetes,E10.9,E10.9 Type 1 diabetes mellitus without complications,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.9,6.1266,3
+What is the billing code for diabetes,E10.622,E10.622 Type 1 diabetes mellitus with other skin ulcer,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.622,6.1252,1
+What is the billing code for diabetes,E10.628,E10.628 Type 1 diabetes mellitus with other skin complications,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.628,6.1229,1
+What is the billing code for diabetes,E10.618,E10.618 Type 1 diabetes mellitus with other diabetic arthropathy,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.618,6.1183,1
+What is the billing code for diabetes,E10.630,E10.630 Type 1 diabetes mellitus with periodontal disease,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.630,6.1172,1
+What is the billing code for diabetes,E10.620,E10.620 Type 1 diabetes mellitus with diabetic dermatitis,/ICD10CM/Codes/E00-E89/E08-E13/E10-/E10.620,6.1168,1
+What is the billing code for diabetes,E11.69,E11.69 Type 2 diabetes mellitus with other specified complication,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11.69,6.1157,2
+What is the billing code for diabetes,E11.59,E11.59 Type 2 diabetes mellitus with other circulatory complications,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11.59,6.1156,2
+What is the billing code for obesity,E66.9,"E66.9 Obesity, unspecified",/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.9,15.6451,2
+What is the billing code for obesity,E66.01,E66.01 Morbid (severe) obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.01,15.4241,3
+What is the billing code for obesity,E66.2,E66.2 Morbid (severe) obesity with alveolar hypoventilation,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.2,15.1828,1
+What is the billing code for obesity,O99.21,"O99.21 Obesity complicating pregnancy, childbirth, and the puerperium",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.21,14.88,1
+What is the billing code for obesity,E66.09,E66.09 Other obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.09,14.7851,2
+What is the billing code for obesity,E66.8,E66.8 Other obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.8,14.7851,1
+What is the billing code for obesity,E66.0,E66.0 Obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.0,14.7788,3
+What is the billing code for obesity,O99.215,O99.215 Obesity complicating the puerperium,/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.215,14.5914,1
+What is the billing code for obesity,O99.214,O99.214 Obesity complicating childbirth,/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.214,14.5705,1
+What is the billing code for obesity,O99.210,"O99.210 Obesity complicating pregnancy, unspecified trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.210,14.5092,1
+What is the billing code for obesity,E66.3,E66.3 Overweight,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.3,14.276,2
+What is the billing code for obesity,E66.1,E66.1 Drug-induced obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.1,14.2508,3
+What is the billing code for obesity,E65,E65 Localized adiposity,/ICD10CM/Codes/E00-E89/E65-E68/E65-/E65,14.1621,0
+What is the billing code for obesity,E67,E67 Other hyperalimentation,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67,14.1041,0
+What is the billing code for obesity,E66,E66 Overweight and obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66,14.0871,2
+What is the billing code for obesity,O99.212,"O99.212 Obesity complicating pregnancy, second trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.212,13.9907,0
+What is the billing code for obesity,O99.211,"O99.211 Obesity complicating pregnancy, first trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.211,13.9887,0
+What is the billing code for obesity,O99.213,"O99.213 Obesity complicating pregnancy, third trimester",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.213,13.9806,0
+What is the billing code for obesity,E88.81,E88.81 Metabolic syndrome and other insulin resistance,/ICD10CM/Codes/E00-E89/E70-E88/E88-/E88.81,13.9129,0
+What is the billing code for obesity,E67.0,E67.0 Hypervitaminosis A,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67.0,13.9099,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R06.0,R06.0 Dyspnea,/ICD10CM/Codes/R00-R99/R00-R09/R06-/R06.0,18.15,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,E84.9,"E84.9 Cystic fibrosis, unspecified",/ICD10CM/Codes/E00-E89/E70-E88/E84-/E84.9,17.8081,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,E84,E84 Cystic fibrosis,/ICD10CM/Codes/E00-E89/E70-E88/E84-/E84,17.1672,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,P24.11,P24.11 Neonatal aspiration of (clear) amniotic fluid and mucus with respiratory symptoms,/ICD10CM/Codes/P00-P96/P19-P29/P24-/P24.11,15.6672,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,P24.10,P24.10 Neonatal aspiration of (clear) amniotic fluid and mucus without respiratory symptoms,/ICD10CM/Codes/P00-P96/P19-P29/P24-/P24.10,15.0336,0
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J12.81,J12.81 Pneumonia due to SARS-associated coronavirus,/ICD10CM/Codes/J00-J99/J09-J18/J12-/J12.81,14.5572,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J42,J42 Unspecified chronic bronchitis,/ICD10CM/Codes/J00-J99/J40-J4A/J42-/J42,14.4323,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J41.0,J41.0 Simple chronic bronchitis,/ICD10CM/Codes/J00-J99/J40-J4A/J41-/J41.0,13.9898,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,J32,J32 Chronic sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32,13.9325,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.3,R05.3 Chronic cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.3,13.5294,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05,R05 Cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05,13.4682,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.2,R05.2 Subacute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.2,13.3689,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.1,R05.1 Acute cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.1,13.3658,3
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.9,"R05.9 Cough, unspecified",/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.9,13.3218,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37.0,A37.0 Whooping cough due to Bordetella pertussis,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.0,13.3106,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37.01,A37.01 Whooping cough due to Bordetella pertussis with pneumonia,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.01,13.2617,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37.9,"A37.9 Whooping cough, unspecified species",/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37.9,13.2297,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,R05.8,R05.8 Other specified cough,/ICD10CM/Codes/R00-R99/R00-R09/R05-/R05.8,13.2128,2
+What is the right billing code for runnie noes with cough mixed in with wet mucus,A37,A37 Whooping cough,/ICD10CM/Codes/A00-B99/A30-A49/A37-/A37,13.0795,1
+What is the right billing code for runnie noes with cough mixed in with wet mucus,E51.12,E51.12 Wet beriberi,/ICD10CM/Codes/E00-E89/E50-E64/E51-/E51.12,13.077,0
+I need the billing code for diabetes type II for teenagers,K62.82,K62.82 Dysplasia of anus,/ICD10CM/Codes/K00-K95/K55-K64/K62-/K62.82,13.7254,0
+I need the billing code for diabetes type II for teenagers,E11.21,E11.21 Type 2 diabetes mellitus with diabetic nephropathy,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11.21,13.6419,1
+I need the billing code for diabetes type II for teenagers,G90.5,G90.5 Complex regional pain syndrome I (CRPS I),/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.5,13.6386,2
+I need the billing code for diabetes type II for teenagers,G57.7,G57.7 Causalgia of lower limb,/ICD10CM/Codes/G00-G99/G50-G59/G57-/G57.7,13.5761,2
+I need the billing code for diabetes type II for teenagers,G90.51,G90.51 Complex regional pain syndrome I of upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.51,13.5156,2
+I need the billing code for diabetes type II for teenagers,G90.52,G90.52 Complex regional pain syndrome I of lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.52,13.514,2
+I need the billing code for diabetes type II for teenagers,G56.4,G56.4 Causalgia of upper limb,/ICD10CM/Codes/G00-G99/G50-G59/G56-/G56.4,13.4579,2
+I need the billing code for diabetes type II for teenagers,I44.1,"I44.1 Atrioventricular block, second degree",/ICD10CM/Codes/I00-I99/I30-I5A/I44-/I44.1,13.4053,3
+I need the billing code for diabetes type II for teenagers,E84,E84 Cystic fibrosis,/ICD10CM/Codes/E00-E89/E70-E88/E84-/E84,13.3136,2
+I need the billing code for diabetes type II for teenagers,D01.3,D01.3 Carcinoma in situ of anus and anal canal,/ICD10CM/Codes/C00-D49/D00-D09/D01-/D01.3,13.2959,0
+I need the billing code for diabetes type II for teenagers,D06,D06 Carcinoma in situ of cervix uteri,/ICD10CM/Codes/C00-D49/D00-D09/D06-/D06,13.1741,0
+I need the billing code for diabetes type II for teenagers,R85.61,R85.61 Abnormal cytologic smear of anus,/ICD10CM/Codes/R00-R99/R83-R89/R85-/R85.61,13.1459,0
+I need the billing code for diabetes type II for teenagers,H31.2,H31.2 Hereditary choroidal dystrophy,/ICD10CM/Codes/H00-H59/H30-H36/H31-/H31.2,13.1203,0
+I need the billing code for diabetes type II for teenagers,E11.69,E11.69 Type 2 diabetes mellitus with other specified complication,/ICD10CM/Codes/E00-E89/E08-E13/E11-/E11.69,13.0943,3
+I need the billing code for diabetes type II for teenagers,M89.0,M89.0 Algoneurodystrophy,/ICD10CM/Codes/M00-M99/M86-M90/M89-/M89.0,12.9124,1
+I need the billing code for diabetes type II for teenagers,G89.2,"G89.2 Chronic pain, not elsewhere classified",/ICD10CM/Codes/G00-G99/G89-G99/G89-/G89.2,12.9017,2
+I need the billing code for diabetes type II for teenagers,D07.2,D07.2 Carcinoma in situ of vagina,/ICD10CM/Codes/C00-D49/D00-D09/D07-/D07.2,12.872,0
+I need the billing code for diabetes type II for teenagers,N89,N89 Other noninflammatory disorders of vagina,/ICD10CM/Codes/N00-N99/N80-N98/N89-/N89,12.8659,0
+I need the billing code for diabetes type II for teenagers,F31.81,F31.81 Bipolar II disorder,/ICD10CM/Codes/F01-F99/F30-F39/F31-/F31.81,12.8426,0
+I need the billing code for diabetes type II for teenagers,N89.1,N89.1 Moderate vaginal dysplasia,/ICD10CM/Codes/N00-N99/N80-N98/N89-/N89.1,12.6908,0
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,R06.2,R06.2 Wheezing,/ICD10CM/Codes/R00-R99/R00-R09/R06-/R06.2,25.0753,2
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.30,"J45.30 Mild persistent asthma, uncomplicated",/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.30,23.0356,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.31,J45.31 Mild persistent asthma with (acute) exacerbation,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.31,22.4951,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.32,J45.32 Mild persistent asthma with status asthmaticus,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.32,22.4172,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45,J45 Asthma,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45,22.2234,2
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.21,J45.21 Mild intermittent asthma with (acute) exacerbation,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.21,21.9533,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.22,J45.22 Mild intermittent asthma with status asthmaticus,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.22,21.9326,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.20,"J45.20 Mild intermittent asthma, uncomplicated",/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.20,21.7598,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.3,J45.3 Mild persistent asthma,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.3,21.313,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.2,J45.2 Mild intermittent asthma,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.2,21.2588,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J44,J44 Other chronic obstructive pulmonary disease,/ICD10CM/Codes/J00-J99/J40-J4A/J44-/J44,21.1191,1
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.4,J45.4 Moderate persistent asthma,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.4,20.9978,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J44.9,"J44.9 Chronic obstructive pulmonary disease, unspecified",/ICD10CM/Codes/J00-J99/J40-J4A/J44-/J44.9,20.8292,2
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J98.01,J98.01 Acute bronchospasm,/ICD10CM/Codes/J00-J99/J96-J99/J98-/J98.01,20.4222,2
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.5,J45.5 Severe persistent asthma,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.5,20.3981,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J82.83,J82.83 Eosinophilic asthma,/ICD10CM/Codes/J00-J99/J80-J84/J82-/J82.83,19.8695,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.40,"J45.40 Moderate persistent asthma, uncomplicated",/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.40,19.2697,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J45.41,J45.41 Moderate persistent asthma with (acute) exacerbation,/ICD10CM/Codes/J00-J99/J40-J4A/J45-/J45.41,19.0986,3
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,F54,F54 Psychological and behavioral factors associated with disorders or diseases classified elsewhere,/ICD10CM/Codes/F01-F99/F50-F59/F54-/F54,18.7072,1
+I need the right billing code for a patient that has mild to intermitent symptoms for asthma,J44.1,J44.1 Chronic obstructive pulmonary disease with (acute) exacerbation,/ICD10CM/Codes/J00-J99/J40-J4A/J44-/J44.1,18.3351,2
+I need the code for a patient with sinus infection,Q21.1,Q21.1 Atrial septal defect,/ICD10CM/Codes/Q00-Q99/Q20-Q28/Q21-/Q21.1,15.4378,0
+I need the code for a patient with sinus infection,J01,J01 Acute sinusitis,/ICD10CM/Codes/J00-J99/J00-J06/J01-/J01,15.2872,3
+I need the code for a patient with sinus infection,J32,J32 Chronic sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32,14.554,3
+I need the code for a patient with sinus infection,M86.461,"M86.461 Chronic osteomyelitis with draining sinus, right tibia and fibula",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.461,13.96,0
+I need the code for a patient with sinus infection,M86.462,"M86.462 Chronic osteomyelitis with draining sinus, left tibia and fibula",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.462,13.917,0
+I need the code for a patient with sinus infection,L05.91,L05.91 Pilonidal cyst without abscess,/ICD10CM/Codes/L00-L99/L00-L08/L05-/L05.91,13.8816,0
+I need the code for a patient with sinus infection,M86.469,"M86.469 Chronic osteomyelitis with draining sinus, unspecified tibia and fibula",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.469,13.8588,0
+I need the code for a patient with sinus infection,J32.9,"J32.9 Chronic sinusitis, unspecified",/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.9,13.7473,2
+I need the code for a patient with sinus infection,M86.48,"M86.48 Chronic osteomyelitis with draining sinus, other site",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.48,13.5301,0
+I need the code for a patient with sinus infection,G90.01,G90.01 Carotid sinus syncope,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.01,13.5213,0
+I need the code for a patient with sinus infection,J32.8,J32.8 Other chronic sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.8,13.0029,3
+I need the code for a patient with sinus infection,M86.38,"M86.38 Chronic multifocal osteomyelitis, other site",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.38,12.9303,0
+I need the code for a patient with sinus infection,J32.0,J32.0 Chronic maxillary sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.0,12.9043,3
+I need the code for a patient with sinus infection,J32.4,J32.4 Chronic pansinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.4,12.4936,3
+I need the code for a patient with sinus infection,J01.81,J01.81 Other acute recurrent sinusitis,/ICD10CM/Codes/J00-J99/J00-J06/J01-/J01.81,12.477,3
+I need the code for a patient with sinus infection,I49,I49 Other cardiac arrhythmias,/ICD10CM/Codes/I00-I99/I30-I5A/I49-/I49,12.4404,0
+I need the code for a patient with sinus infection,J32.1,J32.1 Chronic frontal sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.1,12.4178,3
+I need the code for a patient with sinus infection,M86.45,"M86.45 Chronic osteomyelitis with draining sinus, femur",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.45,12.3922,0
+I need the code for a patient with sinus infection,M86.44,"M86.44 Chronic osteomyelitis with draining sinus, hand",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.44,12.3875,0
+I need the code for a patient with sinus infection,M86.43,"M86.43 Chronic osteomyelitis with draining sinus, radius and ulna",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.43,12.384,0
+What is a billable code for vitamin D deficiency,E55.9,"E55.9 Vitamin D deficiency, unspecified",/ICD10CM/Codes/E00-E89/E50-E64/E55-/E55.9,28.4484,2
+What is a billable code for vitamin D deficiency,E55.0,"E55.0 Rickets, active",/ICD10CM/Codes/E00-E89/E50-E64/E55-/E55.0,27.9995,3
+What is a billable code for vitamin D deficiency,E56.9,"E56.9 Vitamin deficiency, unspecified",/ICD10CM/Codes/E00-E89/E50-E64/E56-/E56.9,26.2759,2
+What is a billable code for vitamin D deficiency,E83.32,E83.32 Hereditary vitamin D-dependent rickets (type 1) (type 2),/ICD10CM/Codes/E00-E89/E70-E88/E83-/E83.32,26.1254,3
+What is a billable code for vitamin D deficiency,E56.0,E56.0 Deficiency of vitamin E,/ICD10CM/Codes/E00-E89/E50-E64/E56-/E56.0,25.375,3
+What is a billable code for vitamin D deficiency,M83.8,M83.8 Other adult osteomalacia,/ICD10CM/Codes/M00-M99/M80-M85/M83-/M83.8,25.2506,3
+What is a billable code for vitamin D deficiency,E56.8,E56.8 Deficiency of other vitamins,/ICD10CM/Codes/E00-E89/E50-E64/E56-/E56.8,25.2059,1
+What is a billable code for vitamin D deficiency,E83.31,E83.31 Familial hypophosphatemia,/ICD10CM/Codes/E00-E89/E70-E88/E83-/E83.31,25.0558,3
+What is a billable code for vitamin D deficiency,E56.1,E56.1 Deficiency of vitamin K,/ICD10CM/Codes/E00-E89/E50-E64/E56-/E56.1,25.0179,2
+What is a billable code for vitamin D deficiency,E56,E56 Other vitamin deficiencies,/ICD10CM/Codes/E00-E89/E50-E64/E56-/E56,24.7357,2
+What is a billable code for vitamin D deficiency,E53.9,"E53.9 Vitamin B deficiency, unspecified",/ICD10CM/Codes/E00-E89/E50-E64/E53-/E53.9,24.7057,2
+What is a billable code for vitamin D deficiency,E53.1,E53.1 Pyridoxine deficiency,/ICD10CM/Codes/E00-E89/E50-E64/E53-/E53.1,24.5835,2
+What is a billable code for vitamin D deficiency,E60,E60 Dietary zinc deficiency,/ICD10CM/Codes/E00-E89/E50-E64/E60-/E60,24.3769,2
+What is a billable code for vitamin D deficiency,E51.9,"E51.9 Thiamine deficiency, unspecified",/ICD10CM/Codes/E00-E89/E50-E64/E51-/E51.9,24.3289,2
+What is a billable code for vitamin D deficiency,E59,E59 Dietary selenium deficiency,/ICD10CM/Codes/E00-E89/E50-E64/E59-/E59,24.1896,2
+What is a billable code for vitamin D deficiency,E53,E53 Deficiency of other B group vitamins,/ICD10CM/Codes/E00-E89/E50-E64/E53-/E53,24.1658,1
+What is a billable code for vitamin D deficiency,M83,M83 Adult osteomalacia,/ICD10CM/Codes/M00-M99/M80-M85/M83-/M83,24.0062,2
+What is a billable code for vitamin D deficiency,E54,E54 Ascorbic acid deficiency,/ICD10CM/Codes/E00-E89/E50-E64/E54-/E54,23.9748,2
+What is a billable code for vitamin D deficiency,E58,E58 Dietary calcium deficiency,/ICD10CM/Codes/E00-E89/E50-E64/E58-/E58,23.867,2
+What is a billable code for vitamin D deficiency,E52,E52 Niacin deficiency [pellagra],/ICD10CM/Codes/E00-E89/E50-E64/E52-/E52,23.6041,2
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F90.9,"F90.9 Attention-deficit hyperactivity disorder, unspecified type",/ICD10CM/Codes/F01-F99/F90-F98/F90-/F90.9,25.2655,3
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F90,F90 Attention-deficit hyperactivity disorders,/ICD10CM/Codes/F01-F99/F90-F98/F90-/F90,19.7252,3
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F90.2,"F90.2 Attention-deficit hyperactivity disorder, combined type",/ICD10CM/Codes/F01-F99/F90-F98/F90-/F90.2,16.314,3
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F90.0,"F90.0 Attention-deficit hyperactivity disorder, predominantly inattentive type",/ICD10CM/Codes/F01-F99/F90-F98/F90-/F90.0,16.2386,3
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F90.1,"F90.1 Attention-deficit hyperactivity disorder, predominantly hyperactive type",/ICD10CM/Codes/F01-F99/F90-F98/F90-/F90.1,16.1732,3
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F90.8,"F90.8 Attention-deficit hyperactivity disorder, other type",/ICD10CM/Codes/F01-F99/F90-F98/F90-/F90.8,12.6155,3
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,L25,L25 Unspecified contact dermatitis,/ICD10CM/Codes/L00-L99/L20-L30/L25-/L25,12.2446,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,L25.9,"L25.9 Unspecified contact dermatitis, unspecified cause",/ICD10CM/Codes/L00-L99/L20-L30/L25-/L25.9,10.925,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,G58.7,G58.7 Mononeuritis multiplex,/ICD10CM/Codes/G00-G99/G50-G59/G58-/G58.7,10.4885,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,Z43,Z43 Encounter for attention to artificial openings,/ICD10CM/Codes/Z00-Z99/Z40-Z53/Z43-/Z43,10.1861,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,Q93.81,Q93.81 Velo-cardio-facial syndrome,/ICD10CM/Codes/Q00-Q99/Q90-Q99/Q93-/Q93.81,9.3368,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,F95.2,F95.2 Tourette's disorder,/ICD10CM/Codes/F01-F99/F90-F98/F95-/F95.2,9.3359,2
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,H44,H44 Disorders of globe,/ICD10CM/Codes/H00-H59/H43-H44/H44-/H44,9.3232,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,H52.7,H52.7 Unspecified disorder of refraction,/ICD10CM/Codes/H00-H59/H49-H52/H52-/H52.7,8.8108,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,H44.9,H44.9 Unspecified disorder of globe,/ICD10CM/Codes/H00-H59/H43-H44/H44-/H44.9,8.7386,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,L29.9,"L29.9 Pruritus, unspecified",/ICD10CM/Codes/L00-L99/L20-L30/L29-/L29.9,8.5532,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,N64.52,N64.52 Nipple discharge,/ICD10CM/Codes/N00-N99/N60-N65/N64-/N64.52,8.2462,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,Z77,Z77 Other contact with and (suspected) exposures hazardous to health,/ICD10CM/Codes/Z00-Z99/Z77-Z99/Z77-/Z77,8.2349,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,L29,L29 Pruritus,/ICD10CM/Codes/L00-L99/L20-L30/L29-/L29,8.2287,0
+I need the billing code for a patient that is coming in for a follow up for medication on Adhd,K70.9,"K70.9 Alcoholic liver disease, unspecified",/ICD10CM/Codes/K00-K95/K70-K77/K70-/K70.9,8.2118,0
+I need the follow up for a patient on medication for depression,R44,R44 Other symptoms and signs involving general sensations and perceptions,/ICD10CM/Codes/R00-R99/R40-R46/R44-/R44,16.697,1
+I need the follow up for a patient on medication for depression,F31,F31 Bipolar disorder,/ICD10CM/Codes/F01-F99/F30-F39/F31-/F31,16.5287,3
+I need the follow up for a patient on medication for depression,F44.2,F44.2 Dissociative stupor,/ICD10CM/Codes/F01-F99/F40-F48/F44-/F44.2,16.3145,2
+I need the follow up for a patient on medication for depression,F63.2,F63.2 Kleptomania,/ICD10CM/Codes/F01-F99/F60-F69/F63-/F63.2,16.041,2
+I need the follow up for a patient on medication for depression,R68.89,R68.89 Other general symptoms and signs,/ICD10CM/Codes/R00-R99/R50-R69/R68-/R68.89,15.828,2
+I need the follow up for a patient on medication for depression,F53,"F53 Mental and behavioral disorders associated with the puerperium, not elsewhere classified",/ICD10CM/Codes/F01-F99/F50-F59/F53-/F53,15.5082,3
+I need the follow up for a patient on medication for depression,F34.1,F34.1 Dysthymic disorder,/ICD10CM/Codes/F01-F99/F30-F39/F34-/F34.1,15.1407,3
+I need the follow up for a patient on medication for depression,F23,F23 Brief psychotic disorder,/ICD10CM/Codes/F01-F99/F20-F29/F23-/F23,14.4166,3
+I need the follow up for a patient on medication for depression,F25,F25 Schizoaffective disorders,/ICD10CM/Codes/F01-F99/F20-F29/F25-/F25,14.3551,2
+I need the follow up for a patient on medication for depression,F42,F42 Obsessive-compulsive disorder,/ICD10CM/Codes/F01-F99/F40-F48/F42-/F42,14.3408,3
+I need the follow up for a patient on medication for depression,F32,F32 Depressive episode,/ICD10CM/Codes/F01-F99/F30-F39/F32-/F32,14.1802,3
+I need the follow up for a patient on medication for depression,F43.2,F43.2 Adjustment disorders,/ICD10CM/Codes/F01-F99/F40-F48/F43-/F43.2,14.0988,3
+I need the follow up for a patient on medication for depression,F31.4,"F31.4 Bipolar disorder, current episode depressed, severe, without psychotic features",/ICD10CM/Codes/F01-F99/F30-F39/F31-/F31.4,14.0202,3
+I need the follow up for a patient on medication for depression,F33,"F33 Major depressive disorder, recurrent",/ICD10CM/Codes/F01-F99/F30-F39/F33-/F33,13.995,3
+I need the follow up for a patient on medication for depression,F30,F30 Manic episode,/ICD10CM/Codes/F01-F99/F30-F39/F30-/F30,13.9361,3
+I need the follow up for a patient on medication for depression,F20,F20 Schizophrenia,/ICD10CM/Codes/F01-F99/F20-F29/F20-/F20,13.6886,3
+I need the follow up for a patient on medication for depression,F32.9,"F32.9 Major depressive disorder, single episode, unspecified",/ICD10CM/Codes/F01-F99/F30-F39/F32-/F32.9,13.6163,3
+I need the follow up for a patient on medication for depression,F33.8,F33.8 Other recurrent depressive disorders,/ICD10CM/Codes/F01-F99/F30-F39/F33-/F33.8,13.5619,3
+I need the follow up for a patient on medication for depression,F33.9,"F33.9 Major depressive disorder, recurrent, unspecified",/ICD10CM/Codes/F01-F99/F30-F39/F33-/F33.9,13.4932,3
+I need the follow up for a patient on medication for depression,F31.30,"F31.30 Bipolar disorder, current episode depressed, mild or moderate severity, unspecified",/ICD10CM/Codes/F01-F99/F30-F39/F31-/F31.30,13.4547,3
+I need a diagnostic code for a complex cough history,G90.50,"G90.50 Complex regional pain syndrome I, unspecified",/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.50,15.7211,0
+I need a diagnostic code for a complex cough history,G90.523,"G90.523 Complex regional pain syndrome I of lower limb, bilateral",/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.523,15.721,0
+I need a diagnostic code for a complex cough history,G90.522,G90.522 Complex regional pain syndrome I of left lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.522,15.721,0
+I need a diagnostic code for a complex cough history,G90.521,G90.521 Complex regional pain syndrome I of right lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.521,15.7174,0
+I need a diagnostic code for a complex cough history,G90.511,G90.511 Complex regional pain syndrome I of right upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.511,15.7139,0
+I need a diagnostic code for a complex cough history,G90.513,"G90.513 Complex regional pain syndrome I of upper limb, bilateral",/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.513,15.7086,0
+I need a diagnostic code for a complex cough history,G90.512,G90.512 Complex regional pain syndrome I of left upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.512,15.7086,0
+I need a diagnostic code for a complex cough history,G90.59,G90.59 Complex regional pain syndrome I of other specified site,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.59,15.6336,0
+I need a diagnostic code for a complex cough history,G90.519,G90.519 Complex regional pain syndrome I of unspecified upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.519,15.6226,0
+I need a diagnostic code for a complex cough history,G90.529,G90.529 Complex regional pain syndrome I of unspecified lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.529,15.5921,0
+I need a diagnostic code for a complex cough history,G90.51,G90.51 Complex regional pain syndrome I of upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.51,15.5677,0
+I need a diagnostic code for a complex cough history,G90.52,G90.52 Complex regional pain syndrome I of lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.52,15.5668,0
+I need a diagnostic code for a complex cough history,G90.5,G90.5 Complex regional pain syndrome I (CRPS I),/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.5,15.2766,0
+I need a diagnostic code for a complex cough history,G57.7,G57.7 Causalgia of lower limb,/ICD10CM/Codes/G00-G99/G50-G59/G57-/G57.7,14.9176,0
+I need a diagnostic code for a complex cough history,G56.4,G56.4 Causalgia of upper limb,/ICD10CM/Codes/G00-G99/G50-G59/G56-/G56.4,14.8373,0
+I need a diagnostic code for a complex cough history,M89.0,M89.0 Algoneurodystrophy,/ICD10CM/Codes/M00-M99/M86-M90/M89-/M89.0,14.4085,0
+I need a diagnostic code for a complex cough history,G89.2,"G89.2 Chronic pain, not elsewhere classified",/ICD10CM/Codes/G00-G99/G89-G99/G89-/G89.2,14.3984,0
+I need a diagnostic code for a complex cough history,G90.B,G90.B LMNB1-related autosomal dominant leukodystrophy,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.B,14.309,0
+I need a diagnostic code for a complex cough history,G90.A,G90.A Postural orthostatic tachycardia syndrome [POTS],/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.A,14.2038,0
+I need a diagnostic code for a complex cough history,G90.2,G90.2 Horner's syndrome,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.2,14.1809,0
+I'm looking for a way to bill for patient that has abdominal pain,G89,"G89 Pain, not elsewhere classified",/ICD10CM/Codes/G00-G99/G89-G99/G89-/G89,18.8598,1
+I'm looking for a way to bill for patient that has abdominal pain,R10.9,R10.9 Unspecified abdominal pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.9,18.6545,2
+I'm looking for a way to bill for patient that has abdominal pain,R10.3,R10.3 Pain localized to other parts of lower abdomen,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.3,18.549,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.8,R10.8 Other abdominal pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.8,18.5436,2
+I'm looking for a way to bill for patient that has abdominal pain,R10.30,"R10.30 Lower abdominal pain, unspecified",/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.30,18.5024,2
+I'm looking for a way to bill for patient that has abdominal pain,R10.31,R10.31 Right lower quadrant pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.31,18.445,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.33,R10.33 Periumbilical pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.33,18.4359,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.32,R10.32 Left lower quadrant pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.32,18.4271,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.81,R10.81 Abdominal tenderness,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.81,18.4212,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.1,R10.1 Pain localized to upper abdomen,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.1,18.1675,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.12,R10.12 Left upper quadrant pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.12,18.1327,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.84,R10.84 Generalized abdominal pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.84,18.091,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.11,R10.11 Right upper quadrant pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.11,18.0414,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.811,R10.811 Right upper quadrant abdominal tenderness,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.811,18.0294,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.0,R10.0 Acute abdomen,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.0,18.0092,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.10,"R10.10 Upper abdominal pain, unspecified",/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.10,18.0068,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.812,R10.812 Left upper quadrant abdominal tenderness,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.812,17.9254,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.83,R10.83 Colic,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.83,17.8902,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.813,R10.813 Right lower quadrant abdominal tenderness,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.813,17.7948,3
+I'm looking for a way to bill for patient that has abdominal pain,R10.814,R10.814 Left lower quadrant abdominal tenderness,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.814,17.674,3
+A complex patient with concerns for maltreatment how do I bill for that,F94.1,F94.1 Reactive attachment disorder of childhood,/ICD10CM/Codes/F01-F99/F90-F98/F94-/F94.1,17.0893,3
+A complex patient with concerns for maltreatment how do I bill for that,V66.7,V66.7 Person on outside of heavy transport vehicle injured in collision with other nonmotor vehicle in traffic accident,/ICD10CM/Codes/V00-Y99/V60-V69/V66-/V66.7,16.4316,0
+A complex patient with concerns for maltreatment how do I bill for that,O9A.3,"O9A.3 Physical abuse complicating pregnancy, childbirth and the puerperium",/ICD10CM/Codes/O00-O9A/O94-O9A/O9A-/O9A.3,15.9163,1
+A complex patient with concerns for maltreatment how do I bill for that,G90.51,G90.51 Complex regional pain syndrome I of upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.51,15.5556,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.52,G90.52 Complex regional pain syndrome I of lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.52,15.5548,0
+A complex patient with concerns for maltreatment how do I bill for that,T74.1,"T74.1 Physical abuse, confirmed",/ICD10CM/Codes/S00-T88/T66-T78/T74-/T74.1,15.3614,3
+A complex patient with concerns for maltreatment how do I bill for that,G90.50,"G90.50 Complex regional pain syndrome I, unspecified",/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.50,15.3193,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.523,"G90.523 Complex regional pain syndrome I of lower limb, bilateral",/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.523,15.3156,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.522,G90.522 Complex regional pain syndrome I of left lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.522,15.3156,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.521,G90.521 Complex regional pain syndrome I of right lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.521,15.3127,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.511,G90.511 Complex regional pain syndrome I of right upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.511,15.3098,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.513,"G90.513 Complex regional pain syndrome I of upper limb, bilateral",/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.513,15.3054,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.512,G90.512 Complex regional pain syndrome I of left upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.512,15.3054,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.5,G90.5 Complex regional pain syndrome I (CRPS I),/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.5,15.2648,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.59,G90.59 Complex regional pain syndrome I of other specified site,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.59,15.2386,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.519,G90.519 Complex regional pain syndrome I of unspecified upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.519,15.2173,0
+A complex patient with concerns for maltreatment how do I bill for that,G90.529,G90.529 Complex regional pain syndrome I of unspecified lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.529,15.1838,0
+A complex patient with concerns for maltreatment how do I bill for that,G57.7,G57.7 Causalgia of lower limb,/ICD10CM/Codes/G00-G99/G50-G59/G57-/G57.7,14.9061,0
+A complex patient with concerns for maltreatment how do I bill for that,T74.12,"T74.12 Child physical abuse, confirmed",/ICD10CM/Codes/S00-T88/T66-T78/T74-/T74.12,14.8716,3
+A complex patient with concerns for maltreatment how do I bill for that,G56.4,G56.4 Causalgia of upper limb,/ICD10CM/Codes/G00-G99/G50-G59/G56-/G56.4,14.8258,0
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.6,R63.6 Underweight,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.6,15.4952,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.4,R63.4 Abnormal weight loss,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.4,13.4546,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R68,R68 Other general symptoms and signs,/ICD10CM/Codes/R00-R99/R50-R69/R68-/R68,12.5351,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R65,R65 Symptoms and signs specifically associated with systemic inflammation and infection,/ICD10CM/Codes/R00-R99/R50-R69/R65-/R65,12.4646,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.30,"R63.30 Feeding difficulties, unspecified",/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.30,11.6426,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R65.10,R65.10 Systemic inflammatory response syndrome (SIRS) of non-infectious origin without acute organ dysfunction,/ICD10CM/Codes/R00-R99/R50-R69/R65-/R65.10,11.5839,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.39,R63.39 Other feeding difficulties,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.39,11.345,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.0,R63.0 Anorexia,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.0,11.3438,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.8,R63.8 Other symptoms and signs concerning food and fluid intake,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.8,11.3037,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.1,R63.1 Polydipsia,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.1,10.9762,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.3,R63.3 Feeding difficulties,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.3,10.5406,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.5,R63.5 Abnormal weight gain,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.5,10.5227,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.2,R63.2 Polyphagia,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.2,10.5227,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R64,R64 Cachexia,/ICD10CM/Codes/R00-R99/R50-R69/R64-/R64,9.8302,2
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.31,"R63.31 Pediatric feeding disorder, acute",/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.31,9.5875,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R63.32,"R63.32 Pediatric feeding disorder, chronic",/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.32,9.5875,3
+A patient who is underweight and vommitting. How do I bill for vomitting?,R65.1,R65.1 Systemic inflammatory response syndrome (SIRS) of non-infectious origin,/ICD10CM/Codes/R00-R99/R50-R69/R65-/R65.1,8.8451,1
+A patient who is underweight and vommitting. How do I bill for vomitting?,R65.20,R65.20 Severe sepsis without septic shock,/ICD10CM/Codes/R00-R99/R50-R69/R65-/R65.20,8.5765,1
+A patient who is underweight and vommitting. How do I bill for vomitting?,R65.11,R65.11 Systemic inflammatory response syndrome (SIRS) of non-infectious origin with acute organ dysfunction,/ICD10CM/Codes/R00-R99/R50-R69/R65-/R65.11,8.2794,1
+A patient who is underweight and vommitting. How do I bill for vomitting?,Y63.9,Y63.9 Failure in dosage during unspecified surgical and medical care,/ICD10CM/Codes/V00-Y99/Y62-Y69/Y63-/Y63.9,8.0313,1
+How do I bill for a pentacel vaccine with administration fees,G61.1,G61.1 Serum neuropathy,/ICD10CM/Codes/G00-G99/G60-G65/G61-/G61.1,14.209,0
+How do I bill for a pentacel vaccine with administration fees,T50.B95A,"T50.B95A Adverse effect of other viral vaccines, initial encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.B95A,14.0626,0
+How do I bill for a pentacel vaccine with administration fees,T50.A15A,"T50.A15A Adverse effect of pertussis vaccine, including combinations with a pertussis component, initial encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A15A,13.1202,0
+How do I bill for a pentacel vaccine with administration fees,T50.A13,"T50.A13 Poisoning by pertussis vaccine, including combinations with a pertussis component, assault",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A13,12.8701,0
+How do I bill for a pentacel vaccine with administration fees,T50.A13A,"T50.A13A Poisoning by pertussis vaccine, including combinations with a pertussis component, assault, initial encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A13A,12.7952,0
+How do I bill for a pentacel vaccine with administration fees,T50.A13D,"T50.A13D Poisoning by pertussis vaccine, including combinations with a pertussis component, assault, subsequent encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A13D,12.726,0
+How do I bill for a pentacel vaccine with administration fees,T80.6,T80.6 Other serum reactions,/ICD10CM/Codes/S00-T88/T80-T88/T80-/T80.6,12.6538,0
+How do I bill for a pentacel vaccine with administration fees,T50.A14,"T50.A14 Poisoning by pertussis vaccine, including combinations with a pertussis component, undetermined",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A14,12.6416,0
+How do I bill for a pentacel vaccine with administration fees,T50.A12,"T50.A12 Poisoning by pertussis vaccine, including combinations with a pertussis component, intentional self-harm",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A12,12.6112,0
+How do I bill for a pentacel vaccine with administration fees,T50.A14A,"T50.A14A Poisoning by pertussis vaccine, including combinations with a pertussis component, undetermined, initial encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A14A,12.5481,0
+How do I bill for a pentacel vaccine with administration fees,T50.A14D,"T50.A14D Poisoning by pertussis vaccine, including combinations with a pertussis component, undetermined, subsequent encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A14D,12.4425,0
+How do I bill for a pentacel vaccine with administration fees,T50.A13S,"T50.A13S Poisoning by pertussis vaccine, including combinations with a pertussis component, assault, sequela",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A13S,12.4425,0
+How do I bill for a pentacel vaccine with administration fees,T50.A11D,"T50.A11D Poisoning by pertussis vaccine, including combinations with a pertussis component, accidental (unintentional), subsequent encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A11D,12.4345,0
+How do I bill for a pentacel vaccine with administration fees,T50.A12D,"T50.A12D Poisoning by pertussis vaccine, including combinations with a pertussis component, intentional self-harm, subsequent encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A12D,12.4184,0
+How do I bill for a pentacel vaccine with administration fees,T50.A11S,"T50.A11S Poisoning by pertussis vaccine, including combinations with a pertussis component, accidental (unintentional), sequela",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A11S,12.4157,0
+How do I bill for a pentacel vaccine with administration fees,T50.A12S,"T50.A12S Poisoning by pertussis vaccine, including combinations with a pertussis component, intentional self-harm, sequela",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A12S,12.3997,0
+How do I bill for a pentacel vaccine with administration fees,T50.A1,"T50.A1 Poisoning by, adverse effect of and underdosing of pertussis vaccine, including combinations with a pertussis component",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A1,12.2848,0
+How do I bill for a pentacel vaccine with administration fees,T50.A15,"T50.A15 Adverse effect of pertussis vaccine, including combinations with a pertussis component",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A15,12.2848,0
+How do I bill for a pentacel vaccine with administration fees,T50.A11,"T50.A11 Poisoning by pertussis vaccine, including combinations with a pertussis component, accidental (unintentional)",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A11,12.2817,0
+How do I bill for a pentacel vaccine with administration fees,T50.A11A,"T50.A11A Poisoning by pertussis vaccine, including combinations with a pertussis component, accidental (unintentional), initial encounter",/ICD10CM/Codes/S00-T88/T36-T50/T50-/T50.A11A,12.1849,0
+what is the best diagnostic code for a patient with a sinus infection,J01,J01 Acute sinusitis,/ICD10CM/Codes/J00-J99/J00-J06/J01-/J01,15.2872,3
+what is the best diagnostic code for a patient with a sinus infection,J32,J32 Chronic sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32,14.554,3
+what is the best diagnostic code for a patient with a sinus infection,M86.461,"M86.461 Chronic osteomyelitis with draining sinus, right tibia and fibula",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.461,14.3449,0
+what is the best diagnostic code for a patient with a sinus infection,M86.462,"M86.462 Chronic osteomyelitis with draining sinus, left tibia and fibula",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.462,14.3006,0
+what is the best diagnostic code for a patient with a sinus infection,M86.469,"M86.469 Chronic osteomyelitis with draining sinus, unspecified tibia and fibula",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.469,14.2486,0
+what is the best diagnostic code for a patient with a sinus infection,L05.91,L05.91 Pilonidal cyst without abscess,/ICD10CM/Codes/L00-L99/L00-L08/L05-/L05.91,14.2301,0
+what is the best diagnostic code for a patient with a sinus infection,J32.9,"J32.9 Chronic sinusitis, unspecified",/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.9,14.1007,3
+what is the best diagnostic code for a patient with a sinus infection,M86.48,"M86.48 Chronic osteomyelitis with draining sinus, other site",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.48,13.8893,3
+what is the best diagnostic code for a patient with a sinus infection,J32.8,J32.8 Other chronic sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.8,13.3826,2
+what is the best diagnostic code for a patient with a sinus infection,M86.38,"M86.38 Chronic multifocal osteomyelitis, other site",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.38,13.2858,0
+what is the best diagnostic code for a patient with a sinus infection,J32.0,J32.0 Chronic maxillary sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.0,13.2175,3
+what is the best diagnostic code for a patient with a sinus infection,J32.4,J32.4 Chronic pansinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.4,12.9033,3
+what is the best diagnostic code for a patient with a sinus infection,J01.81,J01.81 Other acute recurrent sinusitis,/ICD10CM/Codes/J00-J99/J00-J06/J01-/J01.81,12.8244,3
+what is the best diagnostic code for a patient with a sinus infection,J32.1,J32.1 Chronic frontal sinusitis,/ICD10CM/Codes/J00-J99/J30-J39/J32-/J32.1,12.7916,3
+what is the best diagnostic code for a patient with a sinus infection,J01.80,J01.80 Other acute sinusitis,/ICD10CM/Codes/J00-J99/J00-J06/J01-/J01.80,12.7533,3
+what is the best diagnostic code for a patient with a sinus infection,Q21.1,Q21.1 Atrial septal defect,/ICD10CM/Codes/Q00-Q99/Q20-Q28/Q21-/Q21.1,12.6184,0
+what is the best diagnostic code for a patient with a sinus infection,K04.7,K04.7 Periapical abscess without sinus,/ICD10CM/Codes/K00-K95/K00-K14/K04-/K04.7,12.5246,0
+what is the best diagnostic code for a patient with a sinus infection,I49,I49 Other cardiac arrhythmias,/ICD10CM/Codes/I00-I99/I30-I5A/I49-/I49,12.4404,0
+what is the best diagnostic code for a patient with a sinus infection,M86.40,"M86.40 Chronic osteomyelitis with draining sinus, unspecified site",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.40,12.4038,0
+what is the best diagnostic code for a patient with a sinus infection,M86.45,"M86.45 Chronic osteomyelitis with draining sinus, femur",/ICD10CM/Codes/M00-M99/M86-M90/M86-/M86.45,12.3922,0
+"I have a complex patient with obesity, what's the billing code?",E67.0,E67.0 Hypervitaminosis A,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67.0,21.0041,2
+"I have a complex patient with obesity, what's the billing code?",E66.9,"E66.9 Obesity, unspecified",/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.9,17.348,3
+"I have a complex patient with obesity, what's the billing code?",E66.01,E66.01 Morbid (severe) obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.01,17.3133,3
+"I have a complex patient with obesity, what's the billing code?",E66.0,E66.0 Obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.0,17.1473,3
+"I have a complex patient with obesity, what's the billing code?",E66.2,E66.2 Morbid (severe) obesity with alveolar hypoventilation,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.2,17.0746,2
+"I have a complex patient with obesity, what's the billing code?",E64.0,E64.0 Sequelae of protein-calorie malnutrition,/ICD10CM/Codes/E00-E89/E50-E64/E64-/E64.0,17.0498,2
+"I have a complex patient with obesity, what's the billing code?",E28.2,E28.2 Polycystic ovarian syndrome,/ICD10CM/Codes/E00-E89/E20-E35/E28-/E28.2,17.0357,2
+"I have a complex patient with obesity, what's the billing code?",E66.8,E66.8 Other obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.8,16.9648,2
+"I have a complex patient with obesity, what's the billing code?",E66.09,E66.09 Other obesity due to excess calories,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.09,16.9648,3
+"I have a complex patient with obesity, what's the billing code?",R63.5,R63.5 Abnormal weight gain,/ICD10CM/Codes/R00-R99/R50-R69/R63-/R63.5,16.8756,3
+"I have a complex patient with obesity, what's the billing code?",E67,E67 Other hyperalimentation,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67,16.4451,1
+"I have a complex patient with obesity, what's the billing code?",E66.3,E66.3 Overweight,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.3,16.3388,3
+"I have a complex patient with obesity, what's the billing code?",O99.2,"O99.2 Endocrine, nutritional and metabolic diseases complicating pregnancy, childbirth and the puerperium",/ICD10CM/Codes/O00-O9A/O94-O9A/O99-/O99.2,16.3191,2
+"I have a complex patient with obesity, what's the billing code?",E65,E65 Localized adiposity,/ICD10CM/Codes/E00-E89/E65-E68/E65-/E65,16.2624,2
+"I have a complex patient with obesity, what's the billing code?",E66.1,E66.1 Drug-induced obesity,/ICD10CM/Codes/E00-E89/E65-E68/E66-/E66.1,16.006,2
+"I have a complex patient with obesity, what's the billing code?",E64.9,E64.9 Sequelae of unspecified nutritional deficiency,/ICD10CM/Codes/E00-E89/E50-E64/E64-/E64.9,15.9651,2
+"I have a complex patient with obesity, what's the billing code?",E67.1,E67.1 Hypercarotenemia,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67.1,15.8542,1
+"I have a complex patient with obesity, what's the billing code?",E67.2,E67.2 Megavitamin-B6 syndrome,/ICD10CM/Codes/E00-E89/E65-E68/E67-/E67.2,15.6641,1
+"I have a complex patient with obesity, what's the billing code?",G90.51,G90.51 Complex regional pain syndrome I of upper limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.51,15.5693,0
+"I have a complex patient with obesity, what's the billing code?",G90.52,G90.52 Complex regional pain syndrome I of lower limb,/ICD10CM/Codes/G00-G99/G89-G99/G90-/G90.52,15.5685,0
+I need the proper billing code for somoone who has blood in their stool,R19.5,R19.5 Other fecal abnormalities,/ICD10CM/Codes/R00-R99/R10-R19/R19-/R19.5,19.4851,1
+I need the proper billing code for somoone who has blood in their stool,K92.1,K92.1 Melena,/ICD10CM/Codes/K00-K95/K90-K95/K92-/K92.1,18.9204,3
+I need the proper billing code for somoone who has blood in their stool,K59.00,"K59.00 Constipation, unspecified",/ICD10CM/Codes/K00-K95/K55-K64/K59-/K59.00,13.4998,2
+I need the proper billing code for somoone who has blood in their stool,R15.9,R15.9 Full incontinence of feces,/ICD10CM/Codes/R00-R99/R10-R19/R15-/R15.9,12.9258,1
+I need the proper billing code for somoone who has blood in their stool,K59.0,K59.0 Constipation,/ICD10CM/Codes/K00-K95/K55-K64/K59-/K59.0,12.8506,3
+I need the proper billing code for somoone who has blood in their stool,R17,R17 Unspecified jaundice,/ICD10CM/Codes/R00-R99/R10-R19/R17-/R17,12.6392,1
+I need the proper billing code for somoone who has blood in their stool,R15,R15 Fecal incontinence,/ICD10CM/Codes/R00-R99/R10-R19/R15-/R15,12.3625,1
+I need the proper billing code for somoone who has blood in their stool,E80.20,E80.20 Unspecified porphyria,/ICD10CM/Codes/E00-E89/E70-E88/E80-/E80.20,12.2406,1
+I need the proper billing code for somoone who has blood in their stool,E73,E73 Lactose intolerance,/ICD10CM/Codes/E00-E89/E70-E88/E73-/E73,11.4465,1
+I need the proper billing code for somoone who has blood in their stool,E73.9,"E73.9 Lactose intolerance, unspecified",/ICD10CM/Codes/E00-E89/E70-E88/E73-/E73.9,11.2046,1
+I need the proper billing code for somoone who has blood in their stool,P54.1,P54.1 Neonatal melena,/ICD10CM/Codes/P00-P96/P50-P61/P54-/P54.1,11.0612,3
+I need the proper billing code for somoone who has blood in their stool,K64,K64 Hemorrhoids and perianal venous thrombosis,/ICD10CM/Codes/K00-K95/K55-K64/K64-/K64,10.1905,2
+I need the proper billing code for somoone who has blood in their stool,R19.7,"R19.7 Diarrhea, unspecified",/ICD10CM/Codes/R00-R99/R10-R19/R19-/R19.7,10.0714,3
+I need the proper billing code for somoone who has blood in their stool,R85,R85 Abnormal findings in specimens from digestive organs and abdominal cavity,/ICD10CM/Codes/R00-R99/R83-R89/R85-/R85,9.7617,3
+I need the proper billing code for somoone who has blood in their stool,K92.9,"K92.9 Disease of digestive system, unspecified",/ICD10CM/Codes/K00-K95/K90-K95/K92-/K92.9,9.6373,3
+I need the proper billing code for somoone who has blood in their stool,K58,K58 Irritable bowel syndrome,/ICD10CM/Codes/K00-K95/K55-K64/K58-/K58,9.3023,2
+I need the proper billing code for somoone who has blood in their stool,C26.0,"C26.0 Malignant neoplasm of intestinal tract, part unspecified",/ICD10CM/Codes/C00-D49/C15-C26/C26-/C26.0,9.1209,2
+I need the proper billing code for somoone who has blood in their stool,E88.81,E88.81 Metabolic syndrome and other insulin resistance,/ICD10CM/Codes/E00-E89/E70-E88/E88-/E88.81,9.0858,1
+I need the proper billing code for somoone who has blood in their stool,R10.9,R10.9 Unspecified abdominal pain,/ICD10CM/Codes/R00-R99/R10-R19/R10-/R10.9,8.7462,1
+I need the proper billing code for somoone who has blood in their stool,K63.5,K63.5 Polyp of colon,/ICD10CM/Codes/K00-K95/K55-K64/K63-/K63.5,8.6589,2
+I need the proper code for someone who has abnormal developmental screeners,F80.1,F80.1 Expressive language disorder,/ICD10CM/Codes/F01-F99/F80-F89/F80-/F80.1,14.9225,3
+I need the proper code for someone who has abnormal developmental screeners,F84.3,F84.3 Other childhood disintegrative disorder,/ICD10CM/Codes/F01-F99/F80-F89/F84-/F84.3,14.7864,2
+I need the proper code for someone who has abnormal developmental screeners,F80.2,F80.2 Mixed receptive-expressive language disorder,/ICD10CM/Codes/F01-F99/F80-F89/F80-/F80.2,14.76,3
+I need the proper code for someone who has abnormal developmental screeners,F80.0,F80.0 Phonological disorder,/ICD10CM/Codes/F01-F99/F80-F89/F80-/F80.0,14.2585,3
+I need the proper code for someone who has abnormal developmental screeners,F94.0,F94.0 Selective mutism,/ICD10CM/Codes/F01-F99/F90-F98/F94-/F94.0,14.1141,3
+I need the proper code for someone who has abnormal developmental screeners,F88,F88 Other disorders of psychological development,/ICD10CM/Codes/F01-F99/F80-F89/F88-/F88,13.3726,2
+I need the proper code for someone who has abnormal developmental screeners,F81,F81 Specific developmental disorders of scholastic skills,/ICD10CM/Codes/F01-F99/F80-F89/F81-/F81,13.3678,2
+I need the proper code for someone who has abnormal developmental screeners,F81.8,F81.8 Other developmental disorders of scholastic skills,/ICD10CM/Codes/F01-F99/F80-F89/F81-/F81.8,13.3669,2
+I need the proper code for someone who has abnormal developmental screeners,F80.89,F80.89 Other developmental disorders of speech and language,/ICD10CM/Codes/F01-F99/F80-F89/F80-/F80.89,13.2856,2
+I need the proper code for someone who has abnormal developmental screeners,F80.9,"F80.9 Developmental disorder of speech and language, unspecified",/ICD10CM/Codes/F01-F99/F80-F89/F80-/F80.9,13.2829,2
+I need the proper code for someone who has abnormal developmental screeners,F81.89,F81.89 Other developmental disorders of scholastic skills,/ICD10CM/Codes/F01-F99/F80-F89/F81-/F81.89,13.2515,2
+I need the proper code for someone who has abnormal developmental screeners,G40.42,G40.42 Cyclin-Dependent Kinase-Like 5 Deficiency Disorder,/ICD10CM/Codes/G00-G99/G40-G47/G40-/G40.42,13.2356,0
+I need the proper code for someone who has abnormal developmental screeners,F71,F71 Moderate intellectual disabilities,/ICD10CM/Codes/F01-F99/F70-F79/F71-/F71,13.2248,2
+I need the proper code for someone who has abnormal developmental screeners,F82,F82 Specific developmental disorder of motor function,/ICD10CM/Codes/F01-F99/F80-F89/F82-/F82,13.1928,3
+I need the proper code for someone who has abnormal developmental screeners,F81.81,F81.81 Disorder of written expression,/ICD10CM/Codes/F01-F99/F80-F89/F81-/F81.81,13.1867,3
+I need the proper code for someone who has abnormal developmental screeners,F84,F84 Pervasive developmental disorders,/ICD10CM/Codes/F01-F99/F80-F89/F84-/F84,13.1272,2
+I need the proper code for someone who has abnormal developmental screeners,H93.25,H93.25 Central auditory processing disorder,/ICD10CM/Codes/H60-H95/H90-H94/H93-/H93.25,13.09,2
+I need the proper code for someone who has abnormal developmental screeners,F84.9,"F84.9 Pervasive developmental disorder, unspecified",/ICD10CM/Codes/F01-F99/F80-F89/F84-/F84.9,13.082,2
+I need the proper code for someone who has abnormal developmental screeners,F84.0,F84.0 Autistic disorder,/ICD10CM/Codes/F01-F99/F80-F89/F84-/F84.0,13.0709,3
+I need the proper code for someone who has abnormal developmental screeners,F89,F89 Unspecified disorder of psychological development,/ICD10CM/Codes/F01-F99/F80-F89/F89-/F89,13.0294,3
+I need the proper billing code for someone with pharyngitis,J02.8,J02.8 Acute pharyngitis due to other specified organisms,/ICD10CM/Codes/J00-J99/J00-J06/J02-/J02.8,16.3554,2
+I need the proper billing code for someone with pharyngitis,J03.8,J03.8 Acute tonsillitis due to other specified organisms,/ICD10CM/Codes/J00-J99/J00-J06/J03-/J03.8,14.4657,2
+I need the proper billing code for someone with pharyngitis,J10.1,J10.1 Influenza due to other identified influenza virus with other respiratory manifestations,/ICD10CM/Codes/J00-J99/J09-J18/J10-/J10.1,14.4058,3
+I need the proper billing code for someone with pharyngitis,J11.1,J11.1 Influenza due to unidentified influenza virus with other respiratory manifestations,/ICD10CM/Codes/J00-J99/J09-J18/J11-/J11.1,14.1592,2
+I need the proper billing code for someone with pharyngitis,J09.X2,J09.X2 Influenza due to identified novel influenza A virus with other respiratory manifestations,/ICD10CM/Codes/J00-J99/J09-J18/J09-/J09.X2,13.8175,2
+I need the proper billing code for someone with pharyngitis,J31.2,J31.2 Chronic pharyngitis,/ICD10CM/Codes/J00-J99/J30-J39/J31-/J31.2,13.5581,3
+I need the proper billing code for someone with pharyngitis,B08.5,B08.5 Enteroviral vesicular pharyngitis,/ICD10CM/Codes/A00-B99/B00-B09/B08-/B08.5,13.5344,3
+I need the proper billing code for someone with pharyngitis,J02.9,"J02.9 Acute pharyngitis, unspecified",/ICD10CM/Codes/J00-J99/J00-J06/J02-/J02.9,13.4987,3
+I need the proper billing code for someone with pharyngitis,J02.0,J02.0 Streptococcal pharyngitis,/ICD10CM/Codes/J00-J99/J00-J06/J02-/J02.0,13.3598,3
+I need the proper billing code for someone with pharyngitis,J91.8,J91.8 Pleural effusion in other conditions classified elsewhere,/ICD10CM/Codes/J00-J99/J90-J94/J91-/J91.8,13.3388,0
+I need the proper billing code for someone with pharyngitis,J00,J00 Acute nasopharyngitis [common cold],/ICD10CM/Codes/J00-J99/J00-J06/J00-/J00,13.1848,3
+I need the proper billing code for someone with pharyngitis,A54.5,A54.5 Gonococcal pharyngitis,/ICD10CM/Codes/A00-B99/A50-A64/A54-/A54.5,13.1182,2
+I need the proper billing code for someone with pharyngitis,J03,J03 Acute tonsillitis,/ICD10CM/Codes/J00-J99/J00-J06/J03-/J03,12.8787,3
+I need the proper billing code for someone with pharyngitis,B00.2,B00.2 Herpesviral gingivostomatitis and pharyngotonsillitis,/ICD10CM/Codes/A00-B99/B00-B09/B00-/B00.2,12.722,3
+I need the proper billing code for someone with pharyngitis,J02,J02 Acute pharyngitis,/ICD10CM/Codes/J00-J99/J00-J06/J02-/J02,12.6749,3
+I need the proper billing code for someone with pharyngitis,J31.1,J31.1 Chronic nasopharyngitis,/ICD10CM/Codes/J00-J99/J30-J39/J31-/J31.1,12.5383,3
+I need the proper billing code for someone with pharyngitis,A56.4,A56.4 Chlamydial infection of pharynx,/ICD10CM/Codes/A00-B99/A50-A64/A56-/A56.4,12.3023,2
+I need the proper billing code for someone with pharyngitis,A50.03,A50.03 Early congenital syphilitic pharyngitis,/ICD10CM/Codes/A00-B99/A50-A64/A50-/A50.03,12.2572,2
+I need the proper billing code for someone with pharyngitis,A36.0,A36.0 Pharyngeal diphtheria,/ICD10CM/Codes/A00-B99/A30-A49/A36-/A36.0,12.2049,2
+I need the proper billing code for someone with pharyngitis,J31.0,J31.0 Chronic rhinitis,/ICD10CM/Codes/J00-J99/J30-J39/J31-/J31.0,12.196,3

@@ -1,0 +1,11 @@
+Assessment: (This is the assesment of the doctor patient visit)
+(List out in bullet points the assessment)
+
+Plan: (This is the plan of action for the doctor patient visit)
+(List out in bullet points the plan)
+
+Extra Field: (This is an extra field that can be used to fill in any additional information that is needed)
+
+IMPORTANT NOTE FOR AI MODEL - Do not deviate from the above template. "Extra Field" should be the last item filled out.
+IMPORTANT NOTE FOR AI MODEL - Insure that the "Assessment" and "Plan"are filled out in the template.
+IMPORTANT NOTE FOR AI MODEL - Make sure that there is one line break between each item in the template.
