@@ -60,7 +60,7 @@ fi
 read -p "Is this the swarm manager node? (y/n): " is_manager
 if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     echo "This node will act as the swarm manager."
-    # Use 'sudo docker info' in case user isn't in the docker group
+    # Use 'sudo docker info' in case the user isn't in the docker group
     if ! sudo docker info 2>/dev/null | grep -q "Swarm: active"; then
         IP=$(hostname -I | awk '{print $1}')
         echo "Initializing Docker Swarm with advertise address: $IP"
@@ -82,8 +82,21 @@ NODE_ID=$(sudo docker info -f '{{.Swarm.NodeID}}')
 ARCH=$(uname -m)
 
 if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
-    echo "Detected Raspberry Pi architecture ($ARCH). Labeling node as hardware=raspberrypi."
-    sudo docker node update --label-add hardware=raspberrypi "$NODE_ID"
+    echo "Detected Raspberry Pi architecture ($ARCH)."
+    # For Raspberry Pi devices, label them as 'hardware=raspberrypi'.
+    if [[ "$is_manager" =~ ^[Yy]$ ]]; then
+        echo "Labeling node as hardware=raspberrypi locally on the manager node."
+        sudo docker node update --label-add hardware=raspberrypi "$NODE_ID"
+    else
+        echo "This is a worker node. The label must be updated from the swarm manager."
+        # If manager_ip wasn't already provided during swarm join, prompt for it.
+        if [ -z "$manager_ip" ]; then
+            read -p "Enter the manager node IP: " manager_ip
+        fi
+        read -p "Enter manager node SSH username for labeling: " MANAGER_SSH_USER
+        echo "Updating node label on manager node..."
+        ssh "$MANAGER_SSH_USER@$manager_ip" "docker node update --label-add hardware=raspberrypi $NODE_ID"
+    fi
 else
     echo "Detected architecture ($ARCH) (assumed Linux server). Labeling node as hardware=server."
     sudo docker node update --label-add hardware=server "$NODE_ID"
@@ -116,7 +129,6 @@ if [[ "$ARCH" != "armv7l" && "$ARCH" != "aarch64" ]]; then
             sudo cp "$DOCKER_DAEMON" "$DOCKER_DAEMON.bak"
 
             # Extract GPU UUIDs using nvidia-smi.
-            # This command extracts the UUID from lines like: "GPU UUID                             : GPU-XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
             GPU_ARRAY=$(nvidia-smi -a | grep "GPU UUID" | awk -F': ' '{print "\"NVIDIA-GPU="$2"\""}' | paste -sd, -)
             GPU_ARRAY="[$GPU_ARRAY]"
 
@@ -180,7 +192,7 @@ else
                      /var/lib/aiinabox/index_dir \
                      /var/lib/aiinabox/title_index_dir
 
-    # Always ask whether to pre-populate the front_end directory
+    # Optionally pre-populate the front_end directory from the repository.
     PERSISTENT_FRONTEND="/var/lib/aiinabox/front_end"
     REPO_DIR="$HOME/Documents/repos/aiinabox"
     REPO_FRONTEND="$REPO_DIR/src/front_end"
@@ -222,7 +234,7 @@ if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
     echo "This is a Raspberry Pi node. Skipping installation of host-level dependencies."
 else
     echo "Installing host-level dependencies on Linux server..."
-    # (Java, R, ChromeDriver, etc.) ...
+    # (Java, R, ChromeDriver, etc.) can be added here.
 fi
 
 ######################################
