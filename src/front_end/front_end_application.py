@@ -8,8 +8,8 @@ from l2r import L2RFeatureExtractor, L2RRanker, MiscFunctionsL2R
 from template_generator import TemplateGenerator
 
 # Initialize the Flask app
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder="templates", static_folder="static")
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 # Load stop words
 with open('/app/front_end/stopwords.txt', 'r', encoding='utf-8') as f:
     stop_words = set(f.read().splitlines())
@@ -102,6 +102,8 @@ def search():
                 temperature=0.1
             )
 
+            print
+
             if not filled_template:
                 print(f"Failed to generate the filled-out template for Personality {personality_index}")
                 continue  # Skip to the next personality
@@ -159,4 +161,4 @@ def search():
     return render_template('index.html', results=results, query=query, verified_templates=verified_templates)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug= True, host='0.0.0.0', port=5000)

@@ -1,64 +1,71 @@
 version: "3.8"
 
 services:
+  ollama:
+    image: ollama/ollama:latest
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - "/var/lib/aiinabox/ollamadata:/root/.ollama"  # Ensure this directory exists on your host
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 3
+      restart_policy:
+        condition: any
+
   icd_10_code_scraping:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile_scraping
-    container_name: aiinabox_icd_10_scrape
+    image: docker-icd_10_code_scraping:latest
     volumes:
       - /var/lib/aiinabox/scraped_data/jsons:/app/icd_10_code_jsons
       - /var/lib/aiinabox/scraped_data/codes:/app/icd_10_codes
       - /var/lib/aiinabox/scraped_data/codes_clean:/app/icd_10_codes_clean
-    restart: on-failure
     deploy:
+      restart_policy:
+        condition: on-failure
       placement:
         constraints:
           - node.labels.hardware == server
 
   icd_10_search_engine:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile_search_engine
-    container_name: aiinabox_icd_10_search_engine
+    image: docker-icd_10_search_engine:latest
     volumes:
       - /var/lib/aiinabox/scraped_data/jsons:/app/icd_10_code_jsons
       - /var/lib/aiinabox/scraped_data/codes_clean:/app/icd_10_codes_clean
       - /var/lib/aiinabox/search_eng_data:/app/icd_10_search_eng_data
       - /var/lib/aiinabox/index_dir:/app/icd_10_index_dir
       - /var/lib/aiinabox/title_index_dir:/app/icd_10_title_index_dir
-    restart: on-failure
     deploy:
+      restart_policy:
+        condition: on-failure
       placement:
         constraints:
           - node.labels.hardware == server
 
   front_end:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile_front_end
+    image: docker-front_end:latest
     ports:
       - "5000:5000"
-    container_name: aiinabox_front_end
     volumes:
-      - /var/lib/aiinabox/search_eng_data:/app/icd_10_search_eng_data
-      - /var/lib/aiinabox/index_dir:/app/icd_10_index_dir
-      - /var/lib/aiinabox/title_index_dir:/app/icd_10_title_index_dir
-    restart: on-failure
+      - /var/lib/aiinabox/front_end:/app/front_end:ro
+      - /var/lib/aiinabox/search_eng_data:/app/icd_10_search_eng_data:ro
+      - /var/lib/aiinabox/index_dir:/app/icd_10_index_dir:ro
+      - /var/lib/aiinabox/title_index_dir:/app/icd_10_title_index_dir:ro
     deploy:
       placement:
         constraints:
           - node.labels.hardware == server
 
   scribe_speech_to_text:
-    build:
-      context: ../
-      dockerfile: Dockerfile_scribe_arm
-    container_name: aiinabox_scribe
+    image: docker-scribe_speech_to_text:latest
     volumes:
       - /var/lib/aiinabox/transcripts:/app/transcripts
-      - /var/lib/aiinabox/transcripts:/app/transcripts_clean
-    restart: on-failure
+      - /var/lib/aiinabox/transcripts_clean:/app/transcripts_clean
     deploy:
       placement:
         constraints:
@@ -66,5 +73,5 @@ services:
 
 networks:
   default:
-    external:
-      name: app_network
+    driver: overlay
+    attachable: true

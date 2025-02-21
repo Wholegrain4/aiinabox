@@ -1,5 +1,5 @@
-# Use the slim python 3.9 image
-FROM python:3.9-slim
+# Use the slim python 3.12 image
+FROM python:3.12-slim
 
 # Ensure output is unbuffered
 ENV PYTHONUNBUFFERED=1
@@ -12,9 +12,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrage pip
-RUN pip install RPi.GPIO sounddevice numpy git+https://github.com/openai/whisper.git
-
 # Set the working directory
 WORKDIR /app
 
@@ -23,9 +20,9 @@ COPY src/requirements.txt /app/resources/requirements.txt
 RUN pip install --no-cache-dir -r /app/resources/requirements.txt
 
 # Copy the developer modules
-COPY src/stt_processor.py /app/scribe/stt_processor.py
-COPY src/utils.py /app/scribe/utils.py
-COPY src/run_scribe.py /app/scribe/run_scribe.py
+COPY src/edge_devices/scribe_device/stt_processor.py /app/scribe/stt_processor.py
+COPY src/edge_devices/scribe_device/utils.py /app/scribe/utils.py
+COPY src/edge_devices/scribe_device/run_scribe.py /app/scribe/run_scribe.py
 
 # Run the edge device set up script
 CMD ["python", "/app/scribe/run_scribe.py"]

@@ -12,13 +12,22 @@ RUN apt-get update && apt-get install -y \
     default-jre \
     wget \
     gnupg2 \
+    xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy your local Chrome deb file into the container
-COPY bin/google-chrome-stable_current_amd64.deb /tmp/chrome.deb
+# Copy your local Chrome archive into the container
+COPY bin/Chrome.tar.xz /tmp/Chrome.tar.xz
 
-# Install Chrome using apt-get to automatically resolve dependencies
-RUN apt-get update && apt-get install -y ./tmp/chrome.deb && rm /tmp/chrome.deb
+# Extract the Chrome archive, locate the .deb file, install Chrome, and clean up
+RUN mkdir -p /tmp/chrome_install && \
+    tar -xf /tmp/Chrome.tar.xz -C /tmp/chrome_install && \
+    DEB_FILE=$(find /tmp/chrome_install -type f -name "*.deb" | head -n 1) && \
+    if [ -n "$DEB_FILE" ]; then \
+        apt-get update && apt-get install -y "$DEB_FILE"; \
+    else \
+        echo "Error: no .deb file found in the Chrome archive" && exit 1; \
+    fi && \
+    rm -rf /tmp/chrome_install /tmp/Chrome.tar.xz
 
 # Ensure the chrome binary is accessible (create symlink if needed)
 RUN ln -sf /opt/google/chrome/google-chrome /usr/bin/google-chrome || true

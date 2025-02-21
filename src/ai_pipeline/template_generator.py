@@ -7,7 +7,7 @@ from personalities import *
 class TemplateGenerator:
     def __init__(self):
         # Initialize the Ollama client
-        self.client = Client(host='http://localhost:11434')
+        self.client = Client(host='http://ollama:11434')
         
         # Load templates and personalities
         self.load_templates()
@@ -67,7 +67,7 @@ class TemplateGenerator:
 
             # Send the messages to the model
             response = self.client.chat(
-                model='phi3',
+                model='phi3:14b',
                 messages=messages,
                 options={
                     "temperature": temperature,
@@ -80,6 +80,7 @@ class TemplateGenerator:
 
             # Extract the filled template from the response
             filled_template = response['message']["content"].strip()
+            print(f"Filled template for personality {personality_index}:\n{filled_template}")
             return filled_template
 
         except Exception as e:
@@ -129,7 +130,7 @@ class TemplateGenerator:
 
             # Send messages to the model
             verification_response = self.client.chat(
-                model='phi3',
+                model='phi3:14b',
                 messages=messages,
                 options={
                     "temperature": 0.0,
@@ -142,6 +143,7 @@ class TemplateGenerator:
 
             # Extract the content
             verification_content = verification_response['message']["content"].strip()
+            print(f"Verified template for personality {personality_index}, attempt {attempt}:\n{verification_content}")
 
             # Base case: If maximum attempts reached, return the latest response
             if attempt >= max_attempts:
@@ -189,7 +191,7 @@ class TemplateGenerator:
 
             # Send messages to the model
             response = self.client.chat(
-                model='phi3',
+                model='phi3:14b',
                 messages=messages,
                 options={
                     "temperature": 0.0,
@@ -201,6 +203,7 @@ class TemplateGenerator:
 
             # Extract the content
             extracted_terms = response['message']["content"].strip()
+            
 
             # Process the extracted terms into a list
             terms = [term.strip() for term in extracted_terms.split(',') if term.strip()]

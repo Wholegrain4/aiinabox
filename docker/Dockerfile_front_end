@@ -1,38 +1,21 @@
 # Use the slim Python 3.12 image
 FROM python:3.12-slim
 
-# Optional: Ensure output is unbuffered (good for logging)
+# Ensure output is unbuffered (good for logging)
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies, including libgomp1 for lightgbm
+# Install system dependencies (including libgomp1 for lightgbm)
 RUN apt-get update && apt-get install -y libgomp1 && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the requirements file and install dependencies
+# Copy the requirements file and install Python dependencies
 COPY src/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copy the developer modules
-COPY src/front_end/ /app/front_end/
-COPY src/ai_pipeline/personas/personalities.py /app/front_end/personalities.py
-COPY src/ai_pipeline/templates/sick_visit_empty_template_p0.txt /app/front_end/sick_visit_empty_template_p0.txt
-COPY src/ai_pipeline/templates/sick_visit_empty_template_p1.txt /app/front_end/sick_visit_empty_template_p1.txt
-COPY src/ai_pipeline/templates/sick_visit_empty_template_p2.txt /app/front_end/sick_visit_empty_template_p2.txt
-COPY src/ai_pipeline/templates/sick_visit_empty_template_p3.txt /app/front_end/sick_visit_empty_template_p3.txt
-COPY src/ai_pipeline/templates/sick_visit_filled_template_p0.txt /app/front_end/sick_visit_filled_template_p0.txt
-COPY src/ai_pipeline/templates/sick_visit_filled_template_p1.txt /app/front_end/sick_visit_filled_template_p1.txt
-COPY src/ai_pipeline/templates/sick_visit_filled_template_p2.txt /app/front_end/sick_visit_filled_template_p2.txt
-COPY src/ai_pipeline/templates/sick_visit_filled_template_p3.txt /app/front_end/sick_visit_filled_template_p3.txt
-COPY src/ai_pipeline/template_generator.py /app/front_end/template_generator.py
-COPY src/search_engine/data/stopwords.txt /app/front_end/stopwords.txt
-COPY src/search_engine/document_preprocessor.py /app/front_end/document_preprocessor.py
-COPY src/search_engine/indexing.py /app/front_end/indexing.py
-COPY src/search_engine/l2r.py /app/front_end/l2r.py
-COPY src/search_engine/misc_tools.py /app/front_end/misc_tools.py
-COPY src/search_engine/network_features.py /app/front_end/network_features.py
-COPY src/search_engine/ranker.py /app/front_end/ranker.py
-COPY src/search_engine/relevance.py /app/front_end/relevance.py
+# Do not copy application files: they are expected to be provided via a mounted volume.
+# The container will look for the front_end files in /app/front_end (mounted at runtime).
 
+# The front-end container now only needs to run your Flask application.
 CMD ["python", "/app/front_end/front_end_application.py"]
