@@ -1,11 +1,11 @@
 #!/bin/bash
 # install_aiinabox.sh
 # Unified installation script for AI in a Box (manager or worker)
-# Now with private registry integration and prompts to create/use it as insecure.
+# Implements a local private registry as described in the guide.
 
 set -e
 
-# Default registry address/port (adjust as needed)
+# Default registry settings
 DEFAULT_REGISTRY_IP="192.168.40.187"
 REGISTRY_PORT="5001"
 REGISTRY="${DEFAULT_REGISTRY_IP}:${REGISTRY_PORT}"
@@ -22,85 +22,96 @@ function ensure_docker_running() {
         sudo systemctl start docker
         sleep 3
     fi
-
     if ! sudo systemctl is-active --quiet docker; then
-        echo "ERROR: Docker service is not running, and we cannot start it."
-        echo "Check 'sudo systemctl status docker' for more info."
+        echo "ERROR: Docker service is not running. Check 'sudo systemctl status docker'."
         exit 1
     fi
 }
 
-# Prompt to configure /etc/docker/daemon.json with insecure registry entry
+# Configure /etc/docker/daemon.json to mark the registry as insecure.
 function configure_insecure_registry() {
     local registry_addr="$1"
     local DOCKER_DAEMON="/etc/docker/daemon.json"
 
-    if grep -q "\"insecure-registries\"" "$DOCKER_DAEMON" 2>/dev/null; then
-        if grep -q "${registry_addr}" "$DOCKER_DAEMON"; then
-            echo "Insecure registry '${registry_addr}' is already configured in $DOCKER_DAEMON"
-            return
-        fi
+    if grep -q "\"insecure-registries\"" "$DOCKER_DAEMON" 2>/dev/null && grep -q "${registry_addr}" "$DOCKER_DAEMON"; then
+        echo "Insecure registry '${registry_addr}' is already configured in $DOCKER_DAEMON"
+        return
     fi
 
     echo "Configuring insecure registry '${registry_addr}' in $DOCKER_DAEMON..."
-    
     if ! command -v jq &> /dev/null; then
         echo "Installing jq for JSON editing..."
-        sudo apt-get update
-        sudo apt-get install -y jq
+        sudo apt-get update && sudo apt-get install -y jq
     fi
-
     if [ ! -f "$DOCKER_DAEMON" ]; then
         echo "{}" | sudo tee "$DOCKER_DAEMON" > /dev/null
     fi
-
     sudo cp "$DOCKER_DAEMON" "$DOCKER_DAEMON.bak"
-
-    sudo jq --arg reg "$registry_addr" '
-      .["insecure-registries"] += [$reg]
-    ' "$DOCKER_DAEMON" | sudo tee "$DOCKER_DAEMON.tmp" > /dev/null
-
+    sudo jq --arg reg "$registry_addr" '.["insecure-registries"] += [$reg]' "$DOCKER_DAEMON" | sudo tee "$DOCKER_DAEMON.tmp" > /dev/null
     sudo mv "$DOCKER_DAEMON.tmp" "$DOCKER_DAEMON"
-
     echo "Restarting Docker to apply insecure registry settings..."
     sudo systemctl restart docker
     sleep 3
-
     if sudo systemctl is-active --quiet docker; then
         echo "Docker restarted successfully. Insecure registry config applied."
     else
-        echo "Error: Docker failed to restart after registry config. Reverting changes..."
+        echo "Error: Docker failed to restart. Reverting changes..."
         sudo cp "$DOCKER_DAEMON.bak" "$DOCKER_DAEMON"
         sudo systemctl restart docker
         exit 1
     fi
 }
 
-# Prompt to create local private registry container if not running
+# Create (or re-create) a local Docker registry container with the correct port mapping.
 function ensure_local_registry() {
     local registry_name="registry"
-    local registry_port="$REGISTRY_PORT"
-
-    if sudo docker ps --format '{{.Names}}' | grep -q "^${registry_name}$"; then
-        echo "Local Docker registry container '${registry_name}' is already running."
-        return
+    # Check if a container named "registry" exists (even if stopped)
+    if sudo docker ps -a --format '{{.Names}}' | grep -q "^${registry_name}$"; then
+        # Inspect its port mapping.
+        current_mapping=$(sudo docker inspect ${registry_name} | jq -r '.[0].NetworkSettings.Ports["5000/tcp"][0].HostPort')
+        if [ "$current_mapping" != "$REGISTRY_PORT" ]; then
+            echo "Registry container exists but is mapped to port ${current_mapping} instead of ${REGISTRY_PORT}. Removing container..."
+            sudo docker rm -f ${registry_name}
+        else
+            if sudo docker ps --format '{{.Names}}' | grep -q "^${registry_name}$"; then
+                echo "Local Docker registry container '${registry_name}' is already running with correct mapping."
+                return
+            fi
+        fi
     fi
 
-    echo
-    echo "No local registry container detected."
-    read -p "Do you want to create a local Docker registry container (port ${registry_port})? (y/n): " create_reg
+    read -p "Do you want to create a local Docker registry container on port ${REGISTRY_PORT}? (y/n): " create_reg
     if [[ "$create_reg" =~ ^[Yy]$ ]]; then
-        echo "Creating local registry on port ${registry_port}..."
-        # Bind explicitly to all interfaces using 0.0.0.0
-        sudo docker run -d -p 0.0.0.0:${registry_port}:5000 --restart=always --name ${registry_name} registry:2
+        echo "Creating local registry on port ${REGISTRY_PORT}..."
+        # Bind explicitly to all interfaces using 0.0.0.0 so it is reachable externally.
+        sudo docker run -d -p 0.0.0.0:${REGISTRY_PORT}:5000 --restart=always --name ${registry_name} registry:2
         echo "Local registry '${registry_name}' started."
     else
         echo "Skipping local registry creation."
     fi
 }
 
+# Open firewall port for the registry (supports UFW and firewalld)
+function open_firewall_port() {
+    read -p "Do you want to allow incoming TCP connections on port ${REGISTRY_PORT} (for the registry)? (y/n): " fw_open
+    if [[ "$fw_open" =~ ^[Yy]$ ]]; then
+        if sudo ufw status | grep -q "Status: active"; then
+            echo "Allowing port ${REGISTRY_PORT} via UFW..."
+            sudo ufw allow ${REGISTRY_PORT}/tcp
+        elif command -v firewall-cmd &> /dev/null; then
+            echo "Allowing port ${REGISTRY_PORT} via firewalld..."
+            sudo firewall-cmd --permanent --add-port=${REGISTRY_PORT}/tcp
+            sudo firewall-cmd --reload
+        else
+            echo "No supported firewall detected. Please manually ensure port ${REGISTRY_PORT} is open."
+        fi
+    else
+        echo "Skipping firewall configuration. Ensure port ${REGISTRY_PORT} is open for registry access."
+    fi
+}
+
 ######################################
-# 1. Check Docker / Docker Compose
+# 1. Check Docker and Docker Compose
 ######################################
 echo "Checking for Docker..."
 if ! command -v docker &> /dev/null; then
@@ -108,18 +119,16 @@ if ! command -v docker &> /dev/null; then
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     sudo usermod -aG docker "$USER"
-    echo "Docker installed. You may need to log out and back in for group changes to take effect."
+    echo "Docker installed. You may need to log out and back in for group changes."
 else
     echo "Docker is already installed."
 fi
-
 ensure_docker_running
 
 echo "Checking for Docker Compose plugin..."
 if ! docker compose version &> /dev/null; then
     echo "Docker Compose plugin not found. Installing..."
-    sudo apt-get update
-    sudo apt-get install -y docker-compose-plugin
+    sudo apt-get update && sudo apt-get install -y docker-compose-plugin
 else
     echo "Docker Compose plugin is installed."
 fi
@@ -137,16 +146,15 @@ if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     else
         echo "Swarm is already active on this node."
     fi
-
-    # Prompt to create local registry on manager
+    # Create the local registry on the manager.
     ensure_local_registry
+    open_firewall_port
 else
     echo "This node will join an existing swarm as a worker."
     read -p "Enter the manager node IP: " manager_ip
     read -p "Enter the swarm join token: " join_token
     sudo docker swarm join --token "$join_token" "$manager_ip:2377"
-
-    read -p "Does this worker need to pull images from an insecure registry at ${REGISTRY}? (y/n): " worker_insecure
+    read -p "Does this worker need to pull images from the registry at ${REGISTRY}? (y/n): " worker_insecure
     if [[ "$worker_insecure" =~ ^[Yy]$ ]]; then
         configure_insecure_registry "${REGISTRY}"
     fi
@@ -158,6 +166,7 @@ fi
 ARCH=$(uname -m)
 NODE_ID=$(sudo docker info -f '{{.Swarm.NodeID}}')
 
+# Adjust these paths for your environment.
 REPO_DIR_SERVER="/home/trace-grain/Documents/repos/aiinabox"
 REPO_DIR_SCRIBE="/home/wholegrain4/Documents/repos/aiinabox"
 
@@ -185,7 +194,7 @@ else
 fi
 
 ######################################
-# 3.5 Insecure Registry Config (all nodes)
+# 3.5 Configure Insecure Registry on All Nodes
 ######################################
 read -p "Do you want to configure this node to use the registry at ${REGISTRY} as insecure? (y/n): " config_insecure
 if [[ "$config_insecure" =~ ^[Yy]$ ]]; then
@@ -193,7 +202,7 @@ if [[ "$config_insecure" =~ ^[Yy]$ ]]; then
 fi
 
 ######################################
-# 4. GPU Setup (only on Linux server)
+# 4. GPU Setup (Server Only)
 ######################################
 if [[ "$IS_SCRIBE" == false ]]; then
     if command -v nvidia-smi &> /dev/null; then
@@ -202,40 +211,29 @@ if [[ "$IS_SCRIBE" == false ]]; then
         if [[ "$setup_gpu" =~ ^[Yy]$ ]]; then
             DOCKER_DAEMON="/etc/docker/daemon.json"
             echo "Configuring node-generic-resources for NVIDIA GPU in $DOCKER_DAEMON..."
-
             if ! command -v jq &> /dev/null; then
                 echo "Installing jq..."
-                sudo apt-get update
-                sudo apt-get install -y jq
+                sudo apt-get update && sudo apt-get install -y jq
             fi
-
             if [ ! -f "$DOCKER_DAEMON" ]; then
                 echo "{}" | sudo tee "$DOCKER_DAEMON" > /dev/null
             fi
-
             sudo cp "$DOCKER_DAEMON" "$DOCKER_DAEMON.bak"
-
             GPU_ARRAY=$(nvidia-smi -a | grep "GPU UUID" | awk -F': ' '{print "\"NVIDIA-GPU="$2"\""}' | paste -sd, -)
             GPU_ARRAY="[$GPU_ARRAY]"
-
             echo "Detected GPU resources: $GPU_ARRAY"
-
             sudo jq --argjson gpu_resources "$GPU_ARRAY" '
               .["default-runtime"] = "nvidia" |
               .runtimes.nvidia.path = "nvidia-container-runtime" |
               .runtimes.nvidia.args = [] |
               .["node-generic-resources"] = $gpu_resources
             ' "$DOCKER_DAEMON" | sudo tee "$DOCKER_DAEMON.tmp" > /dev/null
-
             sudo mv "$DOCKER_DAEMON.tmp" "$DOCKER_DAEMON"
-
             echo "Restarting Docker to apply changes..."
             sudo systemctl restart docker
             sleep 3
-
             if sudo systemctl is-active --quiet docker; then
-                echo "Docker restarted successfully. Checking GPU resources..."
-                sudo docker info | grep -A5 "Resources" || true
+                echo "Docker restarted successfully. GPU configuration applied."
             else
                 echo "Error: Docker failed to restart. Reverting changes..."
                 sudo cp "$DOCKER_DAEMON.bak" "$DOCKER_DAEMON"
@@ -246,12 +244,12 @@ if [[ "$IS_SCRIBE" == false ]]; then
             echo "Skipping GPU configuration."
         fi
     else
-        echo "No nvidia-smi found; skipping GPU configuration."
+        echo "No NVIDIA GPU detected; skipping GPU configuration."
     fi
 fi
 
 ######################################
-# 5. Create Directories
+# 5. Create Persistent Directories
 ######################################
 if [[ "$IS_SCRIBE" == true ]]; then
     echo "Creating persistent directories for transcripts (scribe)..."
@@ -272,10 +270,8 @@ else
                  /var/lib/aiinabox/search_eng_data \
                  /var/lib/aiinabox/index_dir \
                  /var/lib/aiinabox/title_index_dir
-
     PERSISTENT_FRONTEND="/var/lib/aiinabox/front_end"
     REPO_FRONTEND="$REPO_DIR/src/front_end"
-
     read -p "Do you want to populate (or repopulate) the persistent front_end directory from the repository? (y/n): " populate_frontend
     if [[ "$populate_frontend" =~ ^[Yy]$ ]]; then
         echo "Populating persistent front_end directory from repository..."
@@ -297,7 +293,7 @@ if [[ "$IS_SCRIBE" == true ]]; then
     echo "Scribe node: skipping host-level dependencies."
 else
     echo "Installing host-level dependencies on Linux server..."
-    # e.g., apt-get install -y default-jre or R, etc.
+    # e.g., sudo apt-get install -y default-jre, R, etc.
 fi
 
 ######################################
@@ -313,7 +309,6 @@ else
         read -p "Do you want to pre-build and launch Docker containers now? (y/n): " launch_docker
         if [[ "$launch_docker" =~ ^[Yy]$ ]]; then
             echo "Pre-building Docker images..."
-
             if [[ "$IS_SCRIBE" == true ]]; then
                 echo "Detected Raspberry Pi manager. Building scribe image locally..."
                 sudo docker build -t docker-scribe_speech_to_text -f "$REPO_DIR/docker/Dockerfile_scribe_arm" "$REPO_DIR"
@@ -323,31 +318,25 @@ else
                 sudo docker push ${REGISTRY}/docker-scribe_speech_to_text:latest
             else
                 echo "Detected server manager. Building server-related images..."
-                sudo docker build -t docker-icd_10_code_scraping -f "$REPO_DIR/docker/Dockerfile_scraping" "$REPO_DIR"
-                sudo docker build -t docker-icd_10_search_engine -f "$REPO_DIR/docker/Dockerfile_search_engine" "$REPO_DIR"
-                sudo docker build -t docker-front_end -f "$REPO_DIR/docker/Dockerfile_front_end" "$REPO_DIR"
-                sudo docker build -t docker-scribe_speech_to_text -f "$REPO_DIR/docker/Dockerfile_scribe_arm" "$REPO_DIR"
-                
+                sudo docker build -t docker-icd_10_code_scraping    -f "$REPO_DIR/docker/Dockerfile_scraping"       "$REPO_DIR"
+                sudo docker build -t docker-icd_10_search_engine    -f "$REPO_DIR/docker/Dockerfile_search_engine"  "$REPO_DIR"
+                sudo docker build -t docker-front_end               -f "$REPO_DIR/docker/Dockerfile_front_end"      "$REPO_DIR"
+                sudo docker build -t docker-scribe_speech_to_text   -f "$REPO_DIR/docker/Dockerfile_scribe_arm"     "$REPO_DIR"
                 echo "Tagging and pushing images to private registry..."
-                sudo docker tag docker-icd_10_code_scraping:latest ${REGISTRY}/docker-icd_10_code_scraping:latest
+                sudo docker tag docker-icd_10_code_scraping:latest   ${REGISTRY}/docker-icd_10_code_scraping:latest
                 sudo docker push ${REGISTRY}/docker-icd_10_code_scraping:latest
-
-                sudo docker tag docker-icd_10_search_engine:latest ${REGISTRY}/docker-icd_10_search_engine:latest
+                sudo docker tag docker-icd_10_search_engine:latest   ${REGISTRY}/docker-icd_10_search_engine:latest
                 sudo docker push ${REGISTRY}/docker-icd_10_search_engine:latest
-
-                sudo docker tag docker-front_end:latest ${REGISTRY}/docker-front_end:latest
+                sudo docker tag docker-front_end:latest              ${REGISTRY}/docker-front_end:latest
                 sudo docker push ${REGISTRY}/docker-front_end:latest
-
-                sudo docker tag docker-scribe_speech_to_text:latest ${REGISTRY}/docker-scribe_speech_to_text:latest
+                sudo docker tag docker-scribe_speech_to_text:latest  ${REGISTRY}/docker-scribe_speech_to_text:latest
                 sudo docker push ${REGISTRY}/docker-scribe_speech_to_text:latest
             fi
 
             echo "Deploying Docker stack 'aiinabox'..."
             sudo docker stack deploy -c "$DOCKER_COMPOSE_PATH" aiinabox
-
-            echo "Waiting for the overlay network and services to initialize..."
+            echo "Waiting for overlay network and services to initialize..."
             sleep 15
-
             if [[ "$IS_SCRIBE" == false ]]; then
                 echo "Attempting to load the phi3:14b model into the Ollama container..."
                 sleep 15
@@ -362,11 +351,11 @@ else
                 echo "Scribe node has no Ollama container. Skipping model pull."
             fi
         else
-            echo "Skipping Docker deployment. You can run later with:"
+            echo "Skipping Docker deployment. You can deploy later with:"
             echo "  sudo docker stack deploy -c $DOCKER_COMPOSE_PATH aiinabox"
         fi
     else
-        echo "Worker node: Docker stack deployment must be done on the manager."
+        echo "Worker node: Docker stack deployment must be performed on the manager."
     fi
 fi
 
@@ -377,9 +366,8 @@ echo "Installation complete."
 if [[ "$IS_SCRIBE" == true ]]; then
     echo "Scribe node: transcript directories created."
 else
-    echo "Server node: host-level dependencies installed (if any) and optional GPU config done."
+    echo "Server node: host-level dependencies installed (if any) and optional GPU configuration done."
 fi
-
 if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     echo "Stack deployed (if chosen). Check status with:"
     echo "  sudo docker stack ps aiinabox"
