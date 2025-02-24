@@ -1,6 +1,6 @@
 #!/bin/bash
 # install_aiinabox.sh
-# Unified installation script for AI in a Box.
+# Unified installation script for AI in a Box (manager or worker).
 
 set -e
 
@@ -9,7 +9,6 @@ echo "=== AI in a Box Unified Installation ==="
 ######################################
 # 0.5. Ensure Docker daemon is running
 ######################################
-# If Docker is installed but not running, this resolves "Cannot connect to the Docker daemon" errors.
 function ensure_docker_running() {
     if ! sudo systemctl is-active --quiet docker; then
         echo "Docker daemon is not running. Attempting to start Docker..."
@@ -17,7 +16,6 @@ function ensure_docker_running() {
         sleep 3
     fi
 
-    # Double-check if it started
     if ! sudo systemctl is-active --quiet docker; then
         echo "ERROR: Docker service is not running, and we cannot start it."
         echo "Check 'sudo systemctl status docker' for more info."
@@ -39,7 +37,6 @@ else
     echo "Docker is already installed."
 fi
 
-# Make sure Docker is running now that it’s installed
 ensure_docker_running
 
 ######################################
@@ -60,7 +57,6 @@ fi
 read -p "Is this the swarm manager node? (y/n): " is_manager
 if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     echo "This node will act as the swarm manager."
-    # Use 'sudo docker info' in case the user isn't in the docker group
     if ! sudo docker info 2>/dev/null | grep -q "Swarm: active"; then
         IP=$(hostname -I | awk '{print $1}')
         echo "Initializing Docker Swarm with advertise address: $IP"
@@ -76,20 +72,23 @@ else
 fi
 
 ######################################
-# 4. Label Node Based on Hardware Architecture
+# 4. Architecture Detection and Labeling
 ######################################
-NODE_ID=$(sudo docker info -f '{{.Swarm.NodeID}}')
 ARCH=$(uname -m)
+NODE_ID=$(sudo docker info -f '{{.Swarm.NodeID}}')
+
+# Adjust these paths to the actual location of your aiinabox repo on each device:
+REPO_DIR_SERVER="/home/trace-grain/Documents/repos/aiinabox"   # Example path on the server
+REPO_DIR_SCRIBE="/home/wholegrain4/Documents/repos/aiinabox"       # Example path on the Pi
 
 if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
+    # Raspberry Pi Node
     echo "Detected Raspberry Pi architecture ($ARCH)."
-    # For Raspberry Pi devices, label them as 'hardware=raspberrypi'.
     if [[ "$is_manager" =~ ^[Yy]$ ]]; then
-        echo "Labeling node as hardware=raspberrypi locally on the manager node."
+        echo "Labeling node as hardware=raspberrypi locally on this manager node."
         sudo docker node update --label-add hardware=raspberrypi "$NODE_ID"
     else
-        echo "This is a worker node. The label must be updated from the swarm manager."
-        # If manager_ip wasn't already provided during swarm join, prompt for it.
+        echo "Worker node (Pi). Label must be updated from the manager."
         if [ -z "$manager_ip" ]; then
             read -p "Enter the manager node IP: " manager_ip
         fi
@@ -97,16 +96,23 @@ if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
         echo "Updating node label on manager node..."
         ssh "$MANAGER_SSH_USER@$manager_ip" "docker node update --label-add hardware=raspberrypi $NODE_ID"
     fi
+
+    IS_SCRIBE=true
+    REPO_DIR="$REPO_DIR_SCRIBE"
 else
-    echo "Detected architecture ($ARCH) (assumed Linux server). Labeling node as hardware=server."
+    # x86_64 or other
+    echo "Detected architecture ($ARCH). Labeling node as hardware=server."
     sudo docker node update --label-add hardware=server "$NODE_ID"
+
+    IS_SCRIBE=false
+    REPO_DIR="$REPO_DIR_SERVER"
 fi
 
 ######################################
 # 4.5 GPU Setup (only on Linux server)
 ######################################
-if [[ "$ARCH" != "armv7l" && "$ARCH" != "aarch64" ]]; then
-    # Check if NVIDIA drivers (nvidia-smi) are installed
+if [[ "$IS_SCRIBE" == false ]]; then
+    # Attempt GPU setup only if not ARM
     if command -v nvidia-smi &> /dev/null; then
         echo "NVIDIA GPU detected (nvidia-smi found)."
         read -p "Do you want to configure the GPU for Docker Swarm? (y/n): " setup_gpu
@@ -115,26 +121,23 @@ if [[ "$ARCH" != "armv7l" && "$ARCH" != "aarch64" ]]; then
             echo "Configuring node-generic-resources for NVIDIA GPU in $DOCKER_DAEMON..."
 
             if ! command -v jq &> /dev/null; then
-              echo "Installing jq for JSON manipulation..."
+              echo "Installing jq..."
               sudo apt-get update
               sudo apt-get install -y jq
             fi
 
-            # If daemon.json doesn't exist, create an empty JSON object
+            # Create daemon.json if missing
             if [ ! -f "$DOCKER_DAEMON" ]; then
                 echo "{}" | sudo tee "$DOCKER_DAEMON" > /dev/null
             fi
 
-            # Backup
             sudo cp "$DOCKER_DAEMON" "$DOCKER_DAEMON.bak"
 
-            # Extract GPU UUIDs using nvidia-smi.
             GPU_ARRAY=$(nvidia-smi -a | grep "GPU UUID" | awk -F': ' '{print "\"NVIDIA-GPU="$2"\""}' | paste -sd, -)
             GPU_ARRAY="[$GPU_ARRAY]"
 
             echo "Detected GPU resources: $GPU_ARRAY"
 
-            # Use jq to set defaults & resources with the proper GPU UUIDs
             sudo jq --argjson gpu_resources "$GPU_ARRAY" '
               .["default-runtime"] = "nvidia" |
               .runtimes.nvidia.path = "nvidia-container-runtime" |
@@ -152,9 +155,7 @@ if [[ "$ARCH" != "armv7l" && "$ARCH" != "aarch64" ]]; then
                 echo "Docker restarted successfully. Checking GPU resources..."
                 sudo docker info | grep -A5 "Resources" || true
             else
-                echo "Error: Docker failed to restart. Check logs with:"
-                echo "  journalctl -u docker --no-pager | tail -n 50"
-                echo "Reverting daemon.json to previous backup..."
+                echo "Error: Docker failed to restart. Reverting changes..."
                 sudo cp "$DOCKER_DAEMON.bak" "$DOCKER_DAEMON"
                 sudo systemctl restart docker
                 exit 1
@@ -170,115 +171,114 @@ fi
 ######################################
 # 4.6 Create Persistent Directories
 ######################################
-if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
-    echo "This is a scribe (Raspberry Pi) node."
-    echo "Creating persistent directories for transcripts..."
-    sudo mkdir -p /var/lib/aiinabox/transcripts /var/lib/aiinabox/transcripts_clean
-    sudo chown -R $(whoami):$(whoami) /var/lib/aiinabox/transcripts /var/lib/aiinabox/transcripts_clean
+if [[ "$IS_SCRIBE" == true ]]; then
+    echo "Creating persistent directories for transcripts (scribe)..."
+    sudo mkdir -p /var/lib/aiinabox/transcripts \
+                 /var/lib/aiinabox/transcripts_clean
+    sudo chown -R $(whoami):$(whoami) /var/lib/aiinabox/transcripts \
+                                      /var/lib/aiinabox/transcripts_clean
 else
-    echo "This is a server node."
-    echo "Creating persistent directories for server data..."
+    echo "Creating persistent directories for the server node..."
     sudo mkdir -p /var/lib/aiinabox/ollamadata \
-                     /var/lib/aiinabox/scraped_data/jsons \
-                     /var/lib/aiinabox/scraped_data/codes \
-                     /var/lib/aiinabox/scraped_data/codes_clean \
-                     /var/lib/aiinabox/search_eng_data \
-                     /var/lib/aiinabox/index_dir \
-                     /var/lib/aiinabox/title_index_dir \
-                     /var/lib/aiinabox/front_end/
+                 /var/lib/aiinabox/scraped_data/jsons \
+                 /var/lib/aiinabox/scraped_data/codes \
+                 /var/lib/aiinabox/scraped_data/codes_clean \
+                 /var/lib/aiinabox/search_eng_data \
+                 /var/lib/aiinabox/index_dir \
+                 /var/lib/aiinabox/title_index_dir \
+                 /var/lib/aiinabox/front_end/
     sudo chown -R $(whoami):$(whoami) /var/lib/aiinabox/ollamadata \
-                     /var/lib/aiinabox/scraped_data \
-                     /var/lib/aiinabox/search_eng_data \
-                     /var/lib/aiinabox/index_dir \
-                     /var/lib/aiinabox/title_index_dir
+                 /var/lib/aiinabox/scraped_data \
+                 /var/lib/aiinabox/search_eng_data \
+                 /var/lib/aiinabox/index_dir \
+                 /var/lib/aiinabox/title_index_dir
 
-    # Optionally pre-populate the front_end directory from the repository.
+    # Optionally pre-populate the front_end directory from the repository
     PERSISTENT_FRONTEND="/var/lib/aiinabox/front_end"
-    REPO_DIR="$HOME/Documents/repos/aiinabox"
     REPO_FRONTEND="$REPO_DIR/src/front_end"
 
     read -p "Do you want to populate (or repopulate) the persistent front_end directory from the repository? (y/n): " populate_frontend
     if [[ "$populate_frontend" =~ ^[Yy]$ ]]; then
         echo "Populating persistent front_end directory from repository..."
-        # Copy everything from the src/front_end folder first.
         sudo cp -r "$REPO_FRONTEND/"* "$PERSISTENT_FRONTEND/"
-
-        # Next, copy additional files that your Dockerfile would have placed in /app/front_end.
+        
+        # Additional pipeline/template files
         sudo cp "$REPO_DIR/src/ai_pipeline/personas/personalities.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_empty_template_p0.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_empty_template_p1.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_empty_template_p2.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_empty_template_p3.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_filled_template_p0.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_filled_template_p1.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_filled_template_p2.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/ai_pipeline/templates/sick_visit_filled_template_p3.txt" "$PERSISTENT_FRONTEND/"
+        sudo cp "$REPO_DIR/src/ai_pipeline/templates/"sick_visit_*_template_p{0,1,2,3}.txt "$PERSISTENT_FRONTEND/"
         sudo cp "$REPO_DIR/src/ai_pipeline/template_generator.py" "$PERSISTENT_FRONTEND/"
         sudo cp "$REPO_DIR/src/search_engine/data/stopwords.txt" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/document_preprocessor.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/indexing.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/l2r.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/misc_tools.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/network_features.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/ranker.py" "$PERSISTENT_FRONTEND/"
-        sudo cp "$REPO_DIR/src/search_engine/relevance.py" "$PERSISTENT_FRONTEND/"
+        sudo cp "$REPO_DIR/src/search_engine/"{document_preprocessor.py,indexing.py,l2r.py,misc_tools.py,network_features.py,ranker.py,relevance.py} \
+          "$PERSISTENT_FRONTEND/"
     else
         echo "Skipping pre-population of persistent front_end directory."
     fi
 fi
 
 ######################################
-# 5. Install Host-Level Dependencies (Linux Server Only)
+# 5. Install Host-Level Dependencies (Server Only)
 ######################################
-if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
-    echo "This is a Raspberry Pi node. Skipping installation of host-level dependencies."
+if [[ "$IS_SCRIBE" == true ]]; then
+    echo "Scribe node: skipping host-level dependencies."
 else
     echo "Installing host-level dependencies on Linux server..."
-    # (Java, R, ChromeDriver, etc.) can be added here.
+    # e.g. Java, R, ChromeDriver, etc.
 fi
 
 ######################################
 # 6. Pre-build and Launch Docker Services
 ######################################
-DOCKER_COMPOSE_PATH="$HOME/Documents/repos/aiinabox/docker/docker-compose.yml"
-REPO_DIR="$HOME/Documents/repos/aiinabox"
+# Single Docker Compose file with placement constraints
+DOCKER_COMPOSE_PATH="$REPO_DIR/docker/docker-compose.yml"
 
 if [ ! -f "$DOCKER_COMPOSE_PATH" ]; then
-    echo "Warning: docker-compose.yml not found at ${DOCKER_COMPOSE_PATH}."
-    echo "If you wish to deploy Docker containers, please ensure the file exists."
+    echo "Warning: docker-compose.yml not found at $DOCKER_COMPOSE_PATH."
+    echo "Please ensure the file exists before deploying."
 else
     if [[ "$is_manager" =~ ^[Yy]$ ]]; then
         read -p "Do you want to pre-build and launch Docker containers now? (y/n): " launch_docker
         if [[ "$launch_docker" =~ ^[Yy]$ ]]; then
             echo "Pre-building Docker images..."
-            sudo docker build -t docker-icd_10_code_scraping -f "$REPO_DIR/docker/Dockerfile_scraping" "$REPO_DIR"
-            sudo docker build -t docker-icd_10_search_engine -f "$REPO_DIR/docker/Dockerfile_search_engine" "$REPO_DIR"
-            sudo docker build -t docker-front_end -f "$REPO_DIR/docker/Dockerfile_front_end" "$REPO_DIR"
-            sudo docker build -t docker-scribe_speech_to_text -f "$REPO_DIR/docker/Dockerfile_scribe_arm" "$REPO_DIR"
-            
-            echo "Deploying Docker stack 'aiinabox'..."
+
+            if [[ "$IS_SCRIBE" == true ]]; then
+                echo "Detected Raspberry Pi manager. Building only the scribe image locally..."
+                sudo docker build -t docker-scribe_speech_to_text \
+                                  -f "$REPO_DIR/docker/Dockerfile_scribe_arm" \
+                                  "$REPO_DIR"
+            else
+                echo "Detected server manager. Building the server-related images..."
+                sudo docker build -t docker-icd_10_code_scraping  -f "$REPO_DIR/docker/Dockerfile_scraping"        "$REPO_DIR"
+                sudo docker build -t docker-icd_10_search_engine  -f "$REPO_DIR/docker/Dockerfile_search_engine"   "$REPO_DIR"
+                sudo docker build -t docker-front_end             -f "$REPO_DIR/docker/Dockerfile_front_end"       "$REPO_DIR"
+                sudo docker build -t docker-scribe_speech_to_text -f "$REPO_DIR/docker/Dockerfile_scribe_arm"      "$REPO_DIR"
+                # Note: we build the scribe image here too if you want to push it from the server. If not needed, you can remove this line.
+            fi
+
+            echo "Deploying Docker stack 'aiinabox' with $DOCKER_COMPOSE_PATH..."
             sudo docker stack deploy -c "$DOCKER_COMPOSE_PATH" aiinabox
 
-            # Wait for the overlay network and services to initialize.
             echo "Waiting for the overlay network and services to initialize..."
             sleep 15
 
-            # Attempt to load the phi3:14b model into the Ollama container
-            echo "Attempting to load the phi3:14b model into the Ollama container..."
-            sleep 15
-            CONTAINER_ID=$(sudo docker ps --filter "name=aiinabox_ollama" --format "{{.ID}}" | head -n 1)
-            if [ -n "$CONTAINER_ID" ]; then
-                echo "Pulling phi3:14b model inside the Ollama container..."
-                sudo docker exec "$CONTAINER_ID" ollama run phi3:14b
+            # Only relevant if you have the ollama container on this node (server).
+            if [[ "$IS_SCRIBE" == false ]]; then
+                echo "Attempting to load the phi3:14b model into the Ollama container..."
+                sleep 15
+                CONTAINER_ID=$(sudo docker ps --filter "name=aiinabox_ollama" --format "{{.ID}}" | head -n 1)
+                if [ -n "$CONTAINER_ID" ]; then
+                    echo "Pulling phi3:14b model inside the Ollama container..."
+                    sudo docker exec "$CONTAINER_ID" ollama run phi3:14b
+                else
+                    echo "Error: Ollama container not found. Please check your deployment."
+                fi
             else
-                echo "Error: Ollama container not found. Please check your deployment."
+                echo "Scribe node has no Ollama container. Skipping model pull."
             fi
         else
-            echo "Skipping Docker container deployment. You can launch them later with:"
-            echo "  docker stack deploy -c $DOCKER_COMPOSE_PATH aiinabox"
+            echo "Skipping Docker deployment. You can run later with:"
+            echo "  sudo docker stack deploy -c $DOCKER_COMPOSE_PATH aiinabox"
         fi
     else
-        echo "This is not the swarm manager node. Docker stack deployment must be performed on a manager node."
+        echo "Worker node: Docker stack deployment must be done on the manager."
     fi
 fi
 
@@ -286,14 +286,15 @@ fi
 # 7. Final Messages
 ######################################
 echo "Installation complete."
-if [[ "$ARCH" != "armv7l" && "$ARCH" != "aarch64" ]]; then
-    echo "Host-level dependencies installed on Linux server, plus optional GPU config if you chose it."
+if [[ "$IS_SCRIBE" == true ]]; then
+    echo "Scribe node: transcript directories created."
 else
-    echo "Scribe-specific directories created for transcripts."
+    echo "Server node: host-level dependencies installed (if any) and optional GPU config done."
 fi
+
 if [[ "$is_manager" =~ ^[Yy]$ ]]; then
-    echo "Docker services deployed. Check the status with:"
+    echo "Stack deployed (if chosen). Check status with:"
     echo "  sudo docker stack ps aiinabox"
 else
-    echo "Docker services were not deployed from this node. Please deploy them from the swarm manager node when ready."
+    echo "Worker node: no stack deployed from here."
 fi
