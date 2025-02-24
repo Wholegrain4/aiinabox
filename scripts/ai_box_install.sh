@@ -7,7 +7,7 @@ set -e
 
 # Default registry address/port (adjust as needed)
 DEFAULT_REGISTRY_IP="192.168.40.187"
-REGISTRY_PORT="5000"
+REGISTRY_PORT="5001"
 REGISTRY="${DEFAULT_REGISTRY_IP}:${REGISTRY_PORT}"
 
 echo "=== AI in a Box Unified Installation ==="
@@ -95,7 +95,7 @@ function ensure_local_registry() {
     read -p "Do you want to create a local Docker registry container (port ${registry_port})? (y/n): " create_reg
     if [[ "$create_reg" =~ ^[Yy]$ ]]; then
         echo "Creating local registry on port ${registry_port}..."
-        sudo docker run -d -p ${registry_port}:5000 --restart=always --name ${registry_name} registry:2
+        sudo docker run -d -p ${registry_port}:5001 --restart=always --name ${registry_name} registry:2
         echo "Local registry '${registry_name}' started."
     else
         echo "Skipping local registry creation."
