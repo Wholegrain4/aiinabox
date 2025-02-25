@@ -23,7 +23,6 @@ RUN pip install --no-cache-dir -r /app/resources/requirements.txt
 # Copy the developer modules
 COPY src/edge_devices/scribe_device/stt_processor.py /app/scribe/stt_processor.py
 COPY src/edge_devices/scribe_device/utils.py /app/scribe/utils.py
-COPY src/edge_devices/scribe_device/run_scribe.py /app/scribe/run_scribe.py
 
 # Run the edge device set up script
 CMD ["python", "/app/scribe/stt_processor.py"]
