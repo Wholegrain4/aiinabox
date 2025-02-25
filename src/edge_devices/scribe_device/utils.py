@@ -1,7 +1,7 @@
 import time
 import numpy as np
 import sounddevice as sd
-import RPi.GPIO as GPIO
+from gpiozero import LED, Button
 from datetime import datetime
 import os
 import subprocess
@@ -24,18 +24,18 @@ class STTProcessor:
         self.MODEL_SIZE = model_size
         self.TRANSCRIPTS_DIR = transcripts_dir
 
-        # Setup GPIO
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(self.LED_PIN, GPIO.OUT)
-        # Start with LED off (HIGH, since LED anode is at 3.3V)
-        GPIO.output(self.LED_PIN, GPIO.HIGH)
+        # Setup gpiozero objects for the button and LED.
+        # Note: gpiozero automatically uses the appropriate backend for your Pi.
+        print("Initializing gpiozero for GPIO access...")
+        self.button = Button(self.BUTTON_PIN, pull_up=True)
+        self.led = LED(self.LED_PIN)
+        # Start with LED off.
+        self.led.off()
 
         # Ensure transcripts directory exists
         os.makedirs(self.TRANSCRIPTS_DIR, exist_ok=True)
 
         # Initialize whisper.cpp paths
-        # Adjust these paths as needed for your environment.
         print("Initializing whisper.cpp transcription engine...")
         self.whisper_binary = "./build/bin/whisper-cli"  # Path to the whisper.cpp binary
         self.model_file = "models/ggml-tiny.en.bin"        # Path to the ggml model file
@@ -50,8 +50,8 @@ class STTProcessor:
         with sd.InputStream(samplerate=self.SAMPLE_RATE,
                             channels=1, dtype='float32') as stream:
             print("Recording... Press and hold the button. Release to stop.")
-            # Keep recording while the button is pressed (GPIO input is LOW).
-            while GPIO.input(self.BUTTON_PIN) == GPIO.LOW:
+            # Use gpiozero's Button property to check if pressed.
+            while self.button.is_pressed:
                 data, _ = stream.read(self.CHUNK_SIZE)
                 audio_buffer.append(data)
         return np.concatenate(audio_buffer, axis=0)
@@ -76,14 +76,11 @@ class STTProcessor:
                 wf.writeframes(audio_int16.tobytes())
 
         # Build command to call whisper.cpp
-        # Example command:
-        # ./build/bin/whisper-cli -m models/ggml-tiny.en.bin -f /path/to/temp.wav
         cmd = [self.whisper_binary, "-m", self.model_file, "-f", tmp_filename]
         try:
             result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, text=True)
             output = result.stdout
-            # Depending on the binary's output format, you might need to parse it.
-            # For simplicity, we assume the final line of stdout is the transcription.
+            # For simplicity, assume the final line is the transcription.
             transcription = output.strip().split("\n")[-1]
         except subprocess.CalledProcessError as e:
             print("Error during transcription:", e.stderr)
@@ -94,43 +91,47 @@ class STTProcessor:
 
     def cleanup(self):
         """
-        Clean up the GPIO resources.
+        Clean up the gpiozero resources.
         """
-        GPIO.cleanup()
+        self.button.close()
+        self.led.close()
 
     def run(self):
         """
-        Main loop: waits for a button press to record audio, then transcribes it,
+        Main loop: waits for a button press to record audio, transcribes it,
         and saves the transcript to a text file.
         """
         print("Waiting for button press to start recording...")
         try:
             while True:
-                if GPIO.input(self.BUTTON_PIN) == GPIO.LOW:
-                    # Turn LED on by setting pin LOW (inverted logic).
-                    GPIO.output(self.LED_PIN, GPIO.LOW)
-
-                    # Record audio
+                if self.button.is_pressed:
+                    # Turn LED on to indicate recording.
+                    self.led.on()
+                    # Record audio until button is released.
                     audio_data = self.record_audio_until_release()
-
-                    # Turn LED off
-                    GPIO.output(self.LED_PIN, GPIO.HIGH)
-
-                    # Transcribe the recorded audio
+                    # Turn LED off.
+                    self.led.off()
+                    # Transcribe the recorded audio.
                     transcription = self.transcribe_audio(audio_data)
                     print("Transcription:", transcription)
-
-                    # Save transcript to file
+                    # Save transcript to file.
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     filename = f"transcript_{timestamp}.txt"
                     filepath = os.path.join(self.TRANSCRIPTS_DIR, filename)
                     with open(filepath, "w", encoding="utf-8") as f:
                         f.write(transcription)
                     print(f"Transcript saved to {filepath}")
-
                     time.sleep(0.5)  # Simple debounce
                 time.sleep(0.1)
         except KeyboardInterrupt:
             print("Exiting...")
         finally:
             self.cleanup()
+
+# stt_processor.py remains unchanged:
+def main():
+    processor = STTProcessor()
+    processor.run()
+
+if __name__ == '__main__':
+    main()
