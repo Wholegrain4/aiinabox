@@ -4,7 +4,7 @@ FROM python:3.12-slim
 # Ensure unbuffered stdout/stderr
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies (including wget, gfortran, pkg-config, BLAS/LAPACK libraries, and LGPIO)
+# Install system dependencies (including wget, gfortran, pkg-config, and BLAS/LAPACK libraries)
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     libportaudio2 \
@@ -13,14 +13,13 @@ RUN apt-get update && apt-get install -y \
     git \
     libffi-dev \
     python3-pip \
-    git \
     cmake \
     wget \
     gfortran \
     pkg-config \
     libopenblas-dev \
     liblapack-dev \
-    python3-lgpio && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
@@ -28,8 +27,9 @@ WORKDIR /app
 # Copy requirements.txt into the container
 COPY src/edge_devices/scribe_device/requirements.txt /app/resources/requirements.txt
 
-# Install Python dependencies from requirements.txt
-RUN pip install --no-cache-dir -r /app/resources/requirements.txt
+# Install Python dependencies from requirements.txt and LGPIO via pip
+RUN pip install --no-cache-dir -r /app/resources/requirements.txt && \
+    pip install lgpio
 
 #
 # Clone and build whisper.cpp
