@@ -1,8 +1,8 @@
 # stt_processor.py
 from utils import STTProcessor
 from gpiozero import Device
-from gpiozero.pins.lgpio import LgpioFactory
-Device.pin_factory = LgpioFactory()
+from gpiozero.pins.lgpio import LGPIOFactory
+Device.pin_factory = LGPIOFactory()
 
 def main():
     processor = STTProcessor()
