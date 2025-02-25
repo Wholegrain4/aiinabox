@@ -4,12 +4,13 @@ FROM python:3.12-slim
 # Ensure unbuffered stdout/stderr
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies (including wget, gfortran, pkg-config, and BLAS/LAPACK libraries)
+# Install system dependencies (including wget, gfortran, pkg-config, BLAS/LAPACK libraries, and LGPIO)
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     libportaudio2 \
     python3-dev \
-    build-essential git \
+    build-essential \
+    git \
     libffi-dev \
     python3-pip \
     git \
@@ -18,7 +19,8 @@ RUN apt-get update && apt-get install -y \
     gfortran \
     pkg-config \
     libopenblas-dev \
-    liblapack-dev && rm -rf /var/lib/apt/lists/*
+    liblapack-dev \
+    python3-lgpio && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
