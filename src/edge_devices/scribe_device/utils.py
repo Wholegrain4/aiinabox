@@ -36,9 +36,9 @@ class STTProcessor:
 
         # Initialize whisper.cpp paths
         print("Initializing whisper.cpp transcription engine...")
-        # Updated path to point to the correct location
-        self.whisper_binary = "./whisper.cpp/build/bin/whisper-cli"  # Corrected path
-        self.model_file = "models/ggml-tiny.en.bin"        # Path to the ggml model file
+        # Update binary path and model file path.
+        self.whisper_binary = "./whisper.cpp/build/bin/whisper-cli"  # Correct path to the binary
+        self.model_file = "./whisper.cpp/models/ggml-tiny.en.bin"      # Correct path to the model file
         print("whisper.cpp transcription engine initialized.")
 
     def record_audio_until_release(self):
