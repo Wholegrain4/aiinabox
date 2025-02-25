@@ -20,11 +20,6 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     liblapack-dev && rm -rf /var/lib/apt/lists/*
 
-# Declare TARGETARCH build argument (Docker Buildx sets this automatically)
-ARG TARGETARCH
-ENV CFLAGS="-mcpu=cortex-a76+crypto"
-ENV CXXFLAGS="-mcpu=cortex-a76+crypto"
-
 # Set the working directory
 WORKDIR /app
 
@@ -42,15 +37,8 @@ RUN pip install --no-cache-dir -r /app/resources/requirements.txt
 # set GGML_CPU_VARIANT explicitly to "cortex-a72", and disable auto-detection.
 RUN git clone https://github.com/ggerganov/whisper.cpp.git && \
     cd whisper.cpp && \
-    if [ "$TARGETARCH" = "amd64" ]; then \
-         echo "Target is amd64. Using default cmake configuration..."; \
-         cmake -B build; \
-    else \
-         echo "Non-amd64 target detected ($TARGETARCH). Forcing -mcpu=armv8.2-a and setting GGML_CPU_VARIANT=cortex-a72." && \
-         cmake -B build \
-             -DGGML_NATIVE=OFF \
-             -DGGML_CPU_ARM_ARCH=armv8.2-a; \
-    fi && \
+    echo "Forcing -mcpu=armv8.2-a" && \
+    cmake -B build -DGGML_NATIVE=OFF -DGGML_CPU_ARM_ARCH=armv8.2-a && \
     cmake --build build --config Release && \
     ./models/download-ggml-model.sh tiny.en
 
