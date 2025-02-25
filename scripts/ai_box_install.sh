@@ -1,7 +1,7 @@
 #!/bin/bash
 # install_aiinabox.sh
 # Unified installation script for AI in a Box (manager or worker)
-# Implements a local private registry as described in the guide.
+# Implements a local private registry and multi-arch Docker builds using QEMU emulation.
 
 set -e
 
@@ -26,6 +26,14 @@ function ensure_docker_running() {
         echo "ERROR: Docker service is not running. Check 'sudo systemctl status docker'."
         exit 1
     fi
+}
+
+# NEW: Setup QEMU emulation so that ARM builds run as if natively on ARM.
+function setup_qemu_emulation() {
+    echo "Installing qemu-user-static for multi-arch emulation..."
+    sudo apt-get update && sudo apt-get install -y qemu-user-static
+    echo "Registering QEMU emulation with Docker Buildx..."
+    sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 }
 
 # Configure /etc/docker/daemon.json to mark the registry as insecure.
@@ -124,6 +132,9 @@ else
     echo "Docker is already installed."
 fi
 ensure_docker_running
+
+# NEW: Setup QEMU emulation for multi-arch builds.
+setup_qemu_emulation
 
 echo "Checking for Docker Compose plugin..."
 if ! docker compose version &> /dev/null; then
@@ -310,9 +321,7 @@ else
         if [[ "$launch_docker" =~ ^[Yy]$ ]]; then
             echo "Ensuring Buildx is set up for multi-arch (amd64 + arm)..."
 
-            #
             # 1) Create /etc/buildkit.toml for our insecure registry config
-            #
             echo "Creating /etc/buildkit.toml to allow pushing to http://${REGISTRY}..."
             cat <<EOF | sudo tee /etc/buildkit.toml
 debug = false
@@ -322,17 +331,13 @@ debug = false
   insecure = true
 EOF
 
-            #
             # 2) Remove any existing builder named multiarch-builder (optional fresh config)
-            #
             if docker buildx ls | grep -q "multiarch-builder"; then
               echo "Removing existing multiarch-builder instance..."
               docker buildx rm multiarch-builder || true
             fi
 
-            #
             # 3) Create a builder that uses /etc/buildkit.toml
-            #
             echo "Creating multiarch-builder with /etc/buildkit.toml..."
             docker buildx create \
               --driver docker-container \
@@ -344,15 +349,17 @@ EOF
 
             echo "=== Building multi-architecture images (x86 + ARM) and pushing to ${REGISTRY} ==="
 
-            # Example: Build and push the scribe image for both amd64 and arm (32-bit).
+            # IMPORTANT: With QEMU emulation in place, do not force ARM-specific flags in your Dockerfiles.
+            # For example, use your Dockerfile (e.g. Dockerfile_scribe) without extra -march flags.
             docker buildx build \
-              --platform linux/amd64,linux/arm/v7 \
+              --platform linux/arm64 \
               -t ${REGISTRY}/docker-scribe_speech_to_text:latest \
               -f "$REPO_DIR/docker/Dockerfile_scribe_arm" \
               "$REPO_DIR" \
               --push
 
-            # Build & push the scraping image
+            # (Repeat similar buildx commands for any other images, such as scraping, search engine, front end, etc.)
+            # Example for scraping image:
             docker buildx build \
               --platform linux/amd64 \
               -t ${REGISTRY}/docker-icd_10_code_scraping:latest \
@@ -360,7 +367,7 @@ EOF
               "$REPO_DIR" \
               --push
 
-            # Build & push the search engine image
+            # Example for search engine image:
             docker buildx build \
               --platform linux/amd64 \
               -t ${REGISTRY}/docker-icd_10_search_engine:latest \
@@ -368,7 +375,7 @@ EOF
               "$REPO_DIR" \
               --push
 
-            # Build & push the front-end image
+            # Example for front end image:
             docker buildx build \
               --platform linux/amd64 \
               -t ${REGISTRY}/docker-front_end:latest \

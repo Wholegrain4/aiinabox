@@ -7,7 +7,7 @@ import os
 import subprocess
 import tempfile
 import wave
-import scipy.signal  # For resampling
+import scipy.signal
 
 class STTProcessor:
     def __init__(self, 
@@ -17,7 +17,7 @@ class STTProcessor:
                  sample_rate=16000,  # Desired sample rate for Whisper
                  chunk_size=1024, 
                  model_size="tiny", 
-                 transcripts_dir="/var/lib/aiinabox/transcripts"):
+                 transcripts_dir="/app/transcripts"):
         # Configuration
         self.GREEN_BUTTON_PIN = green_button_pin
         self.RED_BUTTON_PIN = red_button_pin
