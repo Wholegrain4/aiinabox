@@ -308,35 +308,80 @@ else
     if [[ "$is_manager" =~ ^[Yy]$ ]]; then
         read -p "Do you want to pre-build and launch Docker containers now? (y/n): " launch_docker
         if [[ "$launch_docker" =~ ^[Yy]$ ]]; then
-            echo "Pre-building Docker images..."
-            if [[ "$IS_SCRIBE" == true ]]; then
-                echo "Detected Raspberry Pi manager. Building scribe image locally..."
-                sudo docker build -t docker-scribe_speech_to_text -f "$REPO_DIR/docker/Dockerfile_scribe_arm" "$REPO_DIR"
-                echo "Tagging scribe image for private registry..."
-                sudo docker tag docker-scribe_speech_to_text:latest ${REGISTRY}/docker-scribe_speech_to_text:latest
-                echo "Pushing scribe image to private registry..."
-                sudo docker push ${REGISTRY}/docker-scribe_speech_to_text:latest
-            else
-                echo "Detected server manager. Building server-related images..."
-                sudo docker build -t docker-icd_10_code_scraping    -f "$REPO_DIR/docker/Dockerfile_scraping"       "$REPO_DIR"
-                sudo docker build -t docker-icd_10_search_engine    -f "$REPO_DIR/docker/Dockerfile_search_engine"  "$REPO_DIR"
-                sudo docker build -t docker-front_end               -f "$REPO_DIR/docker/Dockerfile_front_end"      "$REPO_DIR"
-                sudo docker build -t docker-scribe_speech_to_text   -f "$REPO_DIR/docker/Dockerfile_scribe_arm"     "$REPO_DIR"
-                echo "Tagging and pushing images to private registry..."
-                sudo docker tag docker-icd_10_code_scraping:latest   ${REGISTRY}/docker-icd_10_code_scraping:latest
-                sudo docker push ${REGISTRY}/docker-icd_10_code_scraping:latest
-                sudo docker tag docker-icd_10_search_engine:latest   ${REGISTRY}/docker-icd_10_search_engine:latest
-                sudo docker push ${REGISTRY}/docker-icd_10_search_engine:latest
-                sudo docker tag docker-front_end:latest              ${REGISTRY}/docker-front_end:latest
-                sudo docker push ${REGISTRY}/docker-front_end:latest
-                sudo docker tag docker-scribe_speech_to_text:latest  ${REGISTRY}/docker-scribe_speech_to_text:latest
-                sudo docker push ${REGISTRY}/docker-scribe_speech_to_text:latest
+            echo "Ensuring Buildx is set up for multi-arch (amd64 + arm)..."
+
+            #
+            # 1) Create /etc/buildkit.toml for our insecure registry config
+            #
+            echo "Creating /etc/buildkit.toml to allow pushing to http://${REGISTRY}..."
+            cat <<EOF | sudo tee /etc/buildkit.toml
+debug = false
+
+[registry."${REGISTRY}"]
+  http = true
+  insecure = true
+EOF
+
+            #
+            # 2) Remove any existing builder named multiarch-builder (optional fresh config)
+            #
+            if docker buildx ls | grep -q "multiarch-builder"; then
+              echo "Removing existing multiarch-builder instance..."
+              docker buildx rm multiarch-builder || true
             fi
 
-            echo "Deploying Docker stack 'aiinabox'..."
+            #
+            # 3) Create a builder that uses /etc/buildkit.toml
+            #
+            echo "Creating multiarch-builder with /etc/buildkit.toml..."
+            docker buildx create \
+              --driver docker-container \
+              --config /etc/buildkit.toml \
+              --name multiarch-builder \
+              --use
+
+            docker buildx inspect --bootstrap
+
+            echo "=== Building multi-architecture images (x86 + ARM) and pushing to ${REGISTRY} ==="
+
+            # Example: Build and push the scribe image for both amd64 and arm (32-bit).
+            docker buildx build \
+              --platform linux/amd64,linux/arm/v7 \
+              -t ${REGISTRY}/docker-scribe_speech_to_text:latest \
+              -f "$REPO_DIR/docker/Dockerfile_scribe_arm" \
+              "$REPO_DIR" \
+              --push
+
+            # Build & push the scraping image
+            docker buildx build \
+              --platform linux/amd64 \
+              -t ${REGISTRY}/docker-icd_10_code_scraping:latest \
+              -f "$REPO_DIR/docker/Dockerfile_scraping" \
+              "$REPO_DIR" \
+              --push
+
+            # Build & push the search engine image
+            docker buildx build \
+              --platform linux/amd64 \
+              -t ${REGISTRY}/docker-icd_10_search_engine:latest \
+              -f "$REPO_DIR/docker/Dockerfile_search_engine" \
+              "$REPO_DIR" \
+              --push
+
+            # Build & push the front-end image
+            docker buildx build \
+              --platform linux/amd64 \
+              -t ${REGISTRY}/docker-front_end:latest \
+              -f "$REPO_DIR/docker/Dockerfile_front_end" \
+              "$REPO_DIR" \
+              --push
+
+            echo "=== Finished multi-arch builds. Deploying Docker stack 'aiinabox'... ==="
             sudo docker stack deploy -c "$DOCKER_COMPOSE_PATH" aiinabox
+
             echo "Waiting for overlay network and services to initialize..."
             sleep 15
+
             if [[ "$IS_SCRIBE" == false ]]; then
                 echo "Attempting to load the phi3:14b model into the Ollama container..."
                 sleep 15
