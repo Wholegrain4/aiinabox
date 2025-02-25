@@ -66,6 +66,9 @@ services:
     volumes:
       - /var/lib/aiinabox/transcripts:/app/transcripts
       - /var/lib/aiinabox/transcripts_clean:/app/transcripts_clean
+    devices:
+      - "/dev/gpiomem:/dev/gpiomem"
+      - "/dev/gpiochip0:/dev/gpiochip0"
     deploy:
       placement:
         constraints:
