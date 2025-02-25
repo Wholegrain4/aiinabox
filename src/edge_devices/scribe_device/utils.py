@@ -1,10 +1,12 @@
 import time
 import numpy as np
 import sounddevice as sd
-import whisper
 import RPi.GPIO as GPIO
 from datetime import datetime
 import os
+import subprocess
+import tempfile
+import wave
 
 class STTProcessor:
     def __init__(self, 
@@ -32,10 +34,12 @@ class STTProcessor:
         # Ensure transcripts directory exists
         os.makedirs(self.TRANSCRIPTS_DIR, exist_ok=True)
 
-        # Load Whisper model
-        print("Loading Whisper model...")
-        self.model = whisper.load_model(self.MODEL_SIZE)
-        print("Model loaded.")
+        # Initialize whisper.cpp paths
+        # Adjust these paths as needed for your environment.
+        print("Initializing whisper.cpp transcription engine...")
+        self.whisper_binary = "./build/bin/whisper-cli"  # Path to the whisper.cpp binary
+        self.model_file = "models/ggml-tiny.en.bin"        # Path to the ggml model file
+        print("whisper.cpp transcription engine initialized.")
 
     def record_audio_until_release(self):
         """
@@ -54,12 +58,39 @@ class STTProcessor:
 
     def transcribe_audio(self, audio_data):
         """
-        Transcribes the buffered audio using the Whisper model.
+        Transcribes the buffered audio using the whisper.cpp binary.
         Returns the transcription text.
         """
-        print("Transcribing...")
-        result = self.model.transcribe(audio_data, fp16=False)
-        return result["text"]
+        print("Transcribing audio using whisper.cpp...")
+
+        # Convert float32 audio (range -1.0 to 1.0) to 16-bit PCM
+        audio_int16 = (audio_data * 32767).astype(np.int16)
+
+        # Write the audio data to a temporary WAV file
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+            tmp_filename = tmp.name
+            with wave.open(tmp_filename, 'wb') as wf:
+                wf.setnchannels(1)
+                wf.setsampwidth(2)  # 2 bytes per sample for int16
+                wf.setframerate(self.SAMPLE_RATE)
+                wf.writeframes(audio_int16.tobytes())
+
+        # Build command to call whisper.cpp
+        # Example command:
+        # ./build/bin/whisper-cli -m models/ggml-tiny.en.bin -f /path/to/temp.wav
+        cmd = [self.whisper_binary, "-m", self.model_file, "-f", tmp_filename]
+        try:
+            result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, text=True)
+            output = result.stdout
+            # Depending on the binary's output format, you might need to parse it.
+            # For simplicity, we assume the final line of stdout is the transcription.
+            transcription = output.strip().split("\n")[-1]
+        except subprocess.CalledProcessError as e:
+            print("Error during transcription:", e.stderr)
+            transcription = ""
+        # Remove the temporary WAV file
+        os.remove(tmp_filename)
+        return transcription
 
     def cleanup(self):
         """
@@ -79,13 +110,13 @@ class STTProcessor:
                     # Turn LED on by setting pin LOW (inverted logic).
                     GPIO.output(self.LED_PIN, GPIO.LOW)
 
-                    # Record
+                    # Record audio
                     audio_data = self.record_audio_until_release()
 
                     # Turn LED off
                     GPIO.output(self.LED_PIN, GPIO.HIGH)
 
-                    # Transcribe
+                    # Transcribe the recorded audio
                     transcription = self.transcribe_audio(audio_data)
                     print("Transcription:", transcription)
 
