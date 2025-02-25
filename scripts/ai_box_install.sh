@@ -30,11 +30,18 @@ function ensure_docker_running() {
 
 # NEW: Setup QEMU emulation so that ARM builds run as if natively on ARM.
 function setup_qemu_emulation() {
+    # Only run on x86_64 (the swarm manager)
+    if [ "$(uname -m)" != "x86_64" ]; then
+        echo "Skipping QEMU emulation setup: not running on an x86 machine."
+        return 0
+    fi
+
     echo "Installing qemu-user-static for multi-arch emulation..."
     sudo apt-get update && sudo apt-get install -y qemu-user-static
     echo "Registering QEMU emulation with Docker Buildx..."
     sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 }
+
 
 # Configure /etc/docker/daemon.json to mark the registry as insecure.
 function configure_insecure_registry() {
