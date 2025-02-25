@@ -15,7 +15,7 @@ class STTProcessor:
                  sample_rate=16000, 
                  chunk_size=1024, 
                  model_size="tiny", 
-                 transcripts_dir="/app/transcripts"):
+                 transcripts_dir="/var/lib/aiinabox/transcripts"):
         # Configuration
         self.BUTTON_PIN = button_pin
         self.LED_PIN = led_pin
