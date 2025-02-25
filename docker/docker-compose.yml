@@ -69,10 +69,12 @@ services:
     devices:
       - "/dev/gpiomem:/dev/gpiomem"
       - "/dev/gpiochip0:/dev/gpiochip0"
+    privileged: true
     deploy:
       placement:
         constraints:
           - node.labels.hardware == raspberrypi
+
 
 networks:
   default:
