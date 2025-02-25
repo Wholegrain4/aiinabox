@@ -74,7 +74,7 @@ class STTProcessor:
     def transcribe_audio(self, audio_data):
         """
         Transcribes the buffered audio using the whisper.cpp binary.
-        Returns the transcription text.
+        Returns the full transcription text.
         """
         print("Transcribing audio using whisper.cpp...")
 
@@ -96,8 +96,8 @@ class STTProcessor:
             result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     check=True, text=True)
             output = result.stdout
-            # For simplicity, assume the final line of output is the transcription.
-            transcription = output.strip().split("\n")[-1]
+            # Use the entire output as the transcription.
+            transcription = output.strip()
         except subprocess.CalledProcessError as e:
             print("Error during transcription:", e.stderr)
             transcription = ""
