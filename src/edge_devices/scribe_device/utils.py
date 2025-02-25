@@ -36,7 +36,8 @@ class STTProcessor:
 
         # Initialize whisper.cpp paths
         print("Initializing whisper.cpp transcription engine...")
-        self.whisper_binary = "./build/bin/whisper-cli"  # Path to the whisper.cpp binary
+        # Updated path to point to the correct location
+        self.whisper_binary = "./whisper.cpp/build/bin/whisper-cli"  # Corrected path
         self.model_file = "models/ggml-tiny.en.bin"        # Path to the ggml model file
         print("whisper.cpp transcription engine initialized.")
 
@@ -116,27 +117,17 @@ class STTProcessor:
         try:
             while True:
                 if self.button.is_pressed:
-                    # Turn LED on to indicate recording.
                     self.led.on()
-
-                    # Record audio until button is released.
                     audio_data = self.record_audio_until_release()
-
-                    # Turn LED off.
                     self.led.off()
-
-                    # Transcribe the recorded audio.
                     transcription = self.transcribe_audio(audio_data)
                     print("Transcription:", transcription)
-
-                    # Save transcript to file.
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     filename = f"transcript_{timestamp}.txt"
                     filepath = os.path.join(self.TRANSCRIPTS_DIR, filename)
                     with open(filepath, "w", encoding="utf-8") as f:
                         f.write(transcription)
                     print(f"Transcript saved to {filepath}")
-
                     time.sleep(0.5)  # Simple debounce
                 time.sleep(0.1)
         except KeyboardInterrupt:
