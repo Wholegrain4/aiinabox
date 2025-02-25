@@ -7,12 +7,13 @@ import os
 import subprocess
 import tempfile
 import wave
+import scipy.signal  # For resampling
 
 class STTProcessor:
     def __init__(self, 
                  button_pin=2, 
                  led_pin=3, 
-                 sample_rate=16000, 
+                 sample_rate=16000,  # Desired sample rate for Whisper
                  chunk_size=1024, 
                  model_size="tiny", 
                  transcripts_dir="/var/lib/aiinabox/transcripts"):
@@ -25,11 +26,9 @@ class STTProcessor:
         self.TRANSCRIPTS_DIR = transcripts_dir
 
         # Setup gpiozero objects for the button and LED.
-        # Note: gpiozero automatically uses the appropriate backend for your Pi.
         print("Initializing gpiozero for GPIO access...")
         self.button = Button(self.BUTTON_PIN, pull_up=True)
         self.led = LED(self.LED_PIN)
-        # Start with LED off.
         self.led.off()
 
         # Ensure transcripts directory exists
@@ -45,16 +44,28 @@ class STTProcessor:
         """
         Records audio from the microphone into an in-memory buffer
         until the button is released.
+        It uses the device's default sample rate and resamples to the desired rate if needed.
         """
+        # Query default input device sample rate
+        default_input = sd.query_devices(kind='input')
+        device_sample_rate = int(default_input['default_samplerate'])
+        print("Using device sample rate:", device_sample_rate)
+
         audio_buffer = []
-        with sd.InputStream(samplerate=self.SAMPLE_RATE,
+        with sd.InputStream(samplerate=device_sample_rate,
                             channels=1, dtype='float32') as stream:
             print("Recording... Press and hold the button. Release to stop.")
-            # Use gpiozero's Button property to check if pressed.
             while self.button.is_pressed:
                 data, _ = stream.read(self.CHUNK_SIZE)
                 audio_buffer.append(data)
-        return np.concatenate(audio_buffer, axis=0)
+        audio_data = np.concatenate(audio_buffer, axis=0)
+
+        # Resample to the desired sample rate if necessary
+        if device_sample_rate != self.SAMPLE_RATE:
+            print(f"Resampling audio from {device_sample_rate} Hz to {self.SAMPLE_RATE} Hz.")
+            num_samples = int(len(audio_data) * self.SAMPLE_RATE / device_sample_rate)
+            audio_data = scipy.signal.resample(audio_data, num_samples)
+        return audio_data
 
     def transcribe_audio(self, audio_data):
         """
@@ -107,13 +118,17 @@ class STTProcessor:
                 if self.button.is_pressed:
                     # Turn LED on to indicate recording.
                     self.led.on()
+
                     # Record audio until button is released.
                     audio_data = self.record_audio_until_release()
+
                     # Turn LED off.
                     self.led.off()
+
                     # Transcribe the recorded audio.
                     transcription = self.transcribe_audio(audio_data)
                     print("Transcription:", transcription)
+
                     # Save transcript to file.
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     filename = f"transcript_{timestamp}.txt"
@@ -121,6 +136,7 @@ class STTProcessor:
                     with open(filepath, "w", encoding="utf-8") as f:
                         f.write(transcription)
                     print(f"Transcript saved to {filepath}")
+
                     time.sleep(0.5)  # Simple debounce
                 time.sleep(0.1)
         except KeyboardInterrupt:
@@ -128,7 +144,6 @@ class STTProcessor:
         finally:
             self.cleanup()
 
-# stt_processor.py remains unchanged:
 def main():
     processor = STTProcessor()
     processor.run()
