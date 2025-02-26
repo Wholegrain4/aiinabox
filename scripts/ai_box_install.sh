@@ -28,7 +28,7 @@ function ensure_docker_running() {
     fi
 }
 
-# NEW: Setup QEMU emulation so that ARM builds run as if natively on ARM.
+# Setup QEMU emulation so that ARM builds run as if natively on ARM.
 function setup_qemu_emulation() {
     # Only run on x86_64 (the swarm manager)
     if [ "$(uname -m)" != "x86_64" ]; then
@@ -41,7 +41,6 @@ function setup_qemu_emulation() {
     echo "Registering QEMU emulation with Docker Buildx..."
     sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 }
-
 
 # Configure /etc/docker/daemon.json to mark the registry as insecure.
 function configure_insecure_registry() {
@@ -140,7 +139,7 @@ else
 fi
 ensure_docker_running
 
-# NEW: Setup QEMU emulation for multi-arch builds.
+# Setup QEMU emulation for multi-arch builds.
 setup_qemu_emulation
 
 echo "Checking for Docker Compose plugin..."
@@ -190,18 +189,14 @@ REPO_DIR_SCRIBE="/home/wholegrain4/Documents/repos/aiinabox"
 
 if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
     echo "Detected Raspberry Pi architecture ($ARCH)."
-    # We assume all Pi nodes are swarm *workers* only. So do manager labeling via SSH.
-
-    LOCAL_IP=$(hostname -I | awk '{print $1}')
+    # For Pi nodes (workers), we assume the manager will label them.
+    # We no longer set a pigpio_ip label since we'll use the node's hostname in the compose file.
     if [ -z "$manager_ip" ]; then
         read -p "Enter the manager node IP: " manager_ip
     fi
     read -p "Enter manager node SSH username for labeling: " MANAGER_SSH_USER
-    echo "Labeling this Pi (worker) from manager side with hardware=raspberrypi and pigpio_ip=$LOCAL_IP"
-    ssh "$MANAGER_SSH_USER@$manager_ip" "docker node update \
-        --label-add hardware=raspberrypi \
-        --label-add pigpio_ip=$LOCAL_IP \
-        $NODE_ID"
+    echo "Labeling this Pi (worker) from the manager side with hardware=raspberrypi."
+    ssh "$MANAGER_SSH_USER@$manager_ip" "docker node update --label-add hardware=raspberrypi $NODE_ID"
 
     IS_SCRIBE=true
     REPO_DIR="$REPO_DIR_SCRIBE"
