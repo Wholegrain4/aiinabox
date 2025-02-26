@@ -1,4 +1,5 @@
 import os
+os.environ['RPI_LGPIO_CHIP'] = '0'
 import time
 import numpy as np
 import sounddevice as sd
