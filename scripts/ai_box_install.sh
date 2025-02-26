@@ -216,6 +216,25 @@ if [[ "$config_insecure" =~ ^[Yy]$ ]]; then
 fi
 
 ######################################
+# 3.75 Ensure pigpiod is running (Scribe nodes only)
+######################################
+if [[ "$IS_SCRIBE" == true ]]; then
+    echo "Checking if pigpiod is running on this Raspberry Pi..."
+    if ! pgrep pigpiod > /dev/null; then
+        echo "pigpiod is not running. Starting pigpiod on all network interfaces..."
+        sudo pigpiod -n 0.0.0.0
+        sleep 2
+        if pgrep pigpiod > /dev/null; then
+            echo "pigpiod started successfully."
+        else
+            echo "Failed to start pigpiod. Please start it manually with: sudo pigpiod -n 0.0.0.0"
+        fi
+    else
+        echo "pigpiod is already running."
+    fi
+fi
+
+######################################
 # 4. GPU Setup (Server Only)
 ######################################
 if [[ "$IS_SCRIBE" == false ]]; then

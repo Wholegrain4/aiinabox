@@ -15,7 +15,7 @@ from datetime import datetime
 # 1) Configure the PiGPIOFactory globally:
 #    Reads host IP from the environment variable "PIGPIO_HOST"
 #    (Set this var in your Docker Swarm config, e.g. PIGPIO_HOST={{.Node.Address}})
-PIGPIO_HOST = os.environ.get("PIGPIO_HOST", "192.168.1.50")
+PIGPIO_HOST = os.environ.get("PIGPIO_HOST")
 Device.pin_factory = PiGPIOFactory(host=PIGPIO_HOST)
 
 class STTProcessor:
