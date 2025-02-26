@@ -8,12 +8,12 @@ import wave
 import scipy.signal
 
 from gpiozero import Device
-from gpiozero.pins.lgpio import LGpioFactory  # Use LGPIO instead of pigpio
+from gpiozero.pins.lgpio import LGPIOFactory  # Use LGPIO instead of pigpio
 from gpiozero import LED, Button
 from datetime import datetime
 
 # 1) Configure the LGpioFactory globally:
-Device.pin_factory = LGpioFactory()
+Device.pin_factory = LGPIOFactory()
 
 class STTProcessor:
     def __init__(self,
