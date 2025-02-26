@@ -159,7 +159,7 @@ if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     echo "This node will act as the swarm manager."
     if ! sudo docker info 2>/dev/null | grep -q "Swarm: active"; then
         IP=$(hostname -I | awk '{print $1}')
-        echo "Initializing Docker Swarm with advertise address: $IP"
+        echo "Initializing Docker Swarm with advertise-addr: $IP"
         sudo docker swarm init --advertise-addr "$IP"
     else
         echo "Swarm is already active on this node."
@@ -190,18 +190,19 @@ REPO_DIR_SCRIBE="/home/wholegrain4/Documents/repos/aiinabox"
 
 if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
     echo "Detected Raspberry Pi architecture ($ARCH)."
-    if [[ "$is_manager" =~ ^[Yy]$ ]]; then
-        echo "Labeling node as hardware=raspberrypi locally on this manager node."
-        sudo docker node update --label-add hardware=raspberrypi "$NODE_ID"
-    else
-        echo "Worker node (Pi). Label must be updated from the manager."
-        if [ -z "$manager_ip" ]; then
-            read -p "Enter the manager node IP: " manager_ip
-        fi
-        read -p "Enter manager node SSH username for labeling: " MANAGER_SSH_USER
-        echo "Updating node label on manager node..."
-        ssh "$MANAGER_SSH_USER@$manager_ip" "docker node update --label-add hardware=raspberrypi $NODE_ID"
+    # We assume all Pi nodes are swarm *workers* only. So do manager labeling via SSH.
+
+    LOCAL_IP=$(hostname -I | awk '{print $1}')
+    if [ -z "$manager_ip" ]; then
+        read -p "Enter the manager node IP: " manager_ip
     fi
+    read -p "Enter manager node SSH username for labeling: " MANAGER_SSH_USER
+    echo "Labeling this Pi (worker) from manager side with hardware=raspberrypi and pigpio_ip=$LOCAL_IP"
+    ssh "$MANAGER_SSH_USER@$manager_ip" "docker node update \
+        --label-add hardware=raspberrypi \
+        --label-add pigpio_ip=$LOCAL_IP \
+        $NODE_ID"
+
     IS_SCRIBE=true
     REPO_DIR="$REPO_DIR_SCRIBE"
 else
@@ -356,8 +357,6 @@ EOF
 
             echo "=== Building multi-architecture images (x86 + ARM) and pushing to ${REGISTRY} ==="
 
-            # IMPORTANT: With QEMU emulation in place, do not force ARM-specific flags in your Dockerfiles.
-            # For example, use your Dockerfile (e.g. Dockerfile_scribe) without extra -march flags.
             docker buildx build \
               --platform linux/arm64 \
               -t ${REGISTRY}/docker-scribe_speech_to_text:latest \
@@ -365,8 +364,7 @@ EOF
               "$REPO_DIR" \
               --push
 
-            # (Repeat similar buildx commands for any other images, such as scraping, search engine, front end, etc.)
-            # Example for scraping image:
+            # Repeat for other images as needed:
             docker buildx build \
               --platform linux/amd64 \
               -t ${REGISTRY}/docker-icd_10_code_scraping:latest \
@@ -374,7 +372,6 @@ EOF
               "$REPO_DIR" \
               --push
 
-            # Example for search engine image:
             docker buildx build \
               --platform linux/amd64 \
               -t ${REGISTRY}/docker-icd_10_search_engine:latest \
@@ -382,7 +379,6 @@ EOF
               "$REPO_DIR" \
               --push
 
-            # Example for front end image:
             docker buildx build \
               --platform linux/amd64 \
               -t ${REGISTRY}/docker-front_end:latest \

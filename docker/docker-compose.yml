@@ -64,7 +64,7 @@ services:
   scribe_speech_to_text:
     image: 192.168.40.187:5001/docker-scribe_speech_to_text:latest
     environment:
-      - PIGPIO_HOST={{.Node.Address}}  # <-- Templating the node's IP into the container
+      - PIGPIO_HOST={{.Node.Labels.pigpio_ip}}
     volumes:
       - /var/lib/aiinabox/transcripts:/app/transcripts
       - /var/lib/aiinabox/transcripts_clean:/app/transcripts_clean
