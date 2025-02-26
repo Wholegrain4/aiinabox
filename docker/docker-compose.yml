@@ -69,12 +69,13 @@ services:
     devices:
       - "/dev/gpiomem:/dev/gpiomem"
       - "/dev/gpiochip0:/dev/gpiochip0"
-    cap_add:
-      - SYS_RAWIO
+      - "/dev/gpiochip4:/dev/gpiochip4"
+    privileged: true
     deploy:
       placement:
         constraints:
           - node.labels.hardware == raspberrypi
+
 
 networks:
   default:
