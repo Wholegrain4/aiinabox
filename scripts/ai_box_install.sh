@@ -171,6 +171,7 @@ else
     read -p "Enter the manager node IP: " manager_ip
     read -p "Enter the swarm join token: " join_token
     sudo docker swarm join --token "$join_token" "$manager_ip:2377"
+    echo "This node joined a swarm as a worker."
     read -p "Does this worker need to pull images from the registry at ${REGISTRY}? (y/n): " worker_insecure
     if [[ "$worker_insecure" =~ ^[Yy]$ ]]; then
         configure_insecure_registry "${REGISTRY}"
@@ -221,15 +222,25 @@ if [[ "$IS_SCRIBE" == true ]]; then
     echo "Checking if pigpiod is running on this Raspberry Pi..."
     if ! pgrep pigpiod > /dev/null; then
         echo "pigpiod is not running. Attempting to start it now..."
-        # Start pigpio daemon without the -n flag (older versions may not support it).
-        sudo pigpiod
+
+        # Attempt to enable remote GPIO via raspi-config if available
+        if command -v raspi-config &> /dev/null; then
+            echo "Enabling Remote GPIO via raspi-config..."
+            sudo raspi-config nonint do_rgpio 0
+            echo "Re-starting pigpiod via systemd..."
+            sudo systemctl enable pigpiod 2>/dev/null || true
+            sudo systemctl restart pigpiod || true
+        else
+            echo "raspi-config not found. Attempting to start pigpiod manually..."
+            sudo pigpiod
+        fi
+
         sleep 2
         if pgrep pigpiod > /dev/null; then
             echo "pigpiod started successfully."
-            echo "Note: If you need remote access, ensure pigpio is configured for remote connections."
-            echo "      For Raspberry Pi OS, use 'sudo raspi-config' → Interfacing Options → Remote GPIO."
+            echo "If remote access doesn't work by default, check /etc/systemd/system/pigpiod.service or run raspi-config → Interfacing Options → Remote GPIO."
         else
-            echo "Failed to start pigpiod. Please enable remote GPIO via raspi-config or configure pigpiod manually."
+            echo "Failed to start pigpiod automatically. Please enable remote GPIO in raspi-config or configure pigpiod manually."
         fi
     else
         echo "pigpiod is already running."
