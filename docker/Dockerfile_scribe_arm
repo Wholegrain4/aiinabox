@@ -4,7 +4,7 @@ FROM python:3.12-slim
 # Ensure unbuffered stdout/stderr
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies (including wget, gfortran, pkg-config, and BLAS/LAPACK libraries)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     libportaudio2 \
@@ -27,16 +27,15 @@ WORKDIR /app
 # Copy requirements.txt into the container
 COPY src/edge_devices/scribe_device/requirements.txt /app/resources/requirements.txt
 
-# Install Python dependencies from requirements.txt and LGPIO via pip
-RUN pip install --no-cache-dir -r /app/resources/requirements.txt && \
-    pip install lgpio
+# Install Python dependencies from requirements.txt
+RUN pip install --no-cache-dir -r /app/resources/requirements.txt
+
+# Install pigpio client library (and gpiozero if desired for PiGPIOFactory)
+RUN pip install pigpio gpiozero
 
 #
 # Clone and build whisper.cpp
 #
-# For amd64 targets we use the default configuration.
-# For non-amd64 targets (e.g. arm64) we force the compiler flags to use Cortex-A72,
-# set GGML_CPU_VARIANT explicitly to "cortex-a72", and disable auto-detection.
 RUN git clone https://github.com/ggerganov/whisper.cpp.git && \
     cd whisper.cpp && \
     echo "Forcing -mcpu=armv8.2-a" && \
