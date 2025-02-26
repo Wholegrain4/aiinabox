@@ -190,7 +190,6 @@ REPO_DIR_SCRIBE="/home/wholegrain4/Documents/repos/aiinabox"
 if [[ "$ARCH" == "armv7l" || "$ARCH" == "aarch64" ]]; then
     echo "Detected Raspberry Pi architecture ($ARCH)."
     # For Pi nodes (workers), we assume the manager will label them.
-    # We no longer set a pigpio_ip label since we'll use the node's hostname in the compose file.
     if [ -z "$manager_ip" ]; then
         read -p "Enter the manager node IP: " manager_ip
     fi
@@ -221,13 +220,16 @@ fi
 if [[ "$IS_SCRIBE" == true ]]; then
     echo "Checking if pigpiod is running on this Raspberry Pi..."
     if ! pgrep pigpiod > /dev/null; then
-        echo "pigpiod is not running. Starting pigpiod on all network interfaces..."
-        sudo pigpiod -n 0.0.0.0
+        echo "pigpiod is not running. Attempting to start it now..."
+        # Start pigpio daemon without the -n flag (older versions may not support it).
+        sudo pigpiod
         sleep 2
         if pgrep pigpiod > /dev/null; then
             echo "pigpiod started successfully."
+            echo "Note: If you need remote access, ensure pigpio is configured for remote connections."
+            echo "      For Raspberry Pi OS, use 'sudo raspi-config' → Interfacing Options → Remote GPIO."
         else
-            echo "Failed to start pigpiod. Please start it manually with: sudo pigpiod -n 0.0.0.0"
+            echo "Failed to start pigpiod. Please enable remote GPIO via raspi-config or configure pigpiod manually."
         fi
     else
         echo "pigpiod is already running."
