@@ -8,15 +8,12 @@ import wave
 import scipy.signal
 
 from gpiozero import Device
-from gpiozero.pins.pigpio import PiGPIOFactory
+from gpiozero.pins.lgpio import LGpioFactory  # Use LGPIO instead of pigpio
 from gpiozero import LED, Button
 from datetime import datetime
 
-# 1) Configure the PiGPIOFactory globally:
-#    Reads host IP from the environment variable "PIGPIO_HOST"
-#    (Set this var in your Docker Swarm config, e.g. PIGPIO_HOST={{.Node.Address}})
-PIGPIO_HOST = os.environ.get("PIGPIO_HOST")
-Device.pin_factory = PiGPIOFactory(host=PIGPIO_HOST)
+# 1) Configure the LGpioFactory globally:
+Device.pin_factory = LGpioFactory()
 
 class STTProcessor:
     def __init__(self,
@@ -38,7 +35,7 @@ class STTProcessor:
         self.TRANSCRIPTS_DIR = transcripts_dir
 
         # Setup gpiozero objects for the green and red buttons and the LED.
-        print(f"Initializing gpiozero for GPIO access via pigpiod at {PIGPIO_HOST}...")
+        print("Initializing gpiozero for GPIO access using LGPIO backend...")
         self.green_button = Button(self.GREEN_BUTTON_PIN, pull_up=True)
         self.red_button = Button(self.RED_BUTTON_PIN, pull_up=True)
         self.led = LED(self.LED_PIN)

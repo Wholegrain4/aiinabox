@@ -216,38 +216,6 @@ if [[ "$config_insecure" =~ ^[Yy]$ ]]; then
 fi
 
 ######################################
-# 3.75 Ensure pigpiod is running (Scribe nodes only)
-######################################
-if [[ "$IS_SCRIBE" == true ]]; then
-    echo "Checking if pigpiod is running on this Raspberry Pi..."
-    if ! pgrep pigpiod > /dev/null; then
-        echo "pigpiod is not running. Attempting to start it now..."
-
-        # Attempt to enable remote GPIO via raspi-config if available
-        if command -v raspi-config &> /dev/null; then
-            echo "Enabling Remote GPIO via raspi-config..."
-            sudo raspi-config nonint do_rgpio 0
-            echo "Re-starting pigpiod via systemd..."
-            sudo systemctl enable pigpiod 2>/dev/null || true
-            sudo systemctl restart pigpiod || true
-        else
-            echo "raspi-config not found. Attempting to start pigpiod manually..."
-            sudo pigpiod
-        fi
-
-        sleep 2
-        if pgrep pigpiod > /dev/null; then
-            echo "pigpiod started successfully."
-            echo "If remote access doesn't work by default, check /etc/systemd/system/pigpiod.service or run raspi-config → Interfacing Options → Remote GPIO."
-        else
-            echo "Failed to start pigpiod automatically. Please enable remote GPIO in raspi-config or configure pigpiod manually."
-        fi
-    else
-        echo "pigpiod is already running."
-    fi
-fi
-
-######################################
 # 4. GPU Setup (Server Only)
 ######################################
 if [[ "$IS_SCRIBE" == false ]]; then
@@ -338,7 +306,7 @@ fi
 if [[ "$IS_SCRIBE" == true ]]; then
     echo "Scribe node: skipping host-level dependencies."
 else
-    echo "Installing host-level dependencies on Linux server..."
+    echo "Server node: installing host-level dependencies if needed..."
     # e.g., sudo apt-get install -y default-jre, R, etc.
 fi
 
@@ -372,7 +340,7 @@ EOF
               docker buildx rm multiarch-builder || true
             fi
 
-            # 3) Create a builder that uses /etc/buildkit.toml
+            # 3) Create a new Buildx builder that uses /etc/buildkit.toml
             echo "Creating multiarch-builder with /etc/buildkit.toml..."
             docker buildx create \
               --driver docker-container \
@@ -447,8 +415,10 @@ fi
 echo "Installation complete."
 if [[ "$IS_SCRIBE" == true ]]; then
     echo "Scribe node: transcript directories created."
+    echo "No pigpio or gpiozero installed at the OS level."
+    echo "Please install gpiozero + LGPIO in your Docker images if needed."
 else
-    echo "Server node: host-level dependencies installed (if any) and optional GPU configuration done."
+    echo "Server node: any host-level dependencies installed (if any) and optional GPU config done."
 fi
 if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     echo "Stack deployed (if chosen). Check status with:"
