@@ -67,7 +67,10 @@ services:
       - /var/lib/aiinabox/transcripts:/app/transcripts
       - /var/lib/aiinabox/transcripts_clean:/app/transcripts_clean
     devices:
-      - "/dev/gpiochip0:/dev/gpiochip0"
+      - /dev/gpiochip4:/dev/gpiochip4
+      - /dev/gpiomem4:/dev/gpiomem4
+    environment:
+      - RPI_LGPIO_CHIP=4
     deploy:
       placement:
         constraints:
