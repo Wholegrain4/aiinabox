@@ -3,8 +3,9 @@ from utils import STTProcessor
 from gpiozero import Device
 
 def main():
-    processor = STTProcessor()
-    processor.run()
+    #processor = STTProcessor()
+    #processor.run()
+    print("Check")
 
 if __name__ == '__main__':
     main()
