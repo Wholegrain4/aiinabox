@@ -1,5 +1,4 @@
 import os
-os.environ['RPI_LGPIO_CHIP'] = '4'
 import time
 import numpy as np
 import sounddevice as sd
@@ -8,20 +7,16 @@ import tempfile
 import wave
 import scipy.signal
 
-from gpiozero import Device
-from gpiozero.pins.lgpio import LGPIOFactory  # Use LGPIO instead of pigpio
-from gpiozero import LED, Button
+from gpiozero import Device, LED, Button
 from datetime import datetime
 
-# 1) Configure the LGpioFactory globally:
-Device.pin_factory = LGPIOFactory()
 
 class STTProcessor:
     def __init__(self,
                  green_button_pin=2,
                  red_button_pin=3,
                  led_pin=17,
-                 sample_rate=16000,  # Desired sample rate for Whisper
+                 sample_rate=16000,
                  chunk_size=1024,
                  model_size="tiny",
                  transcripts_dir="/app/transcripts"):

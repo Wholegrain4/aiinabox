@@ -65,15 +65,16 @@ services:
     image: 192.168.40.187:5001/docker-scribe_speech_to_text:latest
     volumes:
       - /var/lib/aiinabox/transcripts:/app/transcripts
-      - /var/lib/aiinabox/transcripts_clean:/app/transcripts_clean
-      - /dev/gpiochip4:/dev/gpiochip4
-      - /dev/gpiomem4:/dev/gpiomem4
+    devices:
+      - /dev/gpiochip0:/dev/gpiochip0
     environment:
-      - RPI_LGPIO_CHIP=4
+      GPIOZERO_PIN_FACTORY: lgpio
+      RPI_LGPIO_CHIP: 0
     deploy:
       placement:
         constraints:
           - node.labels.hardware == raspberrypi
+
 
 networks:
   default:
