@@ -70,7 +70,6 @@ services:
     environment:
       GPIOZERO_PIN_FACTORY: lgpio
       RPI_LGPIO_CHIP: 0
-    user: root
     deploy:
       placement:
         constraints:
