@@ -384,7 +384,7 @@ EOF
         docker buildx build \
           --platform linux/amd64 \
           -t ${REGISTRY}/docker-scribe_consumer:latest \
-          -f "$REPO_DIR/docker/Dockerfile" \
+          -f "$REPO_DIR/docker/Dockerfile_scribe_consumer" \
           "$REPO_DIR" \
           --push
 
