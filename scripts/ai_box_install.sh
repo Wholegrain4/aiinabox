@@ -3,12 +3,11 @@
 # Unified installation script for AI in a Box
 # - Sets up Docker (and Docker Swarm)
 # - Optionally sets up Mosquitto MQTT broker for inter-machine communication
-# - Sets up an optional local registry
+# - Sets up optional local registry
 # - Configures GPU (if present)
 # - Builds & deploys Docker stack if desired
-# - Uses a Python virtual environment for package installations
 
-set -e  # Exit on error
+set -e
 
 # ------------------------------------------------
 # 1. Default Settings & Global Variables
@@ -31,13 +30,6 @@ echo "=== AI in a Box: Server Installation Script ==="
 # ------------------------------------------------
 
 function ensure_docker_running() {
-    if ! command -v docker &>/dev/null; then
-        echo "Docker not found. Installing..."
-        curl -fsSL https://get.docker.com -o get-docker.sh
-        sudo sh get-docker.sh
-        sudo usermod -aG docker "$USER"
-        echo "Docker installed. You may need to log out/in for group changes to take effect."
-    fi
     if ! sudo systemctl is-active --quiet docker; then
         echo "Docker daemon not running. Attempting to start Docker..."
         sudo systemctl start docker
@@ -154,16 +146,19 @@ function setup_mqtt_broker() {
     echo "=== Setting up Mosquitto MQTT broker ==="
     sudo apt update && sudo apt install -y mosquitto mosquitto-clients
 
-    # Configure the broker to listen on 0.0.0.0:1883, disallow anonymous connections
-    cat <<EOF | sudo tee /etc/mosquitto/conf.d/swarm.conf
+    # Configure the broker to listen on 0.0.0.0:1883, disallow anonymous
+    cat <<EOF | sudo tee /etc/mosquitto/conf.d/listener.conf
 listener ${MQTT_PORT} 0.0.0.0
 allow_anonymous false
 password_file /etc/mosquitto/passwd
 EOF
 
-    # Create default user 'mqttuser'
+    # Create default user 'mqttuser' (prompt could be customized)
     echo "Creating a Mosquitto user 'mqttuser' (please enter a password)..."
     sudo mosquitto_passwd -c /etc/mosquitto/passwd mqttuser
+
+    # Change ownership of the password file so Mosquitto can read it
+    sudo chown mosquitto:mosquitto /etc/mosquitto/passwd
 
     sudo systemctl enable --now mosquitto
 

@@ -60,6 +60,23 @@ services:
       placement:
         constraints:
           - node.labels.hardware == server
+    scribe_consumer:
+      image: 192.168.40.187:5001/docker-scribe_consumer:latest
+      # Or build from source if you prefer:
+      # build: ./scribe_consumer
+      environment:
+        - MQTT_BROKER_HOST=192.168.40.187
+        - MQTT_BROKER_PORT=1883
+        - MQTT_USER=mqttuser
+        - MQTT_PASS=ballerselite40
+        - MQTT_TOPIC=scribe/transcripts
+        - FRONTEND_URL=http://front_end:5000/api/transcript
+      deploy:
+        restart_policy:
+          condition: on-failure
+        placement:
+          constraints:
+            - node.labels.hardware == server 
 
 networks:
   default:
