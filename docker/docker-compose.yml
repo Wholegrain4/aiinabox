@@ -61,21 +61,6 @@ services:
         constraints:
           - node.labels.hardware == server
 
-  scribe_speech_to_text:
-    image: 192.168.40.187:5001/docker-scribe_speech_to_text:latest
-    volumes:
-      - /var/lib/aiinabox/transcripts:/app/transcripts
-    devices:
-      - /dev/gpiochip0:/dev/gpiochip0
-    environment:
-      GPIOZERO_PIN_FACTORY: lgpio
-      RPI_LGPIO_CHIP: 0
-    deploy:
-      placement:
-        constraints:
-          - node.labels.hardware == raspberrypi
-
-
 networks:
   default:
     driver: overlay
