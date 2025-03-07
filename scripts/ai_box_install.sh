@@ -378,6 +378,16 @@ EOF
           "$REPO_DIR" \
           --push
 
+        # ---------------------------------------------------------------
+        # BUILD SCRIBE_CONSUMER HERE
+        # ---------------------------------------------------------------
+        docker buildx build \
+          --platform linux/amd64 \
+          -t ${REGISTRY}/docker-scribe_consumer:latest \
+          -f "$REPO_DIR/scribe_consumer/Dockerfile" \
+          "$REPO_DIR/scribe_consumer" \
+          --push
+
         # If you have a custom Ollama Dockerfile or other services, build them here as well.
 
         echo "Deploying stack 'aiinabox' with $DOCKER_COMPOSE_PATH..."
