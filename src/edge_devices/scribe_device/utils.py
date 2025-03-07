@@ -19,7 +19,7 @@ class STTProcessor:
                  led_pin=17,
                  sample_rate=16000,
                  chunk_size=1024,
-                 transcripts_dir="/app/transcripts"):
+                 transcripts_dir="/var/lib/aiinabox/transcripts"):
         """
         :param green_button_pin: BCM pin number for 'record' button (start).
         :param red_button_pin: BCM pin number for 'stop' button.
