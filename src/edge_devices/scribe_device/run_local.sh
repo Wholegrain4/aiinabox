@@ -23,7 +23,7 @@ echo "--------------------------------------------------------"
 echo "Updating package lists..."
 sudo apt-get update
 
-echo "Installing system dependencies..."
+echo "Installing system dependencies (via apt)..."
 sudo apt-get install -y \
   ffmpeg \
   libportaudio2 \
@@ -44,23 +44,20 @@ if [ ! -d "venv" ]; then
     python3 -m venv venv
 fi
 
-echo "Activating virtual environment..."
+echo "Activating virtual environment (no pip upgrade)..."
+# This ensures that 'pip' and 'python' refer to the venv’s executables
 source venv/bin/activate
 
 # --------------------------------------------------------
-# 4) Upgrade pip in the venv, Install Python Dependencies
+# 4) Install Python Dependencies from requirements.txt
 # --------------------------------------------------------
-echo "Upgrading pip inside the virtual environment..."
-pip install --upgrade pip
-
 echo "Installing Python dependencies from requirements.txt (in venv)..."
 pip install -r requirements.txt
-
-# (Optional) ensure `scipy` is installed (if not already in requirements.txt)
-pip install scipy
+# If 'scipy' is missing in requirements.txt but you need it:
+# pip install scipy
 
 # --------------------------------------------------------
-# 5) Prepare whisper.cpp
+# 5) Build whisper.cpp (if not already built)
 # --------------------------------------------------------
 if [ ! -d "whisper.cpp" ]; then
   echo "Cloning whisper.cpp repository..."
@@ -69,27 +66,25 @@ else
   echo "whisper.cpp directory exists, skipping clone."
 fi
 
-# Check if whisper-cli binary is built
 if [ ! -f "whisper.cpp/build/bin/whisper-cli" ]; then
-  echo "whisper.cpp is not built or 'whisper-cli' missing. Building now..."
+  echo "No whisper-cli found; building whisper.cpp now..."
   cd whisper.cpp
 
-  # Clean old build if partial
   if [ -d "build" ]; then
-    rm -rf build
+    rm -rf build   # ensure a clean build
   fi
 
   cmake -B build
   cmake --build build --config Release
+
   cd ..
 else
   echo "whisper.cpp build exists, skipping build."
 fi
 
 # Check if the tiny.en model is present
-# The downloaded file is typically named "ggml-tiny.en.bin" in whisper.cpp/models
 if [ ! -f "whisper.cpp/models/ggml-tiny.en.bin" ]; then
-  echo "tiny.en model not found, downloading..."
+  echo "tiny.en model missing; downloading..."
   cd whisper.cpp
   ./models/download-ggml-model.sh tiny.en
   cd ..
