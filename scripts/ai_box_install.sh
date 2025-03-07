@@ -2,6 +2,7 @@
 # install_aiinabox.sh
 # Unified installation script for AI in a Box
 # - Sets up Docker (and Docker Swarm)
+# - Optionally sets up Mosquitto MQTT broker for inter-machine communication
 # - Sets up optional local registry
 # - Configures GPU (if present)
 # - Builds & deploys Docker stack if desired
@@ -15,6 +16,8 @@ set -e
 DEFAULT_REGISTRY_IP="192.168.40.187"
 REGISTRY_PORT="5001"
 REGISTRY="${DEFAULT_REGISTRY_IP}:${REGISTRY_PORT}"
+
+MQTT_PORT="1883"  # Port for Mosquitto broker
 
 # Path to your AI-in-a-Box repository (server side)
 REPO_DIR="/home/trace-grain/Documents/repos/aiinabox"
@@ -139,6 +142,38 @@ function open_firewall_port() {
     fi
 }
 
+function setup_mqtt_broker() {
+    echo "=== Setting up Mosquitto MQTT broker ==="
+    sudo apt update && sudo apt install -y mosquitto mosquitto-clients
+
+    # Configure the broker to listen on 0.0.0.0:1883, disallow anonymous
+    cat <<EOF | sudo tee /etc/mosquitto/conf.d/swarm.conf
+listener ${MQTT_PORT} 0.0.0.0
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+EOF
+
+    # Create default user 'mqttuser' (prompt could be customized)
+    echo "Creating a Mosquitto user 'mqttuser' (please enter a password)..."
+    sudo mosquitto_passwd -c /etc/mosquitto/passwd mqttuser
+
+    sudo systemctl enable --now mosquitto
+
+    # Open firewall port 1883
+    if command -v ufw &>/dev/null && sudo ufw status | grep -q "Status: active"; then
+        echo "Allowing 1883/tcp in UFW..."
+        sudo ufw allow 1883/tcp || true
+    fi
+    if command -v firewall-cmd &>/dev/null; then
+        echo "Allowing 1883/tcp in firewalld..."
+        sudo firewall-cmd --permanent --add-port=1883/tcp || true
+        sudo firewall-cmd --reload || true
+    fi
+
+    echo "Mosquitto installed and configured. Broker listening on port ${MQTT_PORT}."
+    echo "Use the 'mqttuser' credentials you just created to connect."
+}
+
 # ------------------------------------------------
 # 3. Main Script Execution
 # ------------------------------------------------
@@ -179,6 +214,16 @@ if [[ "$is_manager" =~ ^[Yy]$ ]]; then
     else
         echo "Swarm is already active on this node."
     fi
+
+    # Ask user if they'd like to set up MQTT on the manager
+    read -p "Install Mosquitto MQTT broker on this server? (y/n): " install_mqtt
+    if [[ "$install_mqtt" =~ ^[Yy]$ ]]; then
+        setup_mqtt_broker
+    else
+        echo "Skipping MQTT broker setup."
+    fi
+
+    # Local registry
     ensure_local_registry
     open_firewall_port "${REGISTRY_PORT}"
 else
@@ -330,8 +375,7 @@ EOF
           "$REPO_DIR" \
           --push
 
-        # Example: Ollama container (if you have a custom Dockerfile for it, or just use official)
-        # If you're building your own image, do that here as well. Otherwise skip.
+        # If you have a custom Ollama Dockerfile or other services, build them here as well.
 
         echo "Deploying stack 'aiinabox' with $DOCKER_COMPOSE_PATH..."
         sudo docker stack deploy -c "$DOCKER_COMPOSE_PATH" aiinabox
