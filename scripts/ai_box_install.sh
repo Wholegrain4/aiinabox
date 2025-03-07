@@ -384,8 +384,8 @@ EOF
         docker buildx build \
           --platform linux/amd64 \
           -t ${REGISTRY}/docker-scribe_consumer:latest \
-          -f "$REPO_DIR/scribe_consumer/Dockerfile" \
-          "$REPO_DIR/scribe_consumer" \
+          -f "$REPO_DIR/docker/Dockerfile" \
+          "$REPO_DIR" \
           --push
 
         # If you have a custom Ollama Dockerfile or other services, build them here as well.

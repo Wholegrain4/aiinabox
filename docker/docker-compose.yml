@@ -62,8 +62,6 @@ services:
           - node.labels.hardware == server
     scribe_consumer:
       image: 192.168.40.187:5001/docker-scribe_consumer:latest
-      # Or build from source if you prefer:
-      # build: ./scribe_consumer
       environment:
         - MQTT_BROKER_HOST=192.168.40.187
         - MQTT_BROKER_PORT=1883
