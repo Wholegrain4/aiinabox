@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import json
 import base64
@@ -46,15 +44,41 @@ class PromptListener:
         """
         Called whenever we receive a message on 'scribe/prompts'.
         We decode the base64-encoded WAV, then play it via sounddevice.
+        We'll manually resample the audio to match the Pi's default output device's sample rate.
         """
         try:
             data = json.loads(msg.payload.decode("utf-8"))
             audio_b64 = data.get("audio", "")
             if audio_b64:
                 print("[PromptListener] Received TTS audio. Playing...")
+                # Decode base64 -> WAV bytes -> sf.read
                 audio_bytes = base64.b64decode(audio_b64)
                 audio_file = io.BytesIO(audio_bytes)
                 audio_data, fs = sf.read(audio_file)
+
+                # 1) Query default audio OUT device
+                device_info = sd.query_devices(kind='output')
+                device_rate = int(device_info['default_samplerate'])
+
+                # 2) If Bark's WAV sample rate != device_rate, resample
+                if fs != device_rate:
+                    print(f"[PromptListener] Resampling from {fs} -> {device_rate}")
+                    ratio = device_rate / fs
+                    new_len = int(len(audio_data) * ratio)
+                    # For multi-channel audio, handle shape carefully
+                    if audio_data.ndim == 1:
+                        audio_data = scipy.signal.resample(audio_data, new_len)
+                    else:
+                        # resample each channel individually
+                        channels = audio_data.shape[1]
+                        new_data = []
+                        for ch in range(channels):
+                            ch_data = scipy.signal.resample(audio_data[:, ch], new_len)
+                            new_data.append(ch_data)
+                        audio_data = np.stack(new_data, axis=1)
+                    fs = device_rate
+
+                # 3) Play at device_rate
                 sd.play(audio_data, fs)
                 sd.wait()
                 print("[PromptListener] Audio prompt finished.")
@@ -73,13 +97,6 @@ class STTProcessor:
                  sample_rate=16000,
                  chunk_size=1024,
                  transcripts_dir="/var/lib/aiinabox/transcripts"):
-        """
-        Base STT processor that:
-         - Waits for green button
-         - Records until red button
-         - Transcribes via whisper.cpp
-         - Publishes transcript to an MQTT topic
-        """
 
         # GPIO pins
         self.GREEN_BUTTON_PIN = green_button_pin
@@ -103,16 +120,14 @@ class STTProcessor:
         self.led          = LED(self.LED_PIN)
         self.led.off()
 
-        # MQTT config from environment or defaults
+        # MQTT config
         self.mqtt_host  = os.getenv("MQTT_BROKER_HOST", "192.168.40.187")
         self.mqtt_port  = int(os.getenv("MQTT_BROKER_PORT", "1883"))
         self.mqtt_user  = os.getenv("MQTT_USER", "mqttuser")
         self.mqtt_pass  = os.getenv("MQTT_PASS", "ballerselite40")
-        # By default, STTProcessor publishes transcripts to "scribe/transcripts"
-        # but we can override in a subclass (or unify below).
         self.mqtt_topic = os.getenv("MQTT_TOPIC", "scribe/transcripts")
 
-        # Initialize MQTT client
+        # Initialize MQTT
         self.mqtt_client = mqtt.Client(client_id="scribe_pi")
         if self.mqtt_user and self.mqtt_pass:
             self.mqtt_client.username_pw_set(self.mqtt_user, self.mqtt_pass)
@@ -134,10 +149,6 @@ class STTProcessor:
         self.mqtt_client.disconnect()
 
     def record_audio_until_red(self):
-        """
-        Records audio until the red button is pressed.
-        Resamples if needed, then returns the raw audio samples.
-        """
         default_input = sd.query_devices(kind='input')
         device_sample_rate = int(default_input['default_samplerate'])
         print("[STTProcessor] Using device sample rate:", device_sample_rate)
@@ -152,7 +163,7 @@ class STTProcessor:
 
         audio_data = np.concatenate(audio_buffer, axis=0)
 
-        # Resample if device sample rate differs from desired
+        # Resample to self.SAMPLE_RATE if needed
         if device_sample_rate != self.SAMPLE_RATE:
             print(f"[STTProcessor] Resampling from {device_sample_rate} -> {self.SAMPLE_RATE}")
             n_samples = int(len(audio_data) * self.SAMPLE_RATE / device_sample_rate)
@@ -161,13 +172,9 @@ class STTProcessor:
         return audio_data
 
     def transcribe_audio(self, audio_data):
-        """
-        Runs whisper.cpp on audio_data and returns the transcript as a string.
-        """
         print("[STTProcessor] Running whisper.cpp transcription...")
         audio_int16 = (audio_data * 32767).astype(np.int16)
 
-        # Write to temp WAV
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
             tmp_name = tmp.name
             with wave.open(tmp_name, 'wb') as wf:
@@ -176,7 +183,6 @@ class STTProcessor:
                 wf.setframerate(self.SAMPLE_RATE)
                 wf.writeframes(audio_int16.tobytes())
 
-        # Build command
         cmd = [self.whisper_binary, "-m", self.model_file, "-f", tmp_name]
         transcription = ""
         try:
@@ -191,9 +197,6 @@ class STTProcessor:
         return transcription
 
     def publish_transcript(self, timestamp, filename, transcript):
-        """
-        Publishes the transcript as a JSON message to the configured MQTT topic.
-        """
         payload = {
             "timestamp": timestamp,
             "filename": filename,
@@ -206,9 +209,6 @@ class STTProcessor:
             print(f"[STTProcessor] Error publishing to MQTT: {e}")
 
     def run(self):
-        """
-        Main loop: Wait for green button -> record -> transcribe -> save file -> publish to MQTT
-        """
         print("[STTProcessor] Waiting for GREEN button press to start recording...")
         try:
             while True:
@@ -229,11 +229,10 @@ class STTProcessor:
                         f.write(transcript)
                     print(f"[STTProcessor] Transcript saved to {filepath}")
 
-                    # Publish to MQTT
                     if transcript:
                         self.publish_transcript(timestamp, filename, transcript)
 
-                    time.sleep(0.5)  # small delay
+                    time.sleep(0.5)
                 time.sleep(0.1)
         except KeyboardInterrupt:
             print("[STTProcessor] Exiting (keyboard interrupt).")
@@ -241,38 +240,29 @@ class STTProcessor:
             self.cleanup()
 
 
-# ------------------------------------------------------------------------
-# ConversationalSTTProcessor Subclass
-# (just changes the publish topic to "scribe/responses")
-# ------------------------------------------------------------------------
 class ConversationalSTTProcessor(STTProcessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Override the default topic to 'scribe/responses'
+        # Override publish topic to scribe/responses
         self.mqtt_topic = "scribe/responses"
 
     def run(self):
         print("[ConversationalSTT] Ready to record after each TTS prompt...")
-        # Same logic, or you can keep the original code from your snippet.
         super().run()
 
-
-# ------------------------------------------------------------------------
-# Main "unified" Script
-# ------------------------------------------------------------------------
 def main():
-    # 1) Parse environment for MQTT
+    # Parse environment for MQTT
     broker = os.getenv("MQTT_BROKER_HOST", "192.168.40.187")
     port   = int(os.getenv("MQTT_BROKER_PORT", "1883"))
     user   = os.getenv("MQTT_USER", "mqttuser")
     pw     = os.getenv("MQTT_PASS", "ballerselite40")
 
-    # 2) Start the PromptListener for TTS playback
+    # Start the PromptListener for TTS playback
     prompt_listener = PromptListener(broker, port, user, pw, topic="scribe/prompts")
 
-    # 3) Start the Conversational STT
+    # Start the Conversational STT
     stt = ConversationalSTTProcessor()
-    stt.run()  # this is a blocking call (main loop) for STT
+    stt.run()
 
 if __name__ == "__main__":
     main()
