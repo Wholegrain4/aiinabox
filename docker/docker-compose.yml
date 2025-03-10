@@ -15,7 +15,7 @@ services:
           generic_resources:
             - discrete_resource_spec:
                 kind: "NVIDIA-GPU"
-                value: 3
+                value: 2
       restart_policy:
         condition: any
 
@@ -74,7 +74,25 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - node.labels.hardware == server 
+          - node.labels.hardware == server
+  conversation_orchestrator:
+    image: 192.168.40.187:5001/docker-conversation_orchestrator:latest
+    environment:
+      - MQTT_BROKER_HOST=192.168.40.187
+      - MQTT_BROKER_PORT=1883
+      - MQTT_USER=mqttuser
+      - MQTT_PASS=ballerselite40
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hardware == server
+      resources:
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 1
+
 
 networks:
   default:

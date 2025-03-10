@@ -2,9 +2,9 @@
 # install_aiinabox.sh
 # Unified installation script for AI in a Box
 # - Sets up Docker (and Docker Swarm)
-# - Optionally sets up Mosquitto MQTT broker for inter-machine communication
+# - Optionally sets up Mosquitto MQTT broker
 # - Sets up optional local registry
-# - Configures GPU (if present)
+# - Configures GPU if present
 # - Builds & deploys Docker stack if desired
 
 set -e
@@ -123,7 +123,7 @@ function ensure_local_registry() {
 }
 
 function open_firewall_port() {
-    # Tries both UFW and firewalld as relevant
+    # Tries both UFW and firewalld if present
     local port="$1"
     read -p "Open port ${port}/tcp in the firewall? (y/n): " fw_open
     if [[ "$fw_open" =~ ^[Yy]$ ]]; then
@@ -157,7 +157,7 @@ EOF
     echo "Creating a Mosquitto user 'mqttuser' (please enter a password)..."
     sudo mosquitto_passwd -c /etc/mosquitto/passwd mqttuser
 
-    # Change ownership of the password file so Mosquitto can read it
+    # Change ownership so Mosquitto can read it
     sudo chown mosquitto:mosquitto /etc/mosquitto/passwd
 
     sudo systemctl enable --now mosquitto
@@ -218,7 +218,7 @@ if [[ "$is_manager" =~ ^[Yy]$ ]]; then
         echo "Swarm is already active on this node."
     fi
 
-    # Ask user if they'd like to set up MQTT on the manager
+    # Ask if we set up MQTT here
     read -p "Install Mosquitto MQTT broker on this server? (y/n): " install_mqtt
     if [[ "$install_mqtt" =~ ^[Yy]$ ]]; then
         setup_mqtt_broker
@@ -306,7 +306,8 @@ read -p "Populate /var/lib/aiinabox/front_end from the repo? (y/n): " populate_f
 if [[ "$populate_frontend" =~ ^[Yy]$ ]]; then
     echo "Copying front_end files from $REPO_FRONTEND -> $PERSISTENT_FRONTEND..."
     sudo cp -r "$REPO_FRONTEND/"* "$PERSISTENT_FRONTEND/"
-    # Additional template or pipeline files if needed:
+
+    # Additional pipeline files if needed:
     sudo cp "$REPO_DIR/src/ai_pipeline/personas/personalities.py" "$PERSISTENT_FRONTEND/" || true
     sudo cp "$REPO_DIR/src/ai_pipeline/template_generator.py" "$PERSISTENT_FRONTEND/" || true
     sudo cp "$REPO_DIR/src/ai_pipeline/templates/"sick_visit_*_template_p{0,1,2,3}.txt "$PERSISTENT_FRONTEND/" || true
@@ -378,9 +379,7 @@ EOF
           "$REPO_DIR" \
           --push
 
-        # ---------------------------------------------------------------
-        # BUILD SCRIBE_CONSUMER HERE
-        # ---------------------------------------------------------------
+        # Example: scribe_consumer
         docker buildx build \
           --platform linux/amd64 \
           -t ${REGISTRY}/docker-scribe_consumer:latest \
@@ -388,7 +387,15 @@ EOF
           "$REPO_DIR" \
           --push
 
-        # If you have a custom Ollama Dockerfile or other services, build them here as well.
+        # -------------------------------------------------------
+        # BUILD CONVERSATION_ORCHESTRATOR HERE
+        # -------------------------------------------------------
+        docker buildx build \
+          --platform linux/amd64 \
+          -t ${REGISTRY}/docker-conversation_orchestrator:latest \
+          -f "$REPO_DIR/docker/Dockerfile_conversational_orchestrator" \
+          "$REPO_DIR" \
+          --push
 
         echo "Deploying stack 'aiinabox' with $DOCKER_COMPOSE_PATH..."
         sudo docker stack deploy -c "$DOCKER_COMPOSE_PATH" aiinabox
@@ -396,7 +403,7 @@ EOF
         echo "Waiting for services to initialize..."
         sleep 15
 
-        # Optionally load a model into Ollama container
+        # (Optional) Ollama model load prompt
         read -p "Attempt to load phi3:14b model in Ollama container? (y/n): " load_model
         if [[ "$load_model" =~ ^[Yy]$ ]]; then
             CONTAINER_ID=$(sudo docker ps --filter "name=aiinabox_ollama" --format "{{.ID}}" | head -n 1)
