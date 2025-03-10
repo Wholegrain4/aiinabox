@@ -4,3 +4,4 @@ sounddevice==0.5.1
 numpy==2.2.3
 scipy==1.15.2
 paho-mqtt==1.6.1
+soundfile==0.12.1
