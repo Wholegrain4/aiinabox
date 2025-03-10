@@ -107,7 +107,7 @@ class STTProcessor:
         self.mqtt_host  = os.getenv("MQTT_BROKER_HOST", "192.168.40.187")
         self.mqtt_port  = int(os.getenv("MQTT_BROKER_PORT", "1883"))
         self.mqtt_user  = os.getenv("MQTT_USER", "mqttuser")
-        self.mqtt_pass  = os.getenv("MQTT_PASS", "password")
+        self.mqtt_pass  = os.getenv("MQTT_PASS", "ballerselite40")
         # By default, STTProcessor publishes transcripts to "scribe/transcripts"
         # but we can override in a subclass (or unify below).
         self.mqtt_topic = os.getenv("MQTT_TOPIC", "scribe/transcripts")
@@ -265,7 +265,7 @@ def main():
     broker = os.getenv("MQTT_BROKER_HOST", "192.168.40.187")
     port   = int(os.getenv("MQTT_BROKER_PORT", "1883"))
     user   = os.getenv("MQTT_USER", "mqttuser")
-    pw     = os.getenv("MQTT_PASS", "password")
+    pw     = os.getenv("MQTT_PASS", "ballerselite40")
 
     # 2) Start the PromptListener for TTS playback
     prompt_listener = PromptListener(broker, port, user, pw, topic="scribe/prompts")
