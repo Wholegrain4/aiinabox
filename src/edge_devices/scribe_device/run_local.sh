@@ -96,6 +96,6 @@ fi
 # 6) Run stt_processor.py in venv
 # --------------------------------------------------------
 echo "Launching STT Processor with MQTT environment variables..."
-python stt_processor.py
+python conversational_ai_scribe.py
 
 echo "Done."
