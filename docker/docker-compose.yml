@@ -82,6 +82,7 @@ services:
       - MQTT_BROKER_PORT=1883
       - MQTT_USER=mqttuser
       - MQTT_PASS=ballerselite40
+      - SUNO_USE_SMALL_MODELS=True
     deploy:
       placement:
         constraints:
